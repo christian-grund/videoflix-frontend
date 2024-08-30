@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+// @import "./app/shared/style/playfair.scss";
+@import "./app/shared/style/colors.scss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "DM Sans";
+  margin: 0;
+  padding: 0;
+  // overflow-x: hidden;
+}
+
+.default-btn {
+  background-color: $color-purple;
+  color: $color-white;
+  padding: 12px 24px;
+}
+
+h1 {
+  color: $color-white;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 62.5px;
+}
