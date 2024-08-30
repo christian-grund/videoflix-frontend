@@ -12,5 +12,11 @@
     width: 100%;
     max-width: 1440px;
     padding: 0 96px;
+
+    img {
+      width: 200px;
+      height: 32px;
+      cursor: pointer;
+    }
   }
 }

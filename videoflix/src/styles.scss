@@ -26,6 +26,11 @@ p {
   margin-block-end: 0;
 }
 
+a {
+  text-decoration: none;
+  color: $color-white;
+}
+
 .btn-default {
   background-color: $color-purple;
   color: $color-white;
@@ -34,6 +39,10 @@ p {
   font-weight: 400;
   border-radius: 40px;
   border-width: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .input-default {
