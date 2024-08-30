@@ -3,11 +3,18 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { StartpageComponent } from './startpage/startpage.component';
 import { HeaderComponent } from './shared/components/header/header.component';
+import { LoginComponent } from './auth/login/login.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, StartpageComponent, HeaderComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    StartpageComponent,
+    HeaderComponent,
+    LoginComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
