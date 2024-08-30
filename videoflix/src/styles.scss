@@ -12,15 +12,42 @@ body {
   // overflow-x: hidden;
 }
 
-.default-btn {
-  background-color: $color-purple;
-  color: $color-white;
-  padding: 12px 24px;
-}
-
 h1 {
   color: $color-white;
   font-size: 48px;
   font-weight: 700;
-  line-height: 62.5px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+p {
+  color: $color-white;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.btn-default {
+  background-color: $color-purple;
+  color: $color-white;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: 400;
+  border-radius: 40px;
+  border-width: 0;
+}
+
+.input-default {
+  border: 1px solid $color-white;
+  border-radius: 40px;
+  padding: 12px 24px;
+  color: $color-white;
+  font-size: 18px;
+  font-weight: 400;
+  background-color: transparent;
+
+  &::placeholder {
+    color: $color-white;
+    font-size: 18px;
+    font-weight: 400;
+  }
 }

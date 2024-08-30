@@ -4,7 +4,6 @@ section {
   height: 100vh;
   display: flex;
   justify-content: center;
-  //   padding: 180px 100px;
   box-sizing: border-box;
 
   .sp-main {
@@ -14,13 +13,12 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-    // margin: auto;
     position: relative;
     background-image: linear-gradient(
         to bottom,
-        #000000,
-        rgba(0, 0, 0, 0) 55%,
-        #000000
+        rgba(0, 0, 0, 0.8),
+        rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.8)
       ),
       url("../../assets/img/background/startpage-bg.jpeg");
     background-size: cover;
@@ -33,6 +31,26 @@ section {
       flex-direction: column;
       width: 100%;
       color: white;
+      gap: 24px;
+
+      p:first-of-type {
+        font-size: 24px;
+        font-weight: 500;
+      }
+
+      p:last-of-type {
+        font-size: 18px;
+        font-weight: 400;
+      }
+
+      .sign-up-form {
+        display: flex;
+        gap: 16px;
+
+        input {
+          width: 360px;
+        }
+      }
     }
   }
 }
