@@ -62,10 +62,11 @@ section {
         flex-direction: column;
         width: 100%;
         max-width: 408px;
-        gap: 24px;
+        gap: 32px;
 
         h1 {
           color: $color-purple;
+          margin-bottom: 8px;
         }
 
         .input-default {
@@ -95,34 +96,34 @@ section {
           }
         }
 
-        .remember-me {
+        .passwords-match {
           display: flex;
-          justify-content: flex-start;
           align-items: center;
           align-self: flex-start;
-          gap: 8px;
-          color: $color-black;
-          font-size: 18px;
-          font-weight: 500;
-          margin-top: -8px;
+          gap: 12px;
+          margin-top: -24px;
+
+          img {
+            width: 18px;
+            height: 18px;
+          }
+
+          p {
+            color: $color-red;
+            font-weight: 400;
+            font-size: 18px;
+          }
         }
+      }
+
+      .btn-default {
+        margin-top: 8px;
       }
 
       a {
         color: $color-purple;
         font-size: 18px;
         font-weight: 700;
-      }
-
-      .sign-up-link {
-        display: flex;
-        gap: 24px;
-
-        p {
-          font-size: 18px;
-          font-weight: 500;
-          color: $color-black;
-        }
       }
     }
   }

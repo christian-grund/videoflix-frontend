@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { StartpageComponent } from './startpage/startpage.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { LoginComponent } from './auth/login/login.component';
     StartpageComponent,
     HeaderComponent,
     LoginComponent,
+    SignupComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

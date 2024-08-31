@@ -1,0 +1,44 @@
+<section>
+  <div class="li-main">
+    <app-header ngSkipHydration></app-header>
+    <div class="li-content">
+      <form>
+        <h1>Sign Up</h1>
+        <input class="input-default" type="email" placeholder="Email Address" />
+        <div class="inputBox">
+          <input
+            class="input-default"
+            type="password"
+            placeholder="Enter a Password"
+          />
+          <img
+            src="../../../assets/img/icons/visibility.svg"
+            alt="password visibility"
+            class="loginPwVisibility"
+          />
+        </div>
+        <div class="inputBox">
+          <input
+            class="input-default"
+            type="password"
+            placeholder="Confirm Password"
+          />
+          <img
+            src="../../../assets/img/icons/visibility.svg"
+            alt="password visibility"
+            class="loginPwVisibility"
+          />
+        </div>
+        <div class="passwords-match">
+          <img
+            src="../../../assets/img/icons/warning.svg"
+            alt="password-match-warning"
+          />
+          <p>Passwords must match.</p>
+        </div>
+        <button class="btn-default">Get Started</button>
+      </form>
+    </div>
+    <app-footer></app-footer>
+  </div>
+</section>
