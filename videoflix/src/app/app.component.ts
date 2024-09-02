@@ -5,6 +5,7 @@ import { StartpageComponent } from './startpage/startpage.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { ForgotpasswordComponent } from './auth/forgotpassword/forgotpassword.component';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import { SignupComponent } from './auth/signup/signup.component';
     HeaderComponent,
     LoginComponent,
     SignupComponent,
+    ForgotpasswordComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
