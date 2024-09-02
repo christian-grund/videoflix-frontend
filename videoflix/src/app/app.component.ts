@@ -6,6 +6,7 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { ForgotpasswordComponent } from './auth/forgotpassword/forgotpassword.component';
+import { ResetpasswordComponent } from './auth/resetpassword/resetpassword.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ import { ForgotpasswordComponent } from './auth/forgotpassword/forgotpassword.co
     LoginComponent,
     SignupComponent,
     ForgotpasswordComponent,
+    ResetpasswordComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
