@@ -8,6 +8,8 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { ForgotpasswordComponent } from './auth/forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './auth/resetpassword/resetpassword.component';
 import { VideoofferComponent } from './videooffer/videooffer.component';
+import { ImprintComponent } from './textsites/imprint/imprint.component';
+import { DataprivacyComponent } from './textsites/dataprivacy/dataprivacy.component';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +24,8 @@ import { VideoofferComponent } from './videooffer/videooffer.component';
     ForgotpasswordComponent,
     ResetpasswordComponent,
     VideoofferComponent,
+    ImprintComponent,
+    DataprivacyComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
