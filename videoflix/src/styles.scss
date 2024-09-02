@@ -13,7 +13,6 @@ body {
 }
 
 h1 {
-  color: $color-white;
   font-size: 48px;
   font-weight: 700;
   margin-block-start: 0;
@@ -24,6 +23,8 @@ h1 {
 p {
   margin-block-start: 0;
   margin-block-end: 0;
+  font-size: 18px;
+  font-weight: 400;
 }
 
 a {
@@ -59,4 +60,20 @@ a {
     font-size: 18px;
     font-weight: 400;
   }
+}
+
+app-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+app-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
 }

@@ -7,6 +7,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { ForgotpasswordComponent } from './auth/forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './auth/resetpassword/resetpassword.component';
+import { VideoofferComponent } from './videooffer/videooffer.component';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ import { ResetpasswordComponent } from './auth/resetpassword/resetpassword.compo
     SignupComponent,
     ForgotpasswordComponent,
     ResetpasswordComponent,
+    VideoofferComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

@@ -1,0 +1,12 @@
+<div class="category-main" *ngFor="let category of categories">
+  <div class="category-content">
+    <h2>{{ category.title }}</h2>
+    <div class="category-videos">
+      <img
+        *ngFor="let video of category.videos"
+        [src]="basePath + video.name + '.jpeg'"
+        [alt]="video.name"
+      />
+    </div>
+  </div>
+</div>
