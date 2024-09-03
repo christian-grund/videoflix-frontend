@@ -1,11 +1,21 @@
 <div class="header-wrapper">
   <div class="header-content">
-    <img
-      src="./assets/img/icons/logo_with_text.svg"
-      alt="Logo"
-      routerLink="/videos"
-      class="logo"
-    />
+    <div class="logo-container">
+      <img
+        *ngIf="currentUrl === '/videos'"
+        src="../../../../assets/img/icons/logo_no_text.svg"
+        alt="Logo no text"
+        routerLink="/videos"
+        class="logo-no-text"
+      />
+      <img
+        *ngIf="currentUrl !== '/videos'"
+        src="../../../../assets/img/icons/logo_with_text.svg"
+        alt="Logo with text"
+        routerLink="/videos"
+        class="logo-with-text"
+      />
+    </div>
     <button *ngIf="currentUrl === '/videos'" class="btn-default" routerLink="/">
       <div class="btn-content-wrapper">
         Log out

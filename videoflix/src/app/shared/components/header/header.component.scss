@@ -13,10 +13,22 @@
     max-width: 1440px;
     padding: 0 96px;
 
-    .logo {
-      width: 200px;
-      height: 32px;
-      cursor: pointer;
+    .logo-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .logo-with-text {
+        width: 200px;
+        height: 32px;
+        cursor: pointer;
+      }
+
+      .logo-no-text {
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+      }
     }
 
     button {
