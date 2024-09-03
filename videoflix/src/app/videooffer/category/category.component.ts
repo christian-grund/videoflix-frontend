@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-category',
@@ -10,6 +11,8 @@ import { Component } from '@angular/core';
 })
 export class CategoryComponent {
   public basePath = './../../../assets/img/thumbnails/';
+
+  constructor(private router: Router) {}
 
   categories = [
     {
@@ -48,4 +51,8 @@ export class CategoryComponent {
       videos: [{ name: 'hate_you' }, { name: 'when_i_met_you' }],
     },
   ];
+
+  openVideo(videoName: string) {
+    this.router.navigate([`/videos/watch/${videoName}`]);
+  }
 }

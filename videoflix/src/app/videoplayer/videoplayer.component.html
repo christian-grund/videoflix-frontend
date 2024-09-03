@@ -1,0 +1,38 @@
+<section>
+  <div class="videoplayer-main">
+    <div class="videoplayer-content">
+      <div *ngIf="videoData" class="video-container">
+        <h1>{{ videoData.title }}</h1>
+        <p>{{ videoData.description }}</p>
+
+        <div class="custom-video-player">
+          <video #videoPlayer [src]="videoData.source"></video>
+
+          <!-- Custom Controls -->
+          <div class="controls">
+            <button (click)="playPause(videoPlayer)">
+              {{ isPlaying ? "Pause" : "Play" }}
+            </button>
+            <input
+              type="range"
+              (input)="seek(videoPlayer, $event)"
+              [value]="videoPlayer.currentTime"
+              [max]="videoPlayer.duration"
+            />
+            <span
+              >{{ formatTime(videoPlayer.currentTime) }} /
+              {{ formatTime(videoPlayer.duration) }}</span
+            >
+            <button (click)="toggleMute(videoPlayer)">
+              {{ isMuted ? "Unmute" : "Mute" }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!videoData">
+        <p>Video not found.</p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -19,6 +19,7 @@
     h2 {
       color: $color-white;
       margin-left: 96px;
+      margin-bottom: 16px;
     }
 
     .category-videos {
@@ -27,6 +28,7 @@
       width: 100%;
       height: 120px;
       gap: 16px;
+      margin-bottom: 48px;
       overflow-x: auto; /* Ermöglicht horizontales Scrollen */
       overflow-y: hidden;
       white-space: nowrap;
