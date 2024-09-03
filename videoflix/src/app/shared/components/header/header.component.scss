@@ -13,10 +13,31 @@
     max-width: 1440px;
     padding: 0 96px;
 
-    img {
+    .logo {
       width: 200px;
       height: 32px;
       cursor: pointer;
     }
+
+    button {
+      .btn-content-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+      }
+    }
   }
+}
+
+.icon-logout {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.icon-arrow {
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
 }

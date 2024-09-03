@@ -52,6 +52,12 @@ section {
         input {
           width: 360px;
           border-radius: 40px;
+          border: 1px solid $color-white;
+          color: $color-white;
+
+          &::placeholder {
+            color: $color-white;
+          }
         }
       }
     }

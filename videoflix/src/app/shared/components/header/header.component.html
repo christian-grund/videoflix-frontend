@@ -3,8 +3,40 @@
     <img
       src="./assets/img/icons/logo_with_text.svg"
       alt="Logo"
-      routerLink="/"
+      routerLink="/videos"
+      class="logo"
     />
-    <button class="btn-default" routerLink="/login">Log in</button>
+    <button *ngIf="currentUrl === '/videos'" class="btn-default" routerLink="/">
+      <div class="btn-content-wrapper">
+        Log out
+        <img
+          src="../../../../assets/img/icons/logout.svg"
+          alt="Logout Icon"
+          class="icon-logout"
+        />
+      </div>
+    </button>
+
+    <button
+      *ngIf="
+        currentUrl === '/' ||
+        currentUrl === '/login' ||
+        currentUrl === '/signup' ||
+        currentUrl === '/forgotpassword' ||
+        currentUrl === '/resetpassword'
+      "
+      class="btn-default"
+      routerLink="/login"
+    >
+      Log in
+    </button>
+
+    <img
+      *ngIf="currentUrl === '/imprint' || currentUrl === '/dataprivacy'"
+      routerLink="/videos"
+      src="../../../../assets/img/icons/arrow_back.svg"
+      alt="Logout Icon"
+      class="icon-arrow"
+    />
   </div>
 </div>

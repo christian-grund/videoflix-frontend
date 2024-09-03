@@ -18,19 +18,14 @@
           <img src="../../../assets/img/icons/checkbox.svg" alt="" />
           <p>Remember me</p>
         </div>
-        <button class="btn-default">Log in</button>
+        <button class="btn-default" routerLink="/videos">Log in</button>
       </form>
-      <a
-        [routerLink]="['/forgotpassword']"
-        routerLinkActive="router-link-active"
-        class="forgot-pw"
+      <a [routerLink]="['/forgotpassword']" class="forgot-pw"
         >Forgot password?</a
       >
       <div class="sign-up-link">
         <p>New to Videoflix?</p>
-        <a [routerLink]="['/signup']" routerLinkActive="router-link-active"
-          >Sign up now</a
-        >
+        <a [routerLink]="['/signup']">Sign up now</a>
       </div>
     </div>
     <app-footer></app-footer>
