@@ -23,16 +23,16 @@
 
     .category-videos {
       display: flex;
+      flex-wrap: nowrap; /* Verhindert das Umbrechen der Bilder */
       width: 100%;
       height: 120px;
       gap: 16px;
-      overflow-x: auto;
+      overflow-x: auto; /* Ermöglicht horizontales Scrollen */
       overflow-y: hidden;
       white-space: nowrap;
       scrollbar-width: none;
       -ms-overflow-style: none;
       box-sizing: border-box;
-      //   min-width: fit-content;
 
       .category-videos::-webkit-scrollbar {
         display: none;
@@ -40,9 +40,11 @@
 
       img {
         height: 100%;
-        width: 212px;
+        width: 213px;
         object-fit: cover;
-        // margin-right: 16px;
+        object-position: center;
+        flex-shrink: 0; /* Verhindert das Schrumpfen der Bilder */
+        overflow: hidden;
 
         &:first-child {
           margin-left: 96px;
@@ -50,6 +52,10 @@
 
         &:last-child {
           margin-right: 48px;
+        }
+
+        &:hover {
+          cursor: pointer;
         }
       }
     }
