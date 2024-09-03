@@ -66,6 +66,10 @@ a {
   }
 }
 
+.router-link-active {
+  text-decoration: underline;
+}
+
 app-header {
   position: absolute;
   top: 0;

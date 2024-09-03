@@ -20,10 +20,17 @@
         </div>
         <button class="btn-default">Log in</button>
       </form>
-      <a href="#" class="forgot-pw">Forgot password?</a>
+      <a
+        [routerLink]="['/forgotpassword']"
+        routerLinkActive="router-link-active"
+        class="forgot-pw"
+        >Forgot password?</a
+      >
       <div class="sign-up-link">
         <p>New to Videoflix?</p>
-        <a href="#">Sign up now</a>
+        <a [routerLink]="['/signup']" routerLinkActive="router-link-active"
+          >Sign up now</a
+        >
       </div>
     </div>
     <app-footer></app-footer>
