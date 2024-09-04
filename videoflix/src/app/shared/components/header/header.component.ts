@@ -26,7 +26,6 @@ export class HeaderComponent implements OnInit {
     this.route.url.subscribe((segments) => {
       this.currentUrl = '/' + segments.map((segment) => segment.path).join('/');
       this.changeDetectorRef.detectChanges(); // Hier wird die Change Detection ausgelöst
-      console.log('currentUrl:', this.currentUrl);
     });
   }
 }

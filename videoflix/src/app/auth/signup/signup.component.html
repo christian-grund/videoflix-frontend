@@ -2,20 +2,33 @@
   <div class="li-main">
     <app-header ngSkipHydration></app-header>
     <div class="li-content">
-      <form>
+      <form #form="ngForm" (ngSubmit)="onSubmit()">
         <h1>Sign Up</h1>
         <input
           class="input-default"
           type="email"
           [(ngModel)]="email"
+          (ngModelChange)="onEmailChange($event)"
           name="email"
           placeholder="Email Address"
+          required
         />
+        <div class="passwords-match" *ngIf="emailError">
+          <img
+            src="../../../assets/img/icons/warning.svg"
+            alt="email-format-warning"
+          />
+          <p>Invalid email format.</p>
+        </div>
+
         <div class="inputBox">
           <input
             class="input-default"
             type="password"
+            [(ngModel)]="password"
+            name="password"
             placeholder="Enter a Password"
+            required
           />
           <img
             src="../../../assets/img/icons/visibility.svg"
@@ -27,7 +40,10 @@
           <input
             class="input-default"
             type="password"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
             placeholder="Confirm Password"
+            required
           />
           <img
             src="../../../assets/img/icons/visibility.svg"
@@ -35,14 +51,14 @@
             class="loginPwVisibility"
           />
         </div>
-        <div class="passwords-match">
+        <div class="passwords-match" *ngIf="passwordError">
           <img
             src="../../../assets/img/icons/warning.svg"
             alt="password-match-warning"
           />
           <p>Passwords must match.</p>
         </div>
-        <button class="btn-default">Get Started</button>
+        <button class="btn-default" type="submit">Get Started</button>
       </form>
     </div>
     <app-footer></app-footer>
