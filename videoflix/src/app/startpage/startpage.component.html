@@ -6,7 +6,16 @@
       <p>Watch whenever you want wherever you want</p>
       <p>Enter you email to create or restart your subscription</p>
       <div class="sign-up-form">
-        <input class="input-default" type="email" placeholder="Email Address" />
+        <div class="input-container">
+          <input
+            type="email"
+            id="email"
+            class="input-default"
+            placeholder=" "
+            required
+          />
+          <label for="email">Email Address</label>
+        </div>
         <button class="btn-default" [routerLink]="['/signup']">
           Sign up >
         </button>

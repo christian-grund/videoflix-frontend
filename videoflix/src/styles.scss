@@ -48,9 +48,11 @@ a {
   font-weight: 400;
   border-radius: 40px;
   border-width: 0;
+  transition: background-color 0.3s ease;
 
   &:hover {
     cursor: pointer;
+    background-color: $color-transform-bg;
   }
 }
 
