@@ -4,7 +4,13 @@
     <div class="li-content">
       <form>
         <h1>Sign Up</h1>
-        <input class="input-default" type="email" placeholder="Email Address" />
+        <input
+          class="input-default"
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="Email Address"
+        />
         <div class="inputBox">
           <input
             class="input-default"

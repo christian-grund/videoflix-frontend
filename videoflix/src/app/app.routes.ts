@@ -11,6 +11,7 @@ import { VideoplayerComponent } from './videoplayer/videoplayer.component';
 
 export const routes: Routes = [
   { path: '', component: StartpageComponent },
+  { path: 'home', component: StartpageComponent },
   { path: 'videos', component: VideoofferComponent },
   { path: 'videos/watch/:videoname', component: VideoplayerComponent },
   { path: 'login', component: LoginComponent },
