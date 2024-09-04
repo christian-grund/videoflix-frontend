@@ -48,6 +48,13 @@ section {
       .sign-up-form {
         display: flex;
         gap: 16px;
+
+        .input-container {
+          input {
+            border: 1px solid $color-white;
+            color: $color-white;
+          }
+        }
       }
     }
   }
