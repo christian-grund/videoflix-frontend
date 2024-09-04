@@ -34,14 +34,18 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.emailValid && this.password == this.confirmPassword) {
-      this.emailError = false;
+    this.emailError = !this.emailValid;
+    this.passwordError = this.password !== this.confirmPassword;
+
+    if (!this.emailError && !this.passwordError) {
       console.log('Form valid!');
-    } else if (!this.emailValid) {
-      this.emailError = true;
     } else {
-      this.passwordError = true;
-      console.log('passwordError:', this.passwordError);
+      if (this.emailError) {
+        console.log('Invalid email');
+      }
+      if (this.passwordError) {
+        console.log('passwordError:', this.passwordError);
+      }
     }
   }
 
