@@ -4,60 +4,77 @@
     <div class="li-content">
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <h1>Sign Up</h1>
-        <input
-          class="input-default"
-          type="email"
-          [(ngModel)]="email"
-          (ngModelChange)="onEmailChange($event)"
-          name="email"
-          placeholder="Email Address"
-          required
-        />
-        <div class="passwords-match" *ngIf="emailError">
-          <img
-            src="../../../assets/img/icons/warning.svg"
-            alt="email-format-warning"
-          />
-          <p>Invalid email format.</p>
+
+        <div class="input-error-container">
+          <div class="input-container">
+            <input
+              class="input-default"
+              type="email"
+              [(ngModel)]="email"
+              (ngModelChange)="onEmailChange($event)"
+              name="email"
+              placeholder=" "
+              required
+            />
+            <label for="email">Email Address</label>
+          </div>
+          <div class="input-error" [ngClass]="{ active: emailError }">
+            <img
+              src="../../../assets/img/icons/warning.svg"
+              alt="email-format-warning"
+            />
+            <p>Invalid email format.</p>
+          </div>
         </div>
 
-        <div class="inputBox">
+        <div class="input-container">
           <input
             class="input-default"
             type="password"
             [(ngModel)]="password"
+            [type]="showPassword ? 'text' : 'password'"
             name="password"
-            placeholder="Enter a Password"
+            placeholder=" "
             required
           />
+          <label for="password">Enter a Password</label>
           <img
             src="../../../assets/img/icons/visibility.svg"
             alt="password visibility"
             class="loginPwVisibility"
+            (click)="togglePasswordVisibility()"
           />
         </div>
-        <div class="inputBox">
-          <input
-            class="input-default"
-            type="password"
-            [(ngModel)]="confirmPassword"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            required
-          />
-          <img
-            src="../../../assets/img/icons/visibility.svg"
-            alt="password visibility"
-            class="loginPwVisibility"
-          />
+
+        <div class="input-error-container">
+          <div class="input-container">
+            <input
+              class="input-default"
+              type="password"
+              [(ngModel)]="confirmPassword"
+              [type]="showPassword ? 'text' : 'password'"
+              name="confirmPassword"
+              placeholder=" "
+              required
+            />
+            <label for="confirmPassword">Confirm Password</label>
+            <img
+              src="../../../assets/img/icons/visibility.svg"
+              alt="password visibility"
+              class="loginPwVisibility"
+              (click)="togglePasswordVisibility()"
+            />
+          </div>
+
+          <div class="input-error" [ngClass]="{ active: passwordError }">
+            <img
+              src="../../../assets/img/icons/warning.svg"
+              alt="password-match-warning"
+            />
+            <p>Passwords must match.</p>
+          </div>
         </div>
-        <div class="passwords-match" *ngIf="passwordError">
-          <img
-            src="../../../assets/img/icons/warning.svg"
-            alt="password-match-warning"
-          />
-          <p>Passwords must match.</p>
-        </div>
+
         <button class="btn-default" type="submit">Get Started</button>
       </form>
     </div>

@@ -53,51 +53,11 @@ section {
           margin-bottom: 8px;
         }
 
-        .input-default {
-          border: 1px solid $color-purple;
-          border-radius: 12px;
-          color: $color-purple;
-          width: 100%;
-          box-sizing: border-box;
-
-          &::placeholder {
-            color: $color-purple;
-          }
-        }
-
-        .inputBox {
-          position: relative;
-          width: 100%;
-          box-sizing: border-box;
-
-          .loginPwVisibility {
-            position: absolute;
-            right: 24px;
-            width: 26px;
-            height: 24px;
-            top: 12px;
-            cursor: pointer;
-          }
-        }
-
-        .passwords-match {
-          display: flex;
-          align-items: center;
-          align-self: flex-start;
-          gap: 12px;
-          margin-top: -24px;
-
-          img {
-            width: 18px;
-            height: 18px;
-          }
-
-          p {
-            color: $color-red;
-            font-weight: 400;
-            font-size: 18px;
-          }
-        }
+        // .inputBox {
+        //   position: relative;
+        //   width: 100%;
+        //   box-sizing: border-box;
+        // }
       }
 
       .btn-default {
@@ -110,5 +70,70 @@ section {
         font-weight: 700;
       }
     }
+  }
+}
+
+.input-error-container {
+  width: 100%;
+  margin-bottom: -24px; /* Platz für die Fehlernachricht reservieren */
+}
+
+.input-container {
+  .input-default {
+    border: 1px solid $color-purple;
+    border-radius: 12px;
+    color: $color-purple;
+    width: 100%;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: $color-purple;
+    }
+  }
+
+  label {
+    color: $color-purple;
+    // font-size: 21px;
+    font-weight: 500;
+    // font-family: "DM Sans";
+  }
+
+  .loginPwVisibility {
+    position: absolute;
+    right: 24px;
+    width: 26px;
+    height: 24px;
+    top: 12px;
+    cursor: pointer;
+  }
+}
+
+.input-error {
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 12px;
+  margin-top: 8px;
+
+  visibility: hidden; /* Fehlernachricht standardmäßig unsichtbar */
+  // height: 0; /* Platz einnehmen, aber unsichtbar sein */
+  opacity: 0; /* Unsichtbar, ohne Layout zu stören */
+  transition: visibility 0s, height 0.3s, opacity 0.3s ease;
+
+  img {
+    width: 18px;
+    height: 18px;
+  }
+
+  p {
+    color: $color-red;
+    font-weight: 400;
+    font-size: 18px;
+  }
+
+  &.active {
+    visibility: visible; /* Sichtbar bei Fehler */
+    // height: auto; /* Höhe wird entsprechend dem Inhalt angepasst */
+    opacity: 1;
   }
 }

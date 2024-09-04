@@ -21,6 +21,7 @@ export class SignupComponent implements OnInit {
   emailValid: boolean = false;
   emailError: boolean = false;
   passwordError: boolean = false;
+  showPassword: boolean = false;
 
   constructor(private dataService: DataService) {}
 
@@ -52,5 +53,9 @@ export class SignupComponent implements OnInit {
   validateEmail(email: string): boolean {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
