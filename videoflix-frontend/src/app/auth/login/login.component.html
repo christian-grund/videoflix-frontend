@@ -1,22 +1,53 @@
 <section>
-  <div class="li-main">
+  <div class="login-main">
     <app-header></app-header>
-    <div class="li-content">
+    <div class="login-content">
       <form>
         <h1>Log in</h1>
-        <input class="input-default" type="email" placeholder="Email Address" />
-        <div class="inputBox">
-          <input class="input-default" type="password" placeholder="Password" />
-          <img
-            src="../../../assets/img/icons/visibility.svg"
-            alt="password visibility"
-            class="passwordVisibility"
+
+        <div class="input-container">
+          <input
+            class="input-default mb-12"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder=" "
           />
+          <label for="email">Email Address</label>
+        </div>
+
+        <div class="input-error-container">
+          <div class="input-container">
+            <input
+              class="input-default"
+              type="password"
+              name="password"
+              placeholder=" "
+              [(ngModel)]="password"
+              [type]="showPassword ? 'text' : 'password'"
+              required
+            />
+            <label for="password">Password</label>
+            <img
+              src="../../../assets/img/icons/visibility.svg"
+              alt="password visibility"
+              class="passwordVisibility"
+              (click)="togglePasswordVisibility()"
+            />
+          </div>
+          <div class="input-error" [ngClass]="{ active: matchError }">
+            <img
+              src="../../../assets/img/icons/warning.svg"
+              alt="password-match-warning"
+            />
+            <p>Email and password don't match.</p>
+          </div>
         </div>
 
         <div class="remember-me">
-          <img src="../../../assets/img/icons/checkbox.svg" alt="" />
-          <p>Remember me</p>
+          <!-- <img src="../../../assets/img/icons/checkbox.svg" alt="" /> -->
+          <input type="checkbox" id="rememberMe" />
+          <label for="rememberMe">Remember me</label>
         </div>
         <button class="btn-default" routerLink="/videos">Log in</button>
       </form>
