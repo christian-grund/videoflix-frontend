@@ -15,6 +15,7 @@
               class="input-default"
               placeholder=" "
               [(ngModel)]="email"
+              #emailInput="ngModel"
               (ngModelChange)="onEmailChange($event)"
               name="email"
               required
@@ -29,7 +30,9 @@
             </div>
           </div>
         </div>
-        <button class="btn-default" type="submit">Sign up ></button>
+        <button class="btn-default" type="submit" [disabled]="!email">
+          Sign up >
+        </button>
       </form>
     </div>
     <app-footer></app-footer>

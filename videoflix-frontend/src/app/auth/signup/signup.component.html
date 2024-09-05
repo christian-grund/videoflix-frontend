@@ -12,6 +12,7 @@
               type="email"
               id="email"
               [(ngModel)]="email"
+              #emailInput="ngModel"
               (ngModelChange)="onEmailChange($event)"
               name="email"
               placeholder=" "
@@ -33,6 +34,7 @@
             class="input-default"
             type="password"
             [(ngModel)]="password"
+            #passwordInput="ngModel"
             [type]="showPassword ? 'text' : 'password'"
             name="password"
             placeholder=" "
@@ -53,6 +55,7 @@
               class="input-default"
               type="password"
               [(ngModel)]="confirmPassword"
+              #confirmPasswordInput="ngModel"
               [type]="showPassword ? 'text' : 'password'"
               name="confirmPassword"
               placeholder=" "
@@ -76,7 +79,13 @@
           </div>
         </div>
 
-        <button class="btn-default" type="submit">Get Started</button>
+        <button
+          class="btn-default"
+          type="submit"
+          [disabled]="!email || !password || !confirmPassword"
+        >
+          Get Started
+        </button>
       </form>
     </div>
     <app-footer></app-footer>
