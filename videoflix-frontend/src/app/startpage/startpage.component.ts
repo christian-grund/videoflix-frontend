@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
 })
 export class StartpageComponent {
   email: string = '';
-  emailValid: boolean = true;
+  emailValid: boolean = false;
   emailError: boolean = false;
 
   constructor(private router: Router, private dataService: DataService) {}

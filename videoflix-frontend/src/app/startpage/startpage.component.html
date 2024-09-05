@@ -6,20 +6,27 @@
       <p>Watch whenever you want wherever you want</p>
       <p>Enter you email to create or restart your subscription</p>
       <form class="sign-up-form" (ngSubmit)="onSubmit()">
-        <div class="input-container">
-          <!-- pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" -->
-          <input
-            type="email"
-            id="email"
-            class="input-default"
-            placeholder=" "
-            [(ngModel)]="email"
-            (ngModelChange)="onEmailChange($event)"
-            name="email"
-            required
-          />
-          <label for="email">Email Address</label>
-          <div *ngIf="emailError">Invalid email format.</div>
+        <div class="input-error-container">
+          <div class="input-container">
+            <input
+              type="email"
+              id="email"
+              class="input-default"
+              placeholder=" "
+              [(ngModel)]="email"
+              (ngModelChange)="onEmailChange($event)"
+              name="email"
+              required
+            />
+            <label for="email">Email Address</label>
+            <div class="input-error" [ngClass]="{ active: emailError }">
+              <img
+                src="../../../assets/img/icons/warning.svg"
+                alt="email-format-warning"
+              />
+              <p>Invalid email format.</p>
+            </div>
+          </div>
         </div>
         <button class="btn-default" type="submit">Sign up ></button>
       </form>

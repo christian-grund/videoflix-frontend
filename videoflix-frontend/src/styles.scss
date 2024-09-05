@@ -110,8 +110,10 @@ app-footer {
   label {
     position: absolute;
     top: 27%;
+    // top: 50%;
     left: 20px;
     font-size: 18px;
+    // transform: translateY(-50%);
     // color: $color-white;
     transition: 0.3s ease;
     pointer-events: none;

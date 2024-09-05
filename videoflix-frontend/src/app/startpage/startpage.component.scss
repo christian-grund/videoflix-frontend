@@ -47,12 +47,27 @@ section {
 
       .sign-up-form {
         display: flex;
+        align-items: center;
         gap: 16px;
 
+        .input-error-container {
+          width: unset !important;
+        }
         .input-container {
           input {
             border: 1px solid $color-white;
             color: $color-white;
+
+            &:focus,
+            &:not(:placeholder-shown) {
+              & + label {
+                top: 2px !important;
+              }
+            }
+          }
+
+          label {
+            top: 16% !important;
           }
         }
       }
