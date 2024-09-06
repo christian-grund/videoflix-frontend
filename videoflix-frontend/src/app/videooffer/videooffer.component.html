@@ -4,6 +4,7 @@
     <div class="videooffer-content">
       <div class="preview-top">
         <div class="preview-text">
+          <!-- Load Data from Service -->
           <h1>Breakout</h1>
           <p>
             In a high-security prison, a wrongly convicted man formulates a
@@ -30,6 +31,11 @@
         />
       </div>
       <div class="content-bottom">
+        <div class="categories">
+          <div class="category" *ngFor="let category of videoData?.categories">
+            {{ category }}
+          </div>
+        </div>
         <p>{{ videoData?.description }}</p>
         <button class="btn-default" (click)="openVideo(videoData?.name || '')">
           <div class="btn-text">

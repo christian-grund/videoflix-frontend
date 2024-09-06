@@ -117,6 +117,18 @@ section {
         color: $color-white;
         margin-top: -4px;
 
+        .categories {
+          display: flex;
+          gap: 16px;
+
+          .category {
+            padding: 6px 12px;
+            background: rgb(65, 65, 65);
+            border-radius: 4px;
+            color: rgba(255, 255, 255, 0.8);
+          }
+        }
+
         .btn-default {
           align-self: flex-start;
 

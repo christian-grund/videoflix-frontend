@@ -20,7 +20,20 @@ export class CategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.categories = this.dataService.getData('categoryData');
+    const videoData = this.dataService.getData('videoData');
+
+    const categoryMap: { [key: string]: { title: string; videos: any[] } } = {};
+
+    videoData.forEach((video: { name: string; categories: string[] }) => {
+      video.categories.forEach((category) => {
+        if (!categoryMap[category]) {
+          categoryMap[category] = { title: category, videos: [] };
+        }
+        categoryMap[category].videos.push(video);
+      });
+    });
+
+    this.categories = Object.values(categoryMap);
   }
 
   openVideoInfo(videoName: string) {

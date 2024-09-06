@@ -20,6 +20,7 @@ export class VideoofferComponent implements OnInit {
     name: string;
     title: string;
     description: string;
+    categories: any[];
   } | null = null;
 
   basePathThumb = './../../../assets/img/thumbnails/';
