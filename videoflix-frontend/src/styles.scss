@@ -41,6 +41,7 @@ a {
 }
 
 .btn-default {
+  display: inline-block !important;
   background-color: $color-purple;
   color: $color-white;
   padding: 12px 24px;
@@ -49,6 +50,7 @@ a {
   border-radius: 40px;
   border-width: 0;
   transition: background-color 0.3s ease;
+  width: auto !important;
 
   &:hover {
     cursor: pointer;

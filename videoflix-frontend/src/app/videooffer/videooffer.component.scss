@@ -77,43 +77,83 @@ section {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5); /* Halbtransparentes Schwarz */
-    z-index: 999; /* Über allen anderen Elementen */
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
   }
 
-  /* Popup-Styling */
   .popup {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Zentriert das Popup */
-    background: white;
-    padding: 20px;
+    transform: translate(-50%, -50%);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 1000; /* Über dem Overlay */
-    width: 400px;
+    z-index: 1000;
+    width: 667px;
     max-width: 90%;
-    border-radius: 10px;
-  }
+    border-radius: 20px;
 
-  .popup-content h2 {
-    margin: 0 0 20px;
-    font-size: 24px;
-    text-align: center;
-  }
+    .popup-content {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
 
-  .popup-content button {
-    display: block;
-    margin: 0 auto;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+      .content-top {
+        img {
+          width: 100%;
+          height: 350px;
+          object-fit: cover;
+        }
+      }
 
-  .popup-content button:hover {
-    background-color: #0056b3;
+      .content-bottom {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 40px;
+        padding: 40px 40px;
+        height: 250px;
+        box-sizing: border-box;
+        background: $color-black;
+        color: $color-white;
+        margin-top: -4px;
+
+        .btn-default {
+          align-self: flex-start;
+
+          .btn-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            p {
+              font-size: 24px;
+            }
+          }
+        }
+      }
+      .close-popup {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        img {
+          width: 32px;
+          height: auto;
+          filter: invert(100%) sepia(4%) saturate(393%) hue-rotate(215deg)
+            brightness(116%) contrast(100%);
+        }
+      }
+    }
   }
 }

@@ -23,9 +23,24 @@
 
   <div class="popup" *ngIf="selectedVideo">
     <div class="popup-content">
-      <h2>{{ selectedVideo }}</h2>
-      <!-- Popup content goes here -->
-      <button (click)="closePopup()">Close</button>
+      <div class="content-top">
+        <img
+          [src]="basePathThumb + videoData?.name + '.jpeg'"
+          [alt]="videoData?.name"
+        />
+      </div>
+      <div class="content-bottom">
+        <p>{{ videoData?.description }}</p>
+        <button class="btn-default" (click)="openVideo(videoData?.name || '')">
+          <div class="btn-text">
+            Get started
+            <p>></p>
+          </div>
+        </button>
+      </div>
+      <div (click)="closePopup()" class="close-popup">
+        <img src="../../assets/img/icons/close.svg" alt="" />
+      </div>
     </div>
   </div>
 </section>

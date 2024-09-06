@@ -3,8 +3,9 @@ import { HeaderComponent } from '../shared/components/header/header.component';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { CategoryComponent } from './category/category.component';
 import { VideoPopupService } from '../shared/services/videopopup.service';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DataService } from '../shared/services/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-videooffer',
@@ -15,8 +16,19 @@ import { CommonModule } from '@angular/common';
 })
 export class VideoofferComponent implements OnInit {
   selectedVideo: string | null = null;
+  videoData: {
+    name: string;
+    title: string;
+    description: string;
+  } | null = null;
 
-  constructor(private videoPopupService: VideoPopupService) {}
+  basePathThumb = './../../../assets/img/thumbnails/';
+
+  constructor(
+    private videoPopupService: VideoPopupService,
+    private dataService: DataService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.videoPopupService.videoName$.subscribe((videoName) => {
@@ -31,12 +43,20 @@ export class VideoofferComponent implements OnInit {
   }
 
   openPopup() {
-    console.log('Popup opened for video:', this.selectedVideo);
+    if (this.selectedVideo) {
+      this.videoData =
+        this.dataService.getVideoByName(this.selectedVideo) || null;
+    }
   }
 
   closePopup() {
-    this.selectedVideo = null; // Set to null to close the popup
-    // this.videoPopupService.closeVideoPopup(); // Notify the service that the popup is closed
-    console.log('Popup closed');
+    this.selectedVideo = null;
+    this.videoData = null;
+  }
+
+  openVideo(videoName: string) {
+    if (videoName) {
+      this.router.navigate([`/videos/watch/${videoName}`]);
+    }
   }
 }
