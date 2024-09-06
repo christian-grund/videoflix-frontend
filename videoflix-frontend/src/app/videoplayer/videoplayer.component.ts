@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DataService } from '../shared/services/data.service';
 
 @Component({
   selector: 'app-videoplayer',
@@ -15,27 +16,16 @@ export class VideoplayerComponent implements OnInit {
   isPlaying = false;
   isMuted = false;
 
-  videos = [
-    {
-      name: 'breakout',
-      title: 'Breakout', // Funktion hierfür erstellen
-      source: './assets/video/escape.mp4', // basePath + Variable
-    },
-  ];
-
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private dataService: DataService
+  ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       this.videoname = params.get('videoname')!;
-      console.log('videoname:', this.videoname);
+      this.videoData = this.dataService.getVideoByName(this.videoname);
 
-      // Suche nach dem Video in der Liste
-      this.videoData = this.videos.find(
-        (video) => video.name === this.videoname
-      );
-
-      // Optional: Fehlerbehandlung, falls das Video nicht gefunden wird
       if (!this.videoData) {
         console.error('Video not found!');
       } else {

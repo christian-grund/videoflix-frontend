@@ -70,4 +70,50 @@ section {
       }
     }
   }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* Halbtransparentes Schwarz */
+    z-index: 999; /* Über allen anderen Elementen */
+  }
+
+  /* Popup-Styling */
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Zentriert das Popup */
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000; /* Über dem Overlay */
+    width: 400px;
+    max-width: 90%;
+    border-radius: 10px;
+  }
+
+  .popup-content h2 {
+    margin: 0 0 20px;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .popup-content button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .popup-content button:hover {
+    background-color: #0056b3;
+  }
 }

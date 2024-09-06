@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataService } from '../../shared/services/data.service';
+import { VideoPopupService } from '../../shared/services/videopopup.service';
 
 @Component({
   selector: 'app-category',
@@ -9,48 +11,24 @@ import { Router } from '@angular/router';
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss',
 })
-export class CategoryComponent {
+export class CategoryComponent implements OnInit {
   public basePath = './../../../assets/img/thumbnails/';
+  public categories: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private dataService: DataService,
+    private videoPopupService: VideoPopupService
+  ) {}
 
-  categories = [
-    {
-      title: 'New on Videoflix',
-      videos: [
-        { name: 'rhythms_of_friendship' },
-        { name: 'majestic_whales' },
-        { name: 'whispering_shadows' },
-        { name: 'babys_secret_language' },
-        { name: 'world_of_wonders' },
-        { name: '48_hours_to_survice' },
-        { name: 'breakout' },
-        { name: 'hate_you' },
-      ],
-    },
-    {
-      title: 'Documentary',
-      videos: [
-        { name: 'majestic_whales' },
-        { name: 'babys_secret_language' },
-        { name: 'world_of_wonders' },
-      ],
-    },
-    {
-      title: 'Drama',
-      videos: [
-        { name: 'rhythms_of_friendship' },
-        { name: 'whispering_shadows' },
-        { name: '48_hours_to_survice' },
-        { name: 'breakout' },
-        { name: 'chronicle_of_a_crime' },
-      ],
-    },
-    {
-      title: 'Romance',
-      videos: [{ name: 'hate_you' }, { name: 'when_i_met_you' }],
-    },
-  ];
+  ngOnInit(): void {
+    this.categories = this.dataService.getData('categoryData');
+    console.log('categoryData:', this.categories);
+  }
+
+  openVideoInfo(videoName: string) {
+    this.videoPopupService.openVideoPopup(videoName);
+  }
 
   openVideo(videoName: string) {
     this.router.navigate([`/videos/watch/${videoName}`]);

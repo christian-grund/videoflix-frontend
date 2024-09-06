@@ -19,4 +19,13 @@
     </div>
     <app-footer></app-footer>
   </div>
+  <div class="overlay" *ngIf="selectedVideo" (click)="closePopup()"></div>
+
+  <div class="popup" *ngIf="selectedVideo">
+    <div class="popup-content">
+      <h2>{{ selectedVideo }}</h2>
+      <!-- Popup content goes here -->
+      <button (click)="closePopup()">Close</button>
+    </div>
+  </div>
 </section>
