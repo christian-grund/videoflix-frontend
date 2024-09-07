@@ -15,6 +15,7 @@ export class VideoplayerComponent implements OnInit {
   videoData: any;
   isPlaying = false;
   isMuted = false;
+  basePath = '../../assets/video/';
 
   constructor(
     private route: ActivatedRoute,

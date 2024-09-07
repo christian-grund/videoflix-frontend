@@ -2,11 +2,14 @@
   <div class="videoplayer-main">
     <div class="videoplayer-content">
       <div *ngIf="videoData" class="video-container">
-        <h1>{{ videoData.title }}</h1>
-        <p>{{ videoData.description }}</p>
+        <!-- <h1>{{ videoData.title }}</h1>
+        <p>{{ videoData.description }}</p> -->
 
         <div class="custom-video-player">
-          <video #videoPlayer [src]="videoData.source"></video>
+          <video
+            #videoPlayer
+            [src]="basePath + videoData?.name + '.mp4'"
+          ></video>
 
           <!-- Custom Controls -->
           <div class="controls">
