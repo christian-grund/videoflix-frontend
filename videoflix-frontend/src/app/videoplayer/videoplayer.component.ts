@@ -18,10 +18,8 @@ import { DataService } from '../shared/services/data.service';
   templateUrl: './videoplayer.component.html',
   styleUrl: './videoplayer.component.scss',
 })
-export class VideoplayerComponent implements OnInit, OnDestroy {
+export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
-  // @ViewChild('progressBar') progressBar!: ElementRef<HTMLInputElement>;
-  progressBarWidth: string = '0%';
   videoname!: string;
   videoData: any;
   isPlaying = false;
@@ -29,7 +27,6 @@ export class VideoplayerComponent implements OnInit, OnDestroy {
   isFullscreen = false;
   videoDuration: number = 0;
   currentTime: number = 0;
-  progressTime: string = '';
   progress: number = 0;
   hoverProgress = 0;
   hovering = false;
@@ -40,7 +37,8 @@ export class VideoplayerComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef // Add ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -54,6 +52,42 @@ export class VideoplayerComponent implements OnInit, OnDestroy {
         console.log('Video data:', this.videoData);
       }
     });
+  }
+
+  ngAfterViewInit() {
+    if (this.videoPlayer) {
+      const videoPlayer = this.videoPlayer.nativeElement;
+
+      // Event-Listener für 'loadedmetadata'
+      videoPlayer.addEventListener('loadedmetadata', () => {
+        this.videoDuration = videoPlayer.duration;
+        this.cdr.detectChanges(); // Force Angular change detection
+        console.log('Video Duration (loadedmetadata):', this.videoDuration);
+
+        // Verzögertes Setzen von videoDuration
+        setTimeout(() => {
+          this.videoDuration = videoPlayer.duration;
+          this.cdr.detectChanges(); // Force Angular change detection
+          console.log('Video Duration (after delay):', this.videoDuration);
+        }, 1000);
+      });
+
+      // Event-Listener für 'canplaythrough'
+      videoPlayer.addEventListener('canplaythrough', () => {
+        if (this.videoDuration === 0) {
+          this.videoDuration = videoPlayer.duration;
+          this.cdr.detectChanges(); // Force Angular change detection
+          console.log('Video Duration (canplaythrough):', this.videoDuration);
+        }
+      });
+
+      // Event-Listener für 'timeupdate'
+      videoPlayer.addEventListener('timeupdate', () => {
+        this.currentTime = videoPlayer.currentTime;
+        this.cdr.detectChanges(); // Force Angular change detection
+        console.log('Video currentTime:', this.currentTime);
+      });
+    }
   }
 
   startUpdatingProgress() {
@@ -109,19 +143,10 @@ export class VideoplayerComponent implements OnInit, OnDestroy {
     this.hovering = false;
   }
 
-  playVideo() {
-    this.videoPlayer.nativeElement.play();
-    this.isPlaying = true;
-    // this.startUpdatingProgress();
-  }
-
-  pauseVideo() {
-    this.videoPlayer.nativeElement.pause();
-    this.isPlaying = false;
-    // if (this.updateIntervalId !== null) {
-    //   clearInterval(this.updateIntervalId);
-    //   this.updateIntervalId = null;
-    // }
+  formatTime(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
   }
 
   ngOnDestroy() {
@@ -130,114 +155,21 @@ export class VideoplayerComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ngAfterViewInit() {
-  //   const video = this.videoPlayer.nativeElement;
-  //   video.onloadedmetadata = () => {
-  //     this.videoDuration = video.duration || 0;
-  //   };
-  // }
+  playPause() {
+    const videoPlayer = this.videoPlayer.nativeElement;
 
-  // ngOnDestroy() {
-  //   if (this.updateIntervalId !== null) {
-  //     clearInterval(this.updateIntervalId);
-  //   }
-  // }
+    if (videoPlayer.paused) {
+      videoPlayer.play();
+      this.isPlaying = true;
+    } else {
+      videoPlayer.pause();
+      this.isPlaying = false;
+    }
+  }
 
-  // updateProgress() {
-  //   const video = this.videoPlayer.nativeElement;
-  //   if (video) {
-  //     this.currentTime = video.currentTime || 0;
-  //     this.videoDuration = video.duration || 0;
-  //     this.progressBar.nativeElement.value = this.currentTime.toString(); // Umwandlung in String
-  //     console.log(
-  //       `Current Time: ${this.currentTime}, Duration: ${this.videoDuration}`
-  //     );
-  //   }
-  // }
-
-  // private startUpdatingProgress() {
-  //   if (this.isPlaying && this.updateIntervalId === null) {
-  //     this.updateIntervalId = window.setInterval(() => {
-  //       this.updateProgress();
-  //     }, 10); // Update alle 10 Millisekunden
-  //   }
-  // }
-
-  // seek(event: Event) {
-  //   const input = event.target as HTMLInputElement;
-  //   const newTime = parseFloat(input.value);
-  //   this.videoPlayer.nativeElement.currentTime = newTime;
-  // }
-
-  // formatTime(seconds: number): string {
-  //   const minutes = Math.floor(seconds / 60);
-  //   const secs = Math.floor(seconds % 60);
-  //   return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-  // }
-
-  // onVideoEnded() {
-  //   this.isPlaying = false;
-  //   if (this.updateIntervalId !== null) {
-  //     clearInterval(this.updateIntervalId);
-  //     this.updateIntervalId = null;
-  //   }
-  // }
+  toggleMute() {
+    const videoPlayer = this.videoPlayer.nativeElement;
+    videoPlayer.muted = !videoPlayer.muted;
+    this.isMuted = videoPlayer.muted;
+  }
 }
-// ngAfterViewInit() {
-//   if (this.videoPlayerRef) {
-//     const videoPlayer = this.videoPlayerRef.nativeElement;
-
-//     videoPlayer.addEventListener('loadedmetadata', () => {
-//       this.videoDuration = videoPlayer.duration;
-//       console.log('Video Duration:', this.videoDuration);
-//     });
-
-//     videoPlayer.addEventListener('timeupdate', async () => {
-//       this.currentTime = videoPlayer.currentTime;
-
-//       // Update the progress bar
-//       await this.updateProgressBar();
-//       console.log('currentTime:', this.currentTime);
-//       // console.log('videoDuration:', this.videoDuration);
-//     });
-//   }
-// }
-
-// private async updateProgressBar() {
-//   this.progress = (this.currentTime / this.videoDuration) * 100;
-
-//   while (this.progress <= 100) {
-//     await this.sleep(this.default_ms);
-//     this.progress = (this.currentTime / this.videoDuration) * 100;
-//   }
-
-//   // console.log('Progres:', this.progress);
-// }
-
-// private sleep(ms: number): Promise<void> {
-//   return new Promise((resolve) => setTimeout(resolve, ms));
-// }
-
-// playPause() {
-//   const videoPlayer = this.videoPlayerRef.nativeElement;
-
-//   if (videoPlayer.paused) {
-//     videoPlayer.play();
-//     this.isPlaying = true;
-//   } else {
-//     videoPlayer.pause();
-//     this.isPlaying = false;
-//   }
-// }
-
-// seek(event: any) {
-//   const videoPlayer = this.videoPlayerRef.nativeElement;
-//   videoPlayer.currentTime = event.target.value;
-//   this.currentTime = videoPlayer.currentTime;
-// }
-
-// toggleMute() {
-//   const videoPlayer = this.videoPlayerRef.nativeElement;
-//   videoPlayer.muted = !videoPlayer.muted;
-//   this.isMuted = videoPlayer.muted;
-// }
