@@ -2,40 +2,113 @@
   <div class="videoplayer-main">
     <div class="videoplayer-content">
       <div *ngIf="videoData" class="video-container">
-        <!-- <h1>{{ videoData.title }}</h1>
-        <p>{{ videoData.description }}</p> -->
-
         <div class="custom-video-player">
-          <video
-            #videoPlayer
-            [src]="basePath + videoData?.name + '.mp4'"
-          ></video>
+          <div class="video-player-container">
+            <video
+              #videoPlayer
+              class="video"
+              controls
+              (play)="startUpdatingProgress()"
+              (pause)="stopUpdatingProgress()"
+            >
+              <source
+                src="../../assets/video/guitar_closeup.mp4"
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </video>
+
+            <!-- <div class="progress-container">
+              <div
+                class="progress-bar"
+                [ngStyle]="{ width: progressBarWidth }"
+              ></div>
+            </div> -->
+          </div>
+
+          <div
+            class="progress-container"
+            (click)="seek($event)"
+            (mousemove)="onMouseMove($event)"
+            (mouseleave)="resetHover()"
+          >
+            <div class="progress-bar" [style.width.%]="progress"></div>
+            <div
+              class="progress-hover"
+              [style.width.%]="hoverProgress"
+              *ngIf="hovering"
+            ></div>
+          </div>
 
           <!-- Custom Controls -->
           <div class="controls">
-            <button (click)="playPause(videoPlayer)">
-              {{ isPlaying ? "Pause" : "Play" }}
-            </button>
+            <button (click)="playVideo()">Play</button>
+            <button (click)="pauseVideo()">Pause</button>
+          </div>
+
+          <!-- <div class="progress-bar-container">
             <input
               type="range"
-              (input)="seek(videoPlayer, $event)"
-              [value]="videoPlayer.currentTime"
-              [max]="videoPlayer.duration"
+              #progressBar
+              (input)="seek($event)"
+              [value]="currentTime"
+              [max]="videoDuration || 0"
             />
             <span
-              >{{ formatTime(videoPlayer.currentTime) }} /
-              {{ formatTime(videoPlayer.duration) }}</span
+              >{{ formatTime(currentTime) }} /
+              {{ formatTime(videoDuration) }}</span
             >
-            <button (click)="toggleMute(videoPlayer)">
-              {{ isMuted ? "Unmute" : "Mute" }}
-            </button>
-          </div>
+          </div> -->
+
+          <!-- <div class="control-buttons">
+              <div class="btns-left">
+                <img
+                  (click)="playPause()"
+                  class="svg-white"
+                  [src]="iconBasePath + (isPlaying ? 'pause.svg' : 'play.svg')"
+                  alt="Play/Pause"
+                />
+
+                <img
+                  class="svg-white"
+                  src="../../assets/img/icons/videoplayer/replay_10.svg"
+                  alt="Replay-10"
+                />
+                <img
+                  class="svg-white"
+                  src="../../assets/img/icons/videoplayer/forward_10.svg"
+                  alt="Forward-10"
+                />
+
+                <img
+                  (click)="toggleMute()"
+                  class="svg-white"
+                  [src]="iconBasePath + (isMuted ? 'volume.svg' : 'mute.svg')"
+                  alt="Sound/Mute"
+                />
+              </div>
+
+              <div class="video-title">{{ videoData.title }}</div>
+
+              <div class="btns-right">
+                <img
+                  class="svg-white"
+                  src="../../assets/img/icons/videoplayer/tune.svg"
+                  alt="Tune"
+                />
+                <img
+                  class="svg-white"
+                  src="../../assets/img/icons/videoplayer/fullscreen_open.svg"
+                  alt="Fullscreen"
+                />
+              </div>
+            </div> -->
         </div>
       </div>
+    </div>
 
-      <div *ngIf="!videoData">
-        <p>Video not found.</p>
-      </div>
+    <div *ngIf="!videoData">
+      <p>Video not found.</p>
     </div>
   </div>
 </section>

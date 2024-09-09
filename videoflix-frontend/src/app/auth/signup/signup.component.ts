@@ -35,6 +35,7 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
+    this.onEmailChange(this.email);
     this.emailError = !this.emailValid;
 
     this.passwordError = this.password !== this.confirmPassword;

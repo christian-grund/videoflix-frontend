@@ -132,7 +132,6 @@ export class DataService {
   }
 
   // Methode zum Abfragen von Daten
-
   getData(key: string): any[] {
     return this.videoData;
   }
@@ -143,7 +142,6 @@ export class DataService {
   }
 
   getVideoByName(name: string) {
-    console.log('name:', name);
     return this.videoData.find((video) => video.name === name);
   }
 }
