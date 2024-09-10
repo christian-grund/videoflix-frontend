@@ -35,7 +35,8 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   hovering = false;
 
   currentVolume: number = 0.5;
-  currentResolution: number = 720;
+  selectedResolution: number = 720;
+  resolutions = [360, 720, 1080];
   videoBasePath = '../../assets/video/';
   iconBasePath = '../../assets/img/icons/videoplayer/';
 
@@ -232,9 +233,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setResolution(resolution: number) {
-    this.currentResolution = resolution;
-    console.log(`The Resolution was set to ${resolution}px.`);
-
-    this.isResolutionMenuVisible = false;
+    this.selectedResolution = resolution;
+    // Logik, um die Videoquelle je nach Auflösung zu ändern
   }
 }

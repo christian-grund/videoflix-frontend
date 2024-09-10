@@ -201,6 +201,10 @@ section {
                     cursor: pointer;
                     text-align: center;
 
+                    &.selected {
+                      font-weight: bold;
+                    }
+
                     &:last-child {
                       border-bottom: none;
                     }
