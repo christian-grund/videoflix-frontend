@@ -9,6 +9,7 @@
             (play)="startUpdatingProgress()"
             (pause)="stopUpdatingProgress()"
             (ended)="onVideoEnded()"
+            (click)="playPause()"
             [src]="videoBasePath + videoname + '.mp4'"
           ></video>
         </div>
@@ -75,10 +76,18 @@
 
             <div class="btns-right">
               <img
+                (click)="toggleResolutionMenu()"
                 class="svg-white"
                 src="../../assets/img/icons/videoplayer/tune.svg"
                 alt="Tune"
               />
+              <div class="resolution-menu" *ngIf="isResolutionMenuVisible">
+                <ul>
+                  <li (click)="setResolution(360)">360p</li>
+                  <li (click)="setResolution(720)">720p</li>
+                  <li (click)="setResolution(1080)">1080p</li>
+                </ul>
+              </div>
               <img
                 (click)="toggleFullscreen()"
                 class="svg-white"

@@ -26,11 +26,13 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   isVideoEnded = false;
   isMuted = false;
   isFullscreen = false;
+  isResolutionMenuVisible = false;
   videoDuration: number = 0;
   currentTime: number = 0;
   progress: number = 0;
   hoverProgress = 0;
   hovering = false;
+  currentResolution: number = 720;
   videoBasePath = '../../assets/video/';
   iconBasePath = '../../assets/img/icons/videoplayer/';
 
@@ -39,7 +41,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     private dataService: DataService,
-    private cdr: ChangeDetectorRef // Add ChangeDetectorRef
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -49,8 +51,6 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (!this.videoData) {
         console.error('Video not found!');
-      } else {
-        console.log('Video data:', this.videoData);
       }
     });
   }
@@ -59,34 +59,26 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.videoPlayer) {
       const videoPlayer = this.videoPlayer.nativeElement;
 
-      // Event-Listener für 'loadedmetadata'
       videoPlayer.addEventListener('loadedmetadata', () => {
         this.videoDuration = videoPlayer.duration;
-        this.cdr.detectChanges(); // Force Angular change detection
-        console.log('Video Duration (loadedmetadata):', this.videoDuration);
+        this.cdr.detectChanges();
 
-        // Verzögertes Setzen von videoDuration
         setTimeout(() => {
           this.videoDuration = videoPlayer.duration;
-          this.cdr.detectChanges(); // Force Angular change detection
-          console.log('Video Duration (after delay):', this.videoDuration);
+          this.cdr.detectChanges();
         }, 1000);
       });
 
-      // Event-Listener für 'canplaythrough'
       videoPlayer.addEventListener('canplaythrough', () => {
         if (this.videoDuration === 0) {
           this.videoDuration = videoPlayer.duration;
-          this.cdr.detectChanges(); // Force Angular change detection
-          console.log('Video Duration (canplaythrough):', this.videoDuration);
+          this.cdr.detectChanges();
         }
       });
 
-      // Event-Listener für 'timeupdate'
       videoPlayer.addEventListener('timeupdate', () => {
         this.currentTime = videoPlayer.currentTime;
-        this.cdr.detectChanges(); // Force Angular change detection
-        console.log('Video currentTime:', this.currentTime);
+        this.cdr.detectChanges();
       });
     }
   }
@@ -113,24 +105,19 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  // Benutzer hat auf die Fortschrittsleiste geklickt
   seek(event: MouseEvent) {
     const video: HTMLVideoElement = this.videoPlayer.nativeElement;
     const progressContainer = event.currentTarget as HTMLElement;
 
-    // Überprüfe, ob das Video bereits geladen ist und eine Dauer hat
     if (video.duration) {
-      // Position des Klicks relativ zur Fortschrittsleiste berechnen
       const rect = progressContainer.getBoundingClientRect();
       const clickPosition = event.clientX - rect.left;
       const percentage = clickPosition / rect.width;
 
-      // Setze den aktuellen Zeitpunkt des Videos basierend auf der prozentualen Position
       video.currentTime = video.duration * percentage;
     }
   }
 
-  // Maus bewegt sich über die Fortschrittsleiste
   onMouseMove(event: MouseEvent) {
     const progressContainer = event.currentTarget as HTMLElement;
     const rect = progressContainer.getBoundingClientRect();
@@ -139,7 +126,6 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.hovering = true;
   }
 
-  // Maus hat die Fortschrittsleiste verlassen
   resetHover() {
     this.hovering = false;
   }
@@ -201,5 +187,16 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   onVideoEnded() {
     this.isVideoEnded = true;
     this.isPlaying = false;
+  }
+
+  toggleResolutionMenu() {
+    this.isResolutionMenuVisible = !this.isResolutionMenuVisible;
+  }
+
+  setResolution(resolution: number) {
+    this.currentResolution = resolution;
+    console.log(`The Resolution was set to ${resolution}px.`);
+
+    this.isResolutionMenuVisible = false;
   }
 }

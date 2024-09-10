@@ -43,18 +43,19 @@ section {
           video {
             width: 100%;
             border-radius: 10px;
+            cursor: pointer;
           }
         }
 
         .progress-bar-container {
           display: flex;
-          align-items: center; // Zentriert die Items vertikal
-          justify-content: space-between; // Stellt sicher, dass der Platz zwischen den Elementen verteilt wird
+          align-items: center;
+          justify-content: space-between;
           width: 100%;
           gap: 16px;
 
           .progress-container {
-            flex: 1; // Stellt sicher, dass die Fortschrittsleiste den verbleibenden Platz einnimmt
+            flex: 1;
             height: 10px;
             background-color: $color-grey;
             cursor: pointer;
@@ -76,11 +77,12 @@ section {
           }
 
           span {
-            display: inline; // Sicherstellen, dass das Span-Element inline bleibt
+            display: inline;
           }
         }
 
         .controls {
+          position: relative;
           display: flex;
           justify-content: center;
           flex-direction: column;
@@ -108,10 +110,35 @@ section {
             }
 
             .btns-right {
+              position: relative;
               display: flex;
               justify-content: flex-end;
               gap: 12px;
               width: 164px;
+
+              .resolution-menu {
+                position: absolute;
+                right: 80px;
+                top: 2px;
+                z-index: 10;
+
+                ul {
+                  list-style: none;
+                  padding: 0;
+                  margin: 0;
+                  display: flex;
+                  gap: 8px;
+
+                  li {
+                    cursor: pointer;
+                    text-align: center;
+
+                    &:last-child {
+                      border-bottom: none;
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -125,19 +152,3 @@ section {
     }
   }
 }
-
-// .controls {
-//   position: absolute;
-//   bottom: 40px;
-//   left: 0;
-//   width: 100%;
-//   display: flex;
-//   justify-content: center;
-//   gap: 10px;
-// }
-
-// .controls button {
-//   padding: 10px 20px;
-//   font-size: 16px;
-//   cursor: pointer;
-// }
