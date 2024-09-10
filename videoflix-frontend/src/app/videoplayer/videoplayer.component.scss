@@ -31,28 +31,32 @@ section {
         width: 100%;
         max-width: 800px;
         margin: 0 auto;
-        background: #000;
-        color: #fff;
+        background: $color-black;
+        color: $color-white;
         padding: 20px;
         border-radius: 10px;
+        position: relative;
+        width: 100%;
+        padding-bottom: 60px;
 
-        .video-player {
-          position: relative;
+        video {
           width: 100%;
-
-          video {
-            width: 100%;
-            border-radius: 10px;
-            cursor: pointer;
-          }
+          border-radius: 10px;
+          cursor: pointer;
         }
 
         .progress-bar-container {
+          position: absolute;
+          bottom: 40px;
+          left: 0;
+          right: 0;
           display: flex;
           align-items: center;
           justify-content: space-between;
           width: 100%;
           gap: 16px;
+          padding: 0 24px;
+          box-sizing: border-box;
 
           .progress-container {
             flex: 1;
@@ -82,11 +86,16 @@ section {
         }
 
         .controls {
-          position: relative;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
           display: flex;
           justify-content: center;
           flex-direction: column;
-          margin-top: 10px;
+          padding: 0 24px;
+          box-sizing: border-box;
+          z-index: 10000000000 !important;
 
           .control-buttons {
             display: flex;
@@ -101,6 +110,65 @@ section {
               img {
                 width: 32px !important;
                 height: auto;
+              }
+
+              .volume-container {
+                position: relative;
+                display: inline-block;
+
+                .volume-slider {
+                  position: absolute;
+                  right: -116px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  padding: 5px;
+                  z-index: 10;
+
+                  input[type="range"] {
+                    appearance: none;
+                    width: 100px;
+                    position: relative;
+                    background-color: transparent;
+                    // top: -5px;
+
+                    &::-webkit-slider-runnable-track {
+                      background-color: #b5b5b5 !important; // Farbe der Leiste
+                      height: 5px;
+                      position: relative;
+                      top: -5px;
+                    }
+
+                    &::-webkit-slider-thumb {
+                      appearance: none;
+                      background-color: $color-white; // Farbe des Schiebereglers
+                      border: 2px solid $color-white; // Rahmenfarbe des Schiebereglers
+                      width: 15px;
+                      height: 15px;
+                      border-radius: 50%;
+                      cursor: pointer;
+                      position: relative;
+                      top: -5px;
+                    }
+
+                    &::-moz-range-track {
+                      background: #b5b5b5; // Farbe der Leiste in Firefox
+                      height: 5px;
+                      position: relative;
+                      top: -5px;
+                    }
+
+                    &::-moz-range-thumb {
+                      background: $color-white; // Farbe des Schiebereglers in Firefox
+                      border: 2px solid $color-white; // Rahmenfarbe des Schiebereglers
+                      width: 15px;
+                      height: 15px;
+                      border-radius: 50%;
+                      cursor: pointer;
+                      position: relative;
+                      top: -5px;
+                    }
+                  }
+                }
               }
             }
 
@@ -150,5 +218,28 @@ section {
         }
       }
     }
+  }
+}
+
+.video:fullscreen + .progress-bar-container,
+.video:fullscreen + .controls {
+  display: flex !important; // Sicherstellen, dass die benutzerdefinierten Controls im Fullscreen-Modus sichtbar sind
+}
+
+.video:fullscreen {
+  z-index: 1 !important;
+}
+
+video::-webkit-media-controls {
+  display: none !important;
+}
+video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+.video-container:fullscreen {
+  /* Optional: Falls weitere Stile für den Fullscreen-Modus benötigt werden */
+  .controls {
+    display: flex; // Ensure the custom controls are visible in fullscreen mode
   }
 }

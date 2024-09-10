@@ -2,17 +2,15 @@
   <div class="videoplayer-main">
     <div class="videoplayer-content">
       <div *ngIf="videoData" class="video-container">
-        <div class="video-player">
-          <video
-            #videoPlayer
-            class="video"
-            (play)="startUpdatingProgress()"
-            (pause)="stopUpdatingProgress()"
-            (ended)="onVideoEnded()"
-            (click)="playPause()"
-            [src]="videoBasePath + videoname + '.mp4'"
-          ></video>
-        </div>
+        <video
+          #videoPlayer
+          class="video"
+          (play)="startUpdatingProgress()"
+          (pause)="stopUpdatingProgress()"
+          (ended)="onVideoEnded()"
+          (click)="playPause()"
+          [src]="videoBasePath + videoname + '.mp4'"
+        ></video>
 
         <div class="progress-bar-container">
           <div
@@ -39,7 +37,6 @@
             <div class="btns-left">
               <img
                 (click)="playPause()"
-                class="svg-white"
                 [src]="
                   iconBasePath +
                   (isVideoEnded
@@ -53,23 +50,34 @@
 
               <img
                 (click)="skip(-10)"
-                class="svg-white"
                 src="../../assets/img/icons/videoplayer/replay_10.svg"
                 alt="Replay-10"
               />
               <img
                 (click)="skip(10)"
-                class="svg-white"
                 src="../../assets/img/icons/videoplayer/forward_10.svg"
                 alt="Forward-10"
               />
 
-              <img
-                (click)="toggleMute()"
-                class="svg-white"
-                [src]="iconBasePath + (isMuted ? 'volume.svg' : 'mute.svg')"
-                alt="Sound/Mute"
-              />
+              <div class="volume-container">
+                <img
+                  (click)="toggleVolumeSlider()"
+                  [src]="iconBasePath + (isMuted ? 'mute.svg' : 'volume.svg')"
+                  alt="Sound/Mute"
+                />
+
+                <!-- Volume Slider -->
+                <div class="volume-slider" *ngIf="isVolumeSliderVisible">
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    [value]="currentVolume"
+                    (input)="setVolume($event)"
+                  />
+                </div>
+              </div>
             </div>
 
             <div class="video-title">{{ videoData.title }}</div>
@@ -77,7 +85,6 @@
             <div class="btns-right">
               <img
                 (click)="toggleResolutionMenu()"
-                class="svg-white"
                 src="../../assets/img/icons/videoplayer/tune.svg"
                 alt="Tune"
               />
@@ -90,7 +97,6 @@
               </div>
               <img
                 (click)="toggleFullscreen()"
-                class="svg-white"
                 src="../../assets/img/icons/videoplayer/fullscreen_open.svg"
                 alt="Fullscreen"
               />
