@@ -8,6 +8,7 @@
             class="video"
             (play)="startUpdatingProgress()"
             (pause)="stopUpdatingProgress()"
+            (ended)="onVideoEnded()"
             [src]="videoBasePath + videoname + '.mp4'"
           ></video>
         </div>
@@ -38,16 +39,25 @@
               <img
                 (click)="playPause()"
                 class="svg-white"
-                [src]="iconBasePath + (isPlaying ? 'pause.svg' : 'play.svg')"
+                [src]="
+                  iconBasePath +
+                  (isVideoEnded
+                    ? 'replay.svg'
+                    : isPlaying
+                    ? 'pause.svg'
+                    : 'play.svg')
+                "
                 alt="Play/Pause"
               />
 
               <img
+                (click)="skip(-10)"
                 class="svg-white"
                 src="../../assets/img/icons/videoplayer/replay_10.svg"
                 alt="Replay-10"
               />
               <img
+                (click)="skip(10)"
                 class="svg-white"
                 src="../../assets/img/icons/videoplayer/forward_10.svg"
                 alt="Forward-10"
@@ -70,6 +80,7 @@
                 alt="Tune"
               />
               <img
+                (click)="toggleFullscreen()"
                 class="svg-white"
                 src="../../assets/img/icons/videoplayer/fullscreen_open.svg"
                 alt="Fullscreen"

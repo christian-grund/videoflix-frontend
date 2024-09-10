@@ -23,6 +23,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   videoname!: string;
   videoData: any;
   isPlaying = false;
+  isVideoEnded = false;
   isMuted = false;
   isFullscreen = false;
   videoDuration: number = 0;
@@ -161,6 +162,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
     if (videoPlayer.paused) {
       videoPlayer.play();
       this.isPlaying = true;
+      this.isVideoEnded = false;
     } else {
       videoPlayer.pause();
       this.isPlaying = false;
@@ -171,5 +173,33 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
     const videoPlayer = this.videoPlayer.nativeElement;
     videoPlayer.muted = !videoPlayer.muted;
     this.isMuted = videoPlayer.muted;
+  }
+
+  toggleFullscreen() {
+    const videoPlayer = this.videoPlayer.nativeElement;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      videoPlayer.requestFullscreen();
+    }
+  }
+
+  skip(seconds: number) {
+    const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+
+    const newTime = video.currentTime + seconds;
+
+    if (newTime < 0) {
+      video.currentTime = 0;
+    } else if (newTime > video.duration) {
+      video.currentTime = video.duration;
+    } else {
+      video.currentTime = newTime;
+    }
+  }
+
+  onVideoEnded() {
+    this.isVideoEnded = true;
+    this.isPlaying = false;
   }
 }
