@@ -129,16 +129,22 @@ section {
           }
         }
 
+        .btns-bottom {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+        }
         .btn-default {
           align-self: flex-start;
 
           .btn-text {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
 
-            p {
-              font-size: 24px;
+            img {
+              width: 28px;
+              height: auto;
             }
           }
         }

@@ -23,7 +23,8 @@ export class VideoofferComponent implements OnInit {
     categories: any[];
   } | null = null;
 
-  basePathThumb = './../../../assets/img/thumbnails/';
+  thumbBasePath = './../../../assets/img/thumbnails/';
+  iconBasePath = '../../assets/img/icons/';
 
   constructor(
     private videoPopupService: VideoPopupService,
@@ -58,6 +59,30 @@ export class VideoofferComponent implements OnInit {
   openVideo(videoName: string) {
     if (videoName) {
       this.router.navigate([`/videos/watch/${videoName}`]);
+    }
+  }
+
+  isFavorite(): boolean {
+    return this.videoData?.categories.includes('Favorites') ?? false;
+  }
+
+  addToOrRemoveFromFavorites() {
+    if (this.videoData) {
+      const favoriteIndex = this.videoData.categories.indexOf('Favorites');
+
+      if (favoriteIndex === -1) {
+        this.videoData.categories.push('Favorites');
+        console.log(
+          `${this.videoData.name} wurde zu den Favoriten hinzugefügt.`
+        );
+      } else {
+        this.videoData.categories.splice(favoriteIndex, 1);
+        console.log(`${this.videoData.name} wurde aus den Favoriten entfernt.`);
+      }
+      this.dataService.updateVideoCategories(
+        this.videoData.name,
+        this.videoData.categories
+      );
     }
   }
 }

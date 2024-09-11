@@ -7,6 +7,7 @@
           <!-- Load Data from Service -->
           <h1>Breakout</h1>
           <p>
+            <!-- Daten aus DataService laden -->
             In a high-security prison, a wrongly convicted man formulates a
             meticulous plan to break out and prove his innocence. He must
             navigate a web of alliances and betrayals to reclaim his freedom and
@@ -26,7 +27,7 @@
     <div class="popup-content">
       <div class="content-top">
         <img
-          [src]="basePathThumb + videoData?.name + '.jpeg'"
+          [src]="thumbBasePath + videoData?.name + '.jpeg'"
           [alt]="videoData?.name"
         />
       </div>
@@ -37,12 +38,43 @@
           </div>
         </div>
         <p>{{ videoData?.description }}</p>
-        <button class="btn-default" (click)="openVideo(videoData?.name || '')">
-          <div class="btn-text">
-            Start
-            <p>></p>
-          </div>
-        </button>
+        <div class="btns-bottom">
+          <button
+            class="btn-default"
+            (click)="openVideo(videoData?.name || '')"
+          >
+            <div class="btn-text">
+              Start
+              <img src="../../assets/img/icons/play.png" alt="" />
+            </div>
+          </button>
+
+          <button
+            class="btn-default"
+            (click)="addToOrRemoveFromFavorites()"
+            *ngIf="!isFavorite()"
+          >
+            <div class="btn-text">
+              Add to Favorites
+              <img
+                class="play-icon"
+                src="../../assets/img/icons/favorite.svg"
+                alt=""
+              />
+            </div>
+          </button>
+
+          <button
+            class="btn-default"
+            (click)="addToOrRemoveFromFavorites()"
+            *ngIf="isFavorite()"
+          >
+            <div class="btn-text">
+              Remove from Favorites
+              <img src="../../assets/img/icons/favorite_remove.svg" alt="" />
+            </div>
+          </button>
+        </div>
       </div>
       <div (click)="closePopup()" class="close-popup">
         <img src="../../assets/img/icons/close.svg" alt="" />

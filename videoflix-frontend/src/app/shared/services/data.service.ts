@@ -5,51 +5,6 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private emailSource = new BehaviorSubject<string>('');
-  currentEmail = this.emailSource.asObservable();
-
-  // private dataStore: {
-  //   [key: string]: any[];
-  // } = {
-  //   categoryData: [
-  //     {
-  //       title: 'New on Videoflix',
-  //       videos: [
-  //         { name: 'rhythms_of_friendship' },
-  //         { name: 'majestic_whales' },
-  //         { name: 'whispering_shadows' },
-  //         { name: 'babys_secret_language' },
-  //         { name: 'world_of_wonders' },
-  //         { name: '48_hours_to_survice' },
-  //         { name: 'breakout' },
-  //         { name: 'hate_you' },
-  //       ],
-  //     },
-  //     {
-  //       title: 'Documentary',
-  //       videos: [
-  //         { name: 'majestic_whales' },
-  //         { name: 'babys_secret_language' },
-  //         { name: 'world_of_wonders' },
-  //       ],
-  //     },
-  //     {
-  //       title: 'Drama',
-  //       videos: [
-  //         { name: 'rhythms_of_friendship' },
-  //         { name: 'whispering_shadows' },
-  //         { name: '48_hours_to_survice' },
-  //         { name: 'breakout' },
-  //         { name: 'chronicle_of_a_crime' },
-  //       ],
-  //     },
-  //     {
-  //       title: 'Romance',
-  //       videos: [{ name: 'hate_you' }, { name: 'when_i_met_you' }],
-  //     },
-  //   ],
-  // };
-
   videoData = [
     {
       name: 'rhythms_of_friendship',
@@ -120,6 +75,11 @@ export class DataService {
     },
   ];
 
+  private emailSource = new BehaviorSubject<string>('');
+  currentEmail = this.emailSource.asObservable();
+  private videoDataSubject = new BehaviorSubject<any[]>(this.videoData);
+  videoData$ = this.videoDataSubject.asObservable();
+
   constructor() {}
 
   changeEmail(email: string) {
@@ -143,5 +103,22 @@ export class DataService {
 
   getVideoByName(name: string) {
     return this.videoData.find((video) => video.name === name);
+  }
+
+  updateVideoCategories(videoName: string, categories: string[]) {
+    const videoIndex = this.videoData.findIndex(
+      (video) => video.name === videoName
+    );
+
+    if (videoIndex !== -1) {
+      this.videoData[videoIndex].categories = categories;
+      this.videoDataSubject.next(this.videoData); // Trigger ein Update
+      console.log(
+        `Kategorien von ${videoName} wurden aktualisiert:`,
+        categories
+      );
+    } else {
+      console.error(`Video mit dem Namen ${videoName} wurde nicht gefunden.`);
+    }
   }
 }

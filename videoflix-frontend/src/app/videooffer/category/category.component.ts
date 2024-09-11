@@ -20,8 +20,12 @@ export class CategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const videoData = this.dataService.getData('videoData');
+    this.dataService.videoData$.subscribe((videoData) => {
+      this.updateCategories(videoData);
+    });
+  }
 
+  updateCategories(videoData: any[]): void {
     const categoryMap: { [key: string]: { title: string; videos: any[] } } = {};
 
     videoData.forEach((video: { name: string; categories: string[] }) => {
