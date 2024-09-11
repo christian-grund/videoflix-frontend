@@ -51,7 +51,7 @@ export class DataService {
       name: 'breakout',
       title: 'Breakout',
       description:
-        'In a high-security prison, a wrongly convicted man formulates...',
+        'In a high-security prison, a wrongly convicted man formulates a meticulous plan to break out and prove his innocence. He must navigate a web of alliances and betrayals to reclaim his freedom and expose the truth.',
       categories: ['New on Videoflix', 'Drama'],
     },
     {

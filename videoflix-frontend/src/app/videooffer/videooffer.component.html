@@ -3,16 +3,26 @@
     <app-header></app-header>
     <div class="videooffer-content">
       <div class="preview-top">
+        <video
+          #videoPlayer
+          class="video-background"
+          (mouseenter)="playVideo()"
+          (mouseleave)="pauseVideo()"
+          (ended)="replayVideo()"
+          [src]="videoBasePath + previewVideo.name + '.mp4'"
+        ></video>
         <div class="preview-text">
-          <!-- Load Data from Service -->
-          <h1>Breakout</h1>
-          <p>
-            <!-- Daten aus DataService laden -->
-            In a high-security prison, a wrongly convicted man formulates a
-            meticulous plan to break out and prove his innocence. He must
-            navigate a web of alliances and betrayals to reclaim his freedom and
-            expose the truth.
-          </p>
+          <h1>{{ previewVideo.title }}</h1>
+          <p>{{ previewVideo.description }}</p>
+          <button
+            class="btn-default"
+            (click)="openVideo(previewVideo?.name || '')"
+          >
+            <div class="btn-text">
+              <img src="../../assets/img/icons/play.png" alt="" />
+              Play
+            </div>
+          </button>
         </div>
       </div>
       <div class="categories">
@@ -44,8 +54,8 @@
             (click)="openVideo(videoData?.name || '')"
           >
             <div class="btn-text">
-              Start
               <img src="../../assets/img/icons/play.png" alt="" />
+              Play
             </div>
           </button>
 
@@ -55,12 +65,12 @@
             *ngIf="!isFavorite()"
           >
             <div class="btn-text">
-              Add to Favorites
               <img
-                class="play-icon"
+                class="favorite-icon"
                 src="../../assets/img/icons/favorite.svg"
                 alt=""
               />
+              Add to Favorites
             </div>
           </button>
 
@@ -70,8 +80,8 @@
             *ngIf="isFavorite()"
           >
             <div class="btn-text">
-              Remove from Favorites
               <img src="../../assets/img/icons/favorite_remove.svg" alt="" />
+              Remove from Favorites
             </div>
           </button>
         </div>

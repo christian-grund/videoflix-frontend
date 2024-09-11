@@ -26,14 +26,13 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   isVideoEnded = false;
   isMuted = false;
   isFullscreen = false;
+  isHovering = false;
   isResolutionMenuVisible = false;
   isVolumeSliderVisible = false;
   videoDuration: number = 0;
   currentTime: number = 0;
   progress: number = 0;
   hoverProgress = 0;
-  hovering = false;
-
   currentVolume: number = 0.5;
   selectedResolution: number = 720;
   resolutions = [360, 720, 1080];
@@ -132,11 +131,11 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
     const rect = progressContainer.getBoundingClientRect();
     const hoverPosition = event.clientX - rect.left;
     this.hoverProgress = (hoverPosition / rect.width) * 100;
-    this.hovering = true;
+    this.isHovering = true;
   }
 
   resetHover() {
-    this.hovering = false;
+    this.isHovering = false;
   }
 
   formatTime(seconds: number): string {

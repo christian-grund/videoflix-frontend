@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { CategoryComponent } from './category/category.component';
@@ -14,8 +20,14 @@ import { Router } from '@angular/router';
   templateUrl: './videooffer.component.html',
   styleUrl: './videooffer.component.scss',
 })
-export class VideoofferComponent implements OnInit {
+export class VideoofferComponent implements OnInit, AfterViewInit {
+  @ViewChild('videoPlayer')
+  videoPlayer!: ElementRef<HTMLVideoElement>;
   selectedVideo: string | null = null;
+  previewVideo: any;
+  isPlaying = false;
+  isVideoEnded = false;
+  isMuted = false;
   videoData: {
     name: string;
     title: string;
@@ -23,7 +35,8 @@ export class VideoofferComponent implements OnInit {
     categories: any[];
   } | null = null;
 
-  thumbBasePath = './../../../assets/img/thumbnails/';
+  thumbBasePath = '../../assets/img/thumbnails/';
+  videoBasePath = '../../assets/video/';
   iconBasePath = '../../assets/img/icons/';
 
   constructor(
@@ -42,6 +55,22 @@ export class VideoofferComponent implements OnInit {
         this.closePopup();
       }
     });
+
+    this.previewVideo = this.dataService.getVideoByName('breakout');
+  }
+
+  ngAfterViewInit() {
+    //   const video = document.getElementById(
+    //     'backgroundVideo'
+    //   ) as HTMLVideoElement;
+    //   if (video && typeof video.play === 'function') {
+    //     video.muted = true;
+    //     video.play().catch((error) => {
+    //       console.error('Video autoplay failed:', error);
+    //     });
+    //   } else {
+    //     console.error('Video element not ready or play() is not a function.');
+    //   }
   }
 
   openPopup() {
@@ -84,5 +113,22 @@ export class VideoofferComponent implements OnInit {
         this.videoData.categories
       );
     }
+  }
+
+  playVideo() {
+    console.log('playVideo');
+    const videoPlayer = this.videoPlayer.nativeElement;
+    videoPlayer.play();
+  }
+
+  pauseVideo() {
+    const videoPlayer = this.videoPlayer.nativeElement;
+    videoPlayer.pause();
+  }
+
+  replayVideo() {
+    const videoPlayer = this.videoPlayer.nativeElement;
+    videoPlayer.currentTime = 0;
+    videoPlayer.play();
   }
 }
