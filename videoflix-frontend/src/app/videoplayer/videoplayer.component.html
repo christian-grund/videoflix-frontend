@@ -2,7 +2,7 @@
   <div class="videoplayer-main">
     <div class="videoplayer-content">
       <div *ngIf="videoData" class="video-container">
-        <div class="video-header">
+        <div class="video-header" *ngIf="isHeaderVisible">
           <img
             src="../../assets/img/icons/arrow_back.svg"
             alt="arrow_back"
@@ -19,6 +19,8 @@
           (pause)="stopUpdatingProgress()"
           (ended)="onVideoEnded()"
           (click)="playPause()"
+          (mouseenter)="startTimer()"
+          (mouseleave)="startTimer()"
           [src]="videoBasePath + videoname + '.mp4'"
         ></video>
 

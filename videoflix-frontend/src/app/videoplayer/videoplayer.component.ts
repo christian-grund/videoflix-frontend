@@ -22,6 +22,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
   videoname!: string;
   videoData: any;
+  intervalId: any;
   isPlaying = false;
   isVideoEnded = false;
   isMuted = false;
@@ -35,6 +36,9 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   hoverProgress = 0;
   currentVolume: number = 0.5;
   selectedResolution: number = 720;
+  timeInSeconds: number = 0;
+  timeOver: number = 3;
+  isHeaderVisible = false;
   resolutions = [360, 720, 1080];
   videoBasePath = '../../assets/video/';
   iconBasePath = '../../assets/img/icons/videoplayer/';
@@ -89,6 +93,39 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.updateControlsVisibility();
       });
     }
+  }
+
+  startTimer() {
+    if (this.intervalId) {
+      this.stopTimer();
+    }
+    this.isHeaderVisible = true;
+    this.intervalId = setInterval(() => {
+      this.timeInSeconds++;
+      console.log(`Time: ${this.timeInSeconds} seconds`);
+
+      if (this.timeInSeconds >= this.timeOver) {
+        this.resetTimer();
+        this.isHeaderVisible = false;
+      }
+    }, 1000);
+  }
+
+  stopTimer() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+  }
+
+  resetTimer() {
+    this.stopTimer();
+    this.timeInSeconds = 0;
+  }
+
+  setHeaderVisible() {
+    this.isHeaderVisible = true;
+    console.log('setHeaderVisible');
   }
 
   startUpdatingProgress() {
