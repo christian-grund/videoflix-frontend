@@ -2,6 +2,16 @@
   <div class="videoplayer-main">
     <div class="videoplayer-content">
       <div *ngIf="videoData" class="video-container">
+        <div class="video-header">
+          <img
+            src="../../assets/img/icons/arrow_back.svg"
+            alt="arrow_back"
+            [routerLink]="['/videos']"
+          />
+          <p>Optimizing video for your screen: 50%</p>
+          <img src="../../assets/img/icons/logo_no_text.svg" alt="" />
+        </div>
+
         <video
           #videoPlayer
           class="video"

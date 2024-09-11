@@ -8,13 +8,13 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DataService } from '../shared/services/data.service';
 
 @Component({
   selector: 'app-videoplayer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './videoplayer.component.html',
   styleUrl: './videoplayer.component.scss',
 })

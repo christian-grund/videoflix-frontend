@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
   templateUrl: './videooffer.component.html',
   styleUrl: './videooffer.component.scss',
 })
-export class VideoofferComponent implements OnInit, AfterViewInit {
+export class VideoofferComponent implements OnInit {
   @ViewChild('videoPlayer')
   videoPlayer!: ElementRef<HTMLVideoElement>;
   selectedVideo: string | null = null;
@@ -57,20 +57,7 @@ export class VideoofferComponent implements OnInit, AfterViewInit {
     });
 
     this.previewVideo = this.dataService.getVideoByName('breakout');
-  }
-
-  ngAfterViewInit() {
-    //   const video = document.getElementById(
-    //     'backgroundVideo'
-    //   ) as HTMLVideoElement;
-    //   if (video && typeof video.play === 'function') {
-    //     video.muted = true;
-    //     video.play().catch((error) => {
-    //       console.error('Video autoplay failed:', error);
-    //     });
-    //   } else {
-    //     console.error('Video element not ready or play() is not a function.');
-    //   }
+    this.closePopup();
   }
 
   openPopup() {
@@ -116,7 +103,6 @@ export class VideoofferComponent implements OnInit, AfterViewInit {
   }
 
   playVideo() {
-    console.log('playVideo');
     const videoPlayer = this.videoPlayer.nativeElement;
     videoPlayer.play();
   }
