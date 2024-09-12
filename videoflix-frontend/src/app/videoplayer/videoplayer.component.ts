@@ -102,7 +102,6 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isHeaderVisible = true;
     this.intervalId = setInterval(() => {
       this.timeInSeconds++;
-      console.log(`Time: ${this.timeInSeconds} seconds`);
 
       if (this.timeInSeconds >= this.timeOver) {
         this.resetTimer();
