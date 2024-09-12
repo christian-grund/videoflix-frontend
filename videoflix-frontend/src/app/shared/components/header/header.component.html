@@ -16,7 +16,12 @@
         class="logo-with-text"
       />
     </div>
-    <button *ngIf="currentUrl === '/videos'" class="btn-default" routerLink="/">
+    <button
+      *ngIf="currentUrl === '/videos'"
+      class="btn-default"
+      routerLink="/"
+      (click)="logout()"
+    >
       <div class="btn-content-wrapper">
         Log out
         <img
