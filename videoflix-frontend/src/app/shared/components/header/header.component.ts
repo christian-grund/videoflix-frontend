@@ -38,7 +38,10 @@ export class HeaderComponent implements OnInit {
       next: (response) => {
         localStorage.removeItem('token');
         this.message = 'Logout successful!';
-        this.router.navigate(['/login']);
+        this.router.navigate(['/']);
+        setTimeout(() => {
+          location.reload(); // Seite neuladen, um alte Routen zu invalidieren
+        }, 0);
       },
       error: (error) => {
         this.message =

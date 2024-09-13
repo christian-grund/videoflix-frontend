@@ -8,11 +8,12 @@ import { ResetpasswordComponent } from './auth/resetpassword/resetpassword.compo
 import { ForgotpasswordComponent } from './auth/forgotpassword/forgotpassword.component';
 import { VideoofferComponent } from './videooffer/videooffer.component';
 import { VideoplayerComponent } from './videoplayer/videoplayer.component';
+import { authGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: StartpageComponent },
   { path: 'home', component: StartpageComponent },
-  { path: 'videos', component: VideoofferComponent },
+  { path: 'videos', component: VideoofferComponent, canActivate: [authGuard] },
   { path: 'videos/watch/:videoname', component: VideoplayerComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },

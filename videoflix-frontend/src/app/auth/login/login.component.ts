@@ -35,24 +35,24 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.currentEmail.subscribe((email) => (this.email = email));
-    console.log('currentEmail:', this.email);
   }
 
   login() {
     console.log('login');
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
+        this.matchError = false;
         localStorage.setItem('token', response.token);
         this.message = 'Login successful!';
         this.router.navigate(['/videos']);
       },
       error: (error) => {
-        // Falls `non_field_errors` nicht vorhanden ist, zeige eine allgemeine Fehlermeldung an
         this.message =
           'Login failed: ' +
           (error.error.non_field_errors
             ? error.error.non_field_errors[0]
             : 'Unknown error');
+        this.matchError = true;
       },
     });
   }

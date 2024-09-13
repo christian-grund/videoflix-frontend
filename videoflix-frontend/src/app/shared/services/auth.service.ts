@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
+  private tokenKey = 'token'; // Schlüssel für den Token im LocalStorage
+
   private apiUrl = 'http://localhost:8000/'; // Dein Backend-Endpunkt
 
   constructor(private http: HttpClient) {}
@@ -24,4 +26,12 @@ export class AuthService {
 
     return this.http.post<any>(`${this.apiUrl}logout/`, {}, { headers });
   }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem(this.tokenKey);
+    return !!token; // Gibt true zurück, wenn ein Token existiert, andernfalls false
+  }
+  // isAuthenticated() {
+  //   throw new Error('Method not implemented.');
+  // }
 }
