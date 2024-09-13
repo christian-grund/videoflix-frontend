@@ -50,11 +50,7 @@
           <input type="checkbox" id="rememberMe" />
           <label for="rememberMe">Remember me</label>
         </div>
-        <button
-          class="btn-default"
-          routerLink="/videos"
-          [disabled]="!email || !password"
-        >
+        <button class="btn-default" [disabled]="!email || !password">
           Log in
         </button>
       </form>

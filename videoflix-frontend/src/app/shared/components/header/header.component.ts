@@ -5,7 +5,7 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -22,7 +22,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private changeDetectorRef: ChangeDetectorRef,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -37,6 +38,7 @@ export class HeaderComponent implements OnInit {
       next: (response) => {
         localStorage.removeItem('token');
         this.message = 'Logout successful!';
+        this.router.navigate(['/login']);
       },
       error: (error) => {
         this.message =

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../shared/services/auth.service';
+import { DataService } from '../../shared/services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -19,20 +20,31 @@ import { AuthService } from '../../shared/services/auth.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
   message: string = '';
   showPassword: boolean = false;
   matchError: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private dataService: DataService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.dataService.currentEmail.subscribe((email) => (this.email = email));
+    console.log('currentEmail:', this.email);
+  }
 
   login() {
+    console.log('login');
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
         localStorage.setItem('token', response.token);
         this.message = 'Login successful!';
+        this.router.navigate(['/videos']);
       },
       error: (error) => {
         // Falls `non_field_errors` nicht vorhanden ist, zeige eine allgemeine Fehlermeldung an

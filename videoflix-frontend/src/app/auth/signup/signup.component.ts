@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { DataService } from '../../shared/services/data.service';
 import { AuthService } from '../../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -33,7 +34,8 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +55,7 @@ export class SignupComponent implements OnInit {
 
     if (!this.emailError && !this.passwordError) {
       console.log('Form valid!');
+      this.dataService.changeEmail(this.email);
       this.register();
     } else {
       if (this.emailError) {
@@ -70,6 +73,7 @@ export class SignupComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.message = 'User registered successfully!';
+          this.router.navigate(['/login']);
         },
         error: (error) => {
           // Falls `non_field_errors` nicht vorhanden ist, zeige eine allgemeine Fehlermeldung an
