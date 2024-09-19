@@ -38,4 +38,20 @@ export class AuthService {
   activateAccount(token: string): Observable<any> {
     return this.http.post(`${this.apiUrl}activate/`, { token });
   }
+
+  passwordResetRequest(email: string): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'password-reset/', { email });
+  }
+
+  passwordResetConfirm(
+    token: string,
+    uid: number,
+    new_password: string
+  ): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'password-reset-confirm/', {
+      token,
+      uid,
+      new_password,
+    });
+  }
 }

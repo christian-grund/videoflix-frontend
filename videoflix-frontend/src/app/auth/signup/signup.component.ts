@@ -74,7 +74,7 @@ export class SignupComponent implements OnInit {
       .register({ email: this.email, password: this.password })
       .subscribe({
         next: (response) => {
-          this.message = 'User registered successfully!';
+          this.message = 'User registered successfuly!';
         },
         error: (error) => {
           // Falls `non_field_errors` nicht vorhanden ist, zeige eine allgemeine Fehlermeldung an

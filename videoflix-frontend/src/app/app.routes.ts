@@ -19,8 +19,8 @@ export const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'activate', component: ActivateComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'forgotpassword', component: ForgotpasswordComponent },
-  { path: 'resetpassword', component: ResetpasswordComponent },
+  { path: 'forgot-password', component: ForgotpasswordComponent },
+  { path: 'reset-password', component: ResetpasswordComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'dataprivacy', component: DataprivacyComponent },
 ];
