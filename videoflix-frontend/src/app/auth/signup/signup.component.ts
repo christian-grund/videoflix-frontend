@@ -31,6 +31,7 @@ export class SignupComponent implements OnInit {
   emailError: boolean = false;
   passwordError: boolean = false;
   showPassword: boolean = false;
+  formSubmitted: boolean = false;
 
   constructor(
     private dataService: DataService,
@@ -57,6 +58,7 @@ export class SignupComponent implements OnInit {
       console.log('Form valid!');
       this.dataService.changeEmail(this.email);
       this.register();
+      this.formSubmitted = true;
     } else {
       if (this.emailError) {
         console.log('Invalid email');
@@ -73,7 +75,6 @@ export class SignupComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.message = 'User registered successfully!';
-          this.router.navigate(['/login']);
         },
         error: (error) => {
           // Falls `non_field_errors` nicht vorhanden ist, zeige eine allgemeine Fehlermeldung an

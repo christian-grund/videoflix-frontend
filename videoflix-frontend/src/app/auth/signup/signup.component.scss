@@ -8,7 +8,7 @@ section {
   justify-content: center;
   box-sizing: border-box;
 
-  .li-main {
+  .signup-main {
     width: 100%;
     max-width: 1440px !important;
     height: 100vh;
@@ -26,7 +26,7 @@ section {
     background-size: cover;
     background-repeat: no-repeat;
 
-    .li-content {
+    .signup-content {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -41,7 +41,6 @@ section {
 
       form {
         display: flex;
-        // justify-content: center;
         align-items: center;
         flex-direction: column;
         width: 100%;
@@ -52,12 +51,6 @@ section {
           color: $color-purple;
           margin-bottom: 8px;
         }
-
-        // .inputBox {
-        //   position: relative;
-        //   width: 100%;
-        //   box-sizing: border-box;
-        // }
       }
 
       .btn-default {
@@ -68,6 +61,25 @@ section {
         color: $color-purple;
         font-size: 18px;
         font-weight: 700;
+      }
+
+      .card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 32px;
+
+        h1 {
+          color: $color-purple;
+          text-align: center;
+          padding-bottom: 16px;
+        }
+
+        p {
+          color: $color-black;
+          text-align: center;
+        }
       }
     }
   }

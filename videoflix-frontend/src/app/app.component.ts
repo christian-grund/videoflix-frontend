@@ -10,6 +10,7 @@ import { ResetpasswordComponent } from './auth/resetpassword/resetpassword.compo
 import { VideoofferComponent } from './videooffer/videooffer.component';
 import { ImprintComponent } from './textsites/imprint/imprint.component';
 import { DataprivacyComponent } from './textsites/dataprivacy/dataprivacy.component';
+import { ActivateComponent } from './auth/activate/activate.component';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ import { DataprivacyComponent } from './textsites/dataprivacy/dataprivacy.compon
     ForgotpasswordComponent,
     ResetpasswordComponent,
     VideoofferComponent,
+    ActivateComponent,
     ImprintComponent,
     DataprivacyComponent,
   ],

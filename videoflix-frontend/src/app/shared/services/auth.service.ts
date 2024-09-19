@@ -34,4 +34,8 @@ export class AuthService {
   // isAuthenticated() {
   //   throw new Error('Method not implemented.');
   // }
+
+  activateAccount(token: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}activate/`, { token });
+  }
 }

@@ -1,8 +1,8 @@
 <section>
-  <div class="li-main">
+  <div class="signup-main">
     <app-header ngSkipHydration></app-header>
-    <div class="li-content">
-      <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <div class="signup-content">
+      <form #form="ngForm" (ngSubmit)="onSubmit()" *ngIf="!formSubmitted">
         <h1>Sign Up</h1>
 
         <div class="input-error-container">
@@ -87,6 +87,23 @@
           Get Started
         </button>
       </form>
+      <div class="card" *ngIf="formSubmitted">
+        <h1>Account created!</h1>
+        <p>
+          Thank you for registering. Please check your email inbox for a
+          confirmation message.
+        </p>
+        <p>
+          To complete your registration and activate your account, click on the
+          link provided in the email.
+        </p>
+        <p>
+          If you don’t see the email in your inbox, make sure to check your spam
+          or junk folder.
+        </p>
+
+        <p>You can close this window now.</p>
+      </div>
     </div>
     <app-footer></app-footer>
   </div>

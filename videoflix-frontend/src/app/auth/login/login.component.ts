@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log('login');
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
         this.matchError = false;
