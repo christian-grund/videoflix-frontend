@@ -272,6 +272,5 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   setResolution(resolution: number) {
     this.selectedResolution = resolution;
     this.videoResolution = `_${resolution}p`;
-    console.log('videoResolution:', this.videoResolution);
   }
 }

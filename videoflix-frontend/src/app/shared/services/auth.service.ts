@@ -27,13 +27,17 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}logout/`, {}, { headers });
   }
 
-  isAuthenticated(): boolean {
-    const token = localStorage.getItem(this.tokenKey);
-    return !!token; // Gibt true zurück, wenn ein Token existiert, andernfalls false
+  isLoggedIn(): Promise<boolean> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        if (typeof window !== 'undefined') {
+          resolve(!!localStorage.getItem('token'));
+        } else {
+          resolve(false);
+        }
+      }, 100); // 100 ms Verzögerung
+    });
   }
-  // isAuthenticated() {
-  //   throw new Error('Method not implemented.');
-  // }
 
   activateAccount(token: string): Observable<any> {
     return this.http.post(`${this.apiUrl}activate/`, { token });

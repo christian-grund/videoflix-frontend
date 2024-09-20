@@ -15,7 +15,11 @@ export const routes: Routes = [
   { path: '', component: StartpageComponent },
   { path: 'home', component: StartpageComponent },
   { path: 'videos', component: VideoofferComponent, canActivate: [authGuard] },
-  { path: 'videos/watch/:videoname', component: VideoplayerComponent },
+  {
+    path: 'videos/watch/:videoname',
+    component: VideoplayerComponent,
+    canActivate: [authGuard],
+  },
   { path: 'signup', component: SignupComponent },
   { path: 'activate', component: ActivateComponent },
   { path: 'login', component: LoginComponent },
