@@ -32,6 +32,7 @@ export class SignupComponent implements OnInit {
   passwordError: boolean = false;
   showPassword: boolean = false;
   formSubmitted: boolean = false;
+  isUserAlreadyRegistered: boolean = false;
 
   constructor(
     private dataService: DataService,
@@ -53,7 +54,10 @@ export class SignupComponent implements OnInit {
     this.emailError = !this.emailValid;
 
     this.passwordError = this.password !== this.confirmPassword;
-    this.formSubmitted = true;
+
+    // if (this.isUserAlreadyRegistered) {
+    //   console.warn('User is already registered');
+    // } else
 
     if (!this.emailError && !this.passwordError) {
       console.log('Form valid!');
@@ -68,6 +72,8 @@ export class SignupComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.message = 'User registered successfuly!';
+          this.isUserAlreadyRegistered = false;
+          this.formSubmitted = true;
         },
         error: (error) => {
           // Falls `non_field_errors` nicht vorhanden ist, zeige eine allgemeine Fehlermeldung an
@@ -76,6 +82,7 @@ export class SignupComponent implements OnInit {
             (error.error.non_field_errors
               ? error.error.non_field_errors[0]
               : 'Unknown error');
+          this.isUserAlreadyRegistered = true;
         },
       });
   }

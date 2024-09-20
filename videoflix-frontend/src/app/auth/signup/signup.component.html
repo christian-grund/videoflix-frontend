@@ -70,12 +70,18 @@
             />
           </div>
 
-          <div class="input-error" [ngClass]="{ active: passwordError }">
+          <div
+            class="input-error"
+            [ngClass]="{ active: passwordError || isUserAlreadyRegistered }"
+          >
             <img
               src="../../../assets/img/icons/warning.svg"
               alt="password-match-warning"
             />
-            <p>Passwords must match.</p>
+            <p *ngIf="passwordError">Passwords must match.</p>
+            <p *ngIf="isUserAlreadyRegistered">
+              An account with this email address already exists.
+            </p>
           </div>
         </div>
 
