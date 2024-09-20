@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   message: string = '';
   showPassword: boolean = false;
   matchError: boolean = false;
+  isRememberMeChecked: boolean = false;
 
   constructor(
     private dataService: DataService,
@@ -35,6 +36,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.currentEmail.subscribe((email) => (this.email = email));
+
+    this.checkSavedCredentials();
   }
 
   login() {
@@ -54,6 +57,37 @@ export class LoginComponent implements OnInit {
         this.matchError = true;
       },
     });
+
+    if (this.isRememberMeChecked) {
+      this.saveCredentials();
+    } else {
+      this.deleteCredentials();
+    }
+  }
+
+  saveCredentials() {
+    let credentials = JSON.stringify({
+      email: this.email,
+      password: this.password,
+    });
+    localStorage.setItem('credentials', credentials);
+  }
+
+  deleteCredentials() {
+    localStorage.removeItem('credentials');
+  }
+
+  checkSavedCredentials() {
+    if (typeof localStorage !== 'undefined') {
+      const savedCredentials = localStorage.getItem('credentials');
+
+      if (savedCredentials) {
+        const { email, password } = JSON.parse(savedCredentials);
+        this.email = email;
+        this.password = password;
+        this.isRememberMeChecked = true;
+      }
+    }
   }
 
   togglePasswordVisibility() {
