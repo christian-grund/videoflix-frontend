@@ -53,19 +53,12 @@ export class SignupComponent implements OnInit {
     this.emailError = !this.emailValid;
 
     this.passwordError = this.password !== this.confirmPassword;
+    this.formSubmitted = true;
 
     if (!this.emailError && !this.passwordError) {
       console.log('Form valid!');
       this.dataService.changeEmail(this.email);
       this.register();
-      this.formSubmitted = true;
-    } else {
-      if (this.emailError) {
-        console.log('Invalid email');
-      }
-      if (this.passwordError) {
-        console.log('passwordError:', this.passwordError);
-      }
     }
   }
 

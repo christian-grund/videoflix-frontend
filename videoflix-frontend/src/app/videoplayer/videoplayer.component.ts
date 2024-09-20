@@ -20,7 +20,8 @@ import { DataService } from '../shared/services/data.service';
 })
 export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
-  videoname!: string;
+  videoName!: string;
+  videoResolution: string = '_720p';
   videoData: any;
   intervalId: any;
   isPlaying = false;
@@ -40,7 +41,8 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   timeOver: number = 3;
   isHeaderVisible = false;
   resolutions = [360, 720, 1080];
-  videoBasePath = '../../assets/video/';
+  // videoBasePath = '../../assets/video/';
+  videoBasePath = 'http://localhost:8000/media/videos/';
   iconBasePath = '../../assets/img/icons/videoplayer/';
 
   private animationFrameId: any;
@@ -53,8 +55,8 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      this.videoname = params.get('videoname')!;
-      this.videoData = this.dataService.getVideoByName(this.videoname);
+      this.videoName = params.get('videoname')!;
+      this.videoData = this.dataService.getVideoByName(this.videoName);
 
       if (!this.videoData) {
         console.error('Video not found!');
@@ -269,6 +271,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   setResolution(resolution: number) {
     this.selectedResolution = resolution;
-    // Logik, um die Videoquelle je nach Auflösung zu ändern
+    this.videoResolution = `_${resolution}p`;
+    console.log('videoResolution:', this.videoResolution);
   }
 }

@@ -24,6 +24,7 @@ export class ResetpasswordComponent implements OnInit {
   confirmPassword: string = '';
   matchError: boolean = false;
   formSubmitted: boolean = false;
+  showPassword: boolean = false;
   token: string | null = null;
   uid: number | null = null;
 
@@ -60,5 +61,9 @@ export class ResetpasswordComponent implements OnInit {
 
   passwordMatch(): boolean {
     return this.password === this.confirmPassword; // Direkter Vergleich mit Rückgabewert
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
