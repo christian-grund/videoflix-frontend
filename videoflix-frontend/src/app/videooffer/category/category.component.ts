@@ -11,7 +11,9 @@ import { VideoPopupService } from '../../shared/services/videopopup.service';
   styleUrl: './category.component.scss',
 })
 export class CategoryComponent implements OnInit {
-  public basePath = './../../../assets/img/thumbnails/';
+  // public basePath = './../../../assets/img/thumbnails/';
+  public basePath = 'http://localhost:8000/media/videos/';
+
   public categories: any[] = [];
 
   constructor(
@@ -19,12 +21,13 @@ export class CategoryComponent implements OnInit {
     private videoPopupService: VideoPopupService
   ) {}
 
-  async ngOnInit() {
-    console.log('CategoryComponent');
-    // await this.dataService.loadVideoData();
-    // this.dataService.videoData$.subscribe((videoData) => {
-    //   this.updateCategories(videoData);
-    // });
+  ngOnInit() {
+    this.dataService.videoData$.subscribe((videoData) => {
+      if (videoData.length > 0) {
+        console.log('videoData:', videoData);
+        this.updateCategories(videoData);
+      }
+    });
   }
 
   updateCategories(videoData: any[]): void {

@@ -90,12 +90,10 @@ export class DataService {
   }
 
   async loadVideoData() {
-    console.log('loadVideoData');
     this.getVideosFromBackend().subscribe({
       next: (data) => {
         this.videoData = data;
         this.videoDataSubject.next(this.videoData);
-        console.log('videoData:', this.videoData);
       },
       error: (error) => {
         console.error('Fehler beim Laden der Videodaten', error);
@@ -123,7 +121,6 @@ export class DataService {
   }
 
   getVideoByName(name: string) {
-    console.log('getVideoByName videoData:', this.videoData);
     return this.videoData.find((video) => video.name === name);
   }
 

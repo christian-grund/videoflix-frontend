@@ -53,13 +53,20 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
     private cdr: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.dataService.loadVideoData();
+
     this.route.paramMap.subscribe((params) => {
       this.videoName = params.get('videoname')!;
-      this.videoData = this.dataService.getVideoByName(this.videoName);
+    });
 
-      if (!this.videoData) {
-        console.error('Video not found!');
+    this.dataService.videoData$.subscribe((videoData) => {
+      if (videoData && videoData.length > 0) {
+        this.videoData = this.dataService.getVideoByName(this.videoName);
+
+        if (!this.videoData) {
+          console.error('Video not found!');
+        }
       }
     });
   }
@@ -70,17 +77,19 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       videoPlayer.addEventListener('loadedmetadata', () => {
         this.videoDuration = videoPlayer.duration;
+        console.log('Video metadata loaded, duration:', this.videoDuration);
         this.cdr.detectChanges();
 
-        setTimeout(() => {
-          this.videoDuration = videoPlayer.duration;
-          this.cdr.detectChanges();
-        }, 1000);
+        // setTimeout(() => {
+
+        // }, 100);
       });
 
       videoPlayer.addEventListener('canplaythrough', () => {
         if (this.videoDuration === 0) {
           this.videoDuration = videoPlayer.duration;
+          console.log('canplaythrough - videoDuration:', this.videoDuration);
+
           this.cdr.detectChanges();
         }
       });
@@ -94,6 +103,20 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isFullscreen = !!document.fullscreenElement;
         this.updateControlsVisibility();
       });
+    }
+  }
+
+  onMetadataLoaded() {
+    if (this.videoPlayer) {
+      this.videoDuration = this.videoPlayer.nativeElement.duration;
+      console.log('Video metadata loaded, duration:', this.videoDuration);
+    }
+  }
+
+  onTimeUpdate() {
+    if (this.videoPlayer) {
+      this.currentTime = this.videoPlayer.nativeElement.currentTime;
+      console.log('Current time updated:', this.currentTime);
     }
   }
 

@@ -1,7 +1,7 @@
 <section>
   <div class="videoplayer-main">
     <div class="videoplayer-content">
-      <div *ngIf="videoData" class="video-container">
+      <div class="video-container" *ngIf="videoData">
         <div class="video-header" *ngIf="isHeaderVisible">
           <img
             src="../../assets/img/icons/arrow_back.svg"
@@ -15,6 +15,8 @@
         <video
           #videoPlayer
           class="video"
+          (loadedmetadata)="onMetadataLoaded()"
+          (timeupdate)="onTimeUpdate()"
           (play)="startUpdatingProgress()"
           (pause)="stopUpdatingProgress()"
           (ended)="onVideoEnded()"
@@ -92,7 +94,9 @@
               </div>
             </div>
 
-            <div class="video-title">{{ videoData.title }}</div>
+            <div class="video-title">
+              {{ videoData.title }}
+            </div>
 
             <div class="btns-right">
               <img

@@ -35,8 +35,10 @@ export class VideoofferComponent implements OnInit {
     categories: any[];
   } | null = null;
 
-  thumbBasePath = '../../assets/img/thumbnails/';
-  videoBasePath = '../../assets/video/';
+  // thumbBasePath = '../../assets/img/thumbnails/';
+  thumbBasePath = 'http://localhost:8000/media/videos/';
+  // videoBasePath = '../../assets/video/';
+  videoBasePath = 'http://localhost:8000/media/videos/';
   iconBasePath = '../../assets/img/icons/';
 
   constructor(
@@ -46,13 +48,11 @@ export class VideoofferComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    console.log('VideoofferComponent');
     await this.dataService.loadVideoData();
 
     this.dataService.videoData$.subscribe((data) => {
       if (data.length > 0) {
         this.previewVideo = this.dataService.getVideoByName('breakout');
-        console.log('this.previewVideo:', this.previewVideo);
       }
     });
 
