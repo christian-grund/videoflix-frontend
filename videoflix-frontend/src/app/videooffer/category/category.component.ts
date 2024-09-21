@@ -19,10 +19,12 @@ export class CategoryComponent implements OnInit {
     private videoPopupService: VideoPopupService
   ) {}
 
-  ngOnInit(): void {
-    this.dataService.videoData$.subscribe((videoData) => {
-      this.updateCategories(videoData);
-    });
+  async ngOnInit() {
+    console.log('CategoryComponent');
+    // await this.dataService.loadVideoData();
+    // this.dataService.videoData$.subscribe((videoData) => {
+    //   this.updateCategories(videoData);
+    // });
   }
 
   updateCategories(videoData: any[]): void {

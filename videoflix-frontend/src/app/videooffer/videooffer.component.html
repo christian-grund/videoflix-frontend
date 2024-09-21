@@ -2,7 +2,7 @@
   <div class="videooffer-main">
     <app-header></app-header>
     <div class="videooffer-content">
-      <div class="preview-top">
+      <div class="preview-top" *ngIf="previewVideo">
         <video
           #videoPlayer
           class="video-background"

@@ -45,7 +45,17 @@ export class VideoofferComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    console.log('VideoofferComponent');
+    await this.dataService.loadVideoData();
+
+    this.dataService.videoData$.subscribe((data) => {
+      if (data.length > 0) {
+        this.previewVideo = this.dataService.getVideoByName('breakout');
+        console.log('this.previewVideo:', this.previewVideo);
+      }
+    });
+
     this.videoPopupService.videoName$.subscribe((videoName) => {
       this.selectedVideo = videoName;
 
@@ -56,7 +66,8 @@ export class VideoofferComponent implements OnInit {
       }
     });
 
-    this.previewVideo = this.dataService.getVideoByName('breakout');
+    // this.previewVideo = this.dataService.getVideoByName('breakout');
+
     this.closePopup();
   }
 
