@@ -12,5 +12,6 @@ export const authGuard: CanActivateFn = async () => {
     return true;
   } else {
     return router.parseUrl('/login'); // Umleitung zur Login-Seite
+    // return false; // Leitet nicht um, aber der Resolver stellt sicher, dass die Login-Seite angezeigt wird
   }
 };

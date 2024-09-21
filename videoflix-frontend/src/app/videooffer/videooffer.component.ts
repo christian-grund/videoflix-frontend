@@ -11,7 +11,7 @@ import { CategoryComponent } from './category/category.component';
 import { VideoPopupService } from '../shared/services/videopopup.service';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../shared/services/data.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-videooffer',
@@ -25,9 +25,10 @@ export class VideoofferComponent implements OnInit {
   videoPlayer!: ElementRef<HTMLVideoElement>;
   selectedVideo: string | null = null;
   previewVideo: any;
-  isPlaying = false;
-  isVideoEnded = false;
-  isMuted = false;
+  isPlaying: boolean = false;
+  isVideoEnded: boolean = false;
+  isMuted: boolean = false;
+  isLoggedIn: boolean = false;
   videoData: {
     name: string;
     title: string;
@@ -44,10 +45,18 @@ export class VideoofferComponent implements OnInit {
   constructor(
     private videoPopupService: VideoPopupService,
     private dataService: DataService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   async ngOnInit() {
+    this.route.data.subscribe((data) => {
+      this.isLoggedIn = data['isLoggedIn']; // Daten vom Resolver
+      if (!this.isLoggedIn) {
+        this.router.navigate(['/login']); // Weiterleitung zur Login-Seite, falls nicht eingeloggt
+      }
+    });
+
     await this.dataService.loadVideoData();
 
     this.dataService.videoData$.subscribe((data) => {
