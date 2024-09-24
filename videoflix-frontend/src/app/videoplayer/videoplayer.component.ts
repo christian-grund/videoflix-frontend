@@ -181,8 +181,12 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
       const rect = progressContainer.getBoundingClientRect();
       const clickPosition = event.clientX - rect.left;
       const percentage = clickPosition / rect.width;
+      console.log('video.duration:', video.duration);
+      console.log('percentage:', percentage);
 
-      video.currentTime = video.duration * percentage;
+      // video.currentTime = video.duration * percentage;
+      video.currentTime = 5;
+      console.log('video.currentTime:', video.currentTime);
     }
   }
 
@@ -277,8 +281,10 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
       video.currentTime = 0;
     } else if (newTime > video.duration) {
       video.currentTime = video.duration;
+      console.log('skip video.currentTime:', video.currentTime);
     } else {
       video.currentTime = newTime;
+      console.log('skip video.currentTime:', video.currentTime);
     }
   }
 
