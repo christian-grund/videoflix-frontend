@@ -116,7 +116,6 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   onTimeUpdate() {
     if (this.videoPlayer) {
       this.currentTime = this.videoPlayer.nativeElement.currentTime;
-      console.log('Current time updated:', this.currentTime);
     }
   }
 

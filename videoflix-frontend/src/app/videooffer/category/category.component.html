@@ -4,7 +4,7 @@
     <div class="category-videos">
       <img
         *ngFor="let video of category.videos"
-        [src]="basePath + video.name + '.png'"
+        [src]="basePath + video.name + '_with_text.jpg'"
         [alt]="video.name"
         (click)="openVideoInfo(video.name)"
       />

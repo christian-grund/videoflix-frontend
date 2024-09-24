@@ -12,7 +12,7 @@ import { VideoPopupService } from '../../shared/services/videopopup.service';
 })
 export class CategoryComponent implements OnInit {
   // public basePath = './../../../assets/img/thumbnails/';
-  public basePath = 'http://localhost:8000/media/videos/';
+  public basePath = 'http://localhost:8000/media/thumbnails/';
 
   public categories: any[] = [];
 

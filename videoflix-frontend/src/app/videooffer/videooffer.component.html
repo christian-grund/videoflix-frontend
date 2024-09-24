@@ -9,7 +9,7 @@
           (mouseenter)="playVideo()"
           (mouseleave)="pauseVideo()"
           (ended)="replayVideo()"
-          [src]="videoBasePath + previewVideo.name + '.mp4'"
+          [src]="videoBasePath + previewVideo.name + '_720p.mp4'"
         ></video>
         <div class="video-overlay"></div>
         <div class="preview-text">
@@ -38,7 +38,7 @@
     <div class="popup-content">
       <div class="content-top">
         <img
-          [src]="thumbBasePath + videoData?.name + '.png'"
+          [src]="thumbBasePath + videoData?.name + '_with_text.jpg'"
           [alt]="videoData?.name"
         />
       </div>

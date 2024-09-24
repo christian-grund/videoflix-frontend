@@ -37,9 +37,7 @@ export class VideoofferComponent implements OnInit {
     id: number;
   } | null = null;
 
-  // thumbBasePath = '../../assets/img/thumbnails/';
-  thumbBasePath = 'http://localhost:8000/media/videos/';
-  // videoBasePath = '../../assets/video/';
+  thumbBasePath = 'http://localhost:8000/media/thumbnails/';
   videoBasePath = 'http://localhost:8000/media/videos/';
   iconBasePath = '../../assets/img/icons/';
 

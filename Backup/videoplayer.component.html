@@ -12,19 +12,16 @@
           <img src="../../assets/img/icons/logo_no_text.svg" alt="" />
         </div>
 
-        <!-- [src]="videoBasePath + videoName + videoResolution + '.mp4'" -->
         <video
           #videoPlayer
           class="video"
-          (loadedmetadata)="onMetadataLoaded()"
-          (timeupdate)="onTimeUpdate()"
           (play)="startUpdatingProgress()"
           (pause)="stopUpdatingProgress()"
           (ended)="onVideoEnded()"
           (click)="playPause()"
-          (mouseenter)="startTimer()"
-          (mouseleave)="startTimer()"
-          src="../../assets/video/breakout.mp4"
+          (loadedmetadata)="onMetadataLoaded($event)"
+          (timeupdate)="onTimeUpdate($event)"
+          [src]="videoBasePath + videoName + videoResolution + '.mp4'"
         ></video>
 
         <div class="progress-bar-container">
