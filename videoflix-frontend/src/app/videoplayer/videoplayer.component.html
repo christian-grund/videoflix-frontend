@@ -12,10 +12,10 @@
           <img src="../../assets/img/icons/logo_no_text.svg" alt="" />
         </div>
 
-        <!-- src="../../assets/video/breakout.mp4" -->
         <video
           #videoPlayer
           class="video"
+          id="videoPlayer"
           preload="metadata"
           (loadedmetadata)="onMetadataLoaded()"
           (timeupdate)="onTimeUpdate()"
@@ -27,6 +27,7 @@
           (mouseleave)="startTimer()"
           [src]="videoBasePath + videoName + videoResolution + '.mp4'"
         ></video>
+        <!-- src="../../assets/video/cliffs.mp4" -->
 
         <div class="progress-bar-container">
           <div

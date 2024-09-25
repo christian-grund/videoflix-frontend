@@ -18,14 +18,10 @@ export const routes: Routes = [
   {
     path: 'videos',
     component: VideoofferComponent,
-    canActivate: [authGuard],
-    resolve: { isLoggedIn: authResolver },
   },
   {
     path: 'videos/watch/:videoname',
     component: VideoplayerComponent,
-    canActivate: [authGuard],
-    resolve: { isLoggedIn: authResolver },
   },
   { path: 'signup', component: SignupComponent },
   { path: 'activate', component: ActivateComponent },
@@ -35,3 +31,16 @@ export const routes: Routes = [
   { path: 'imprint', component: ImprintComponent },
   { path: 'dataprivacy', component: DataprivacyComponent },
 ];
+
+// {
+//   path: 'videos',
+//   component: VideoofferComponent,
+//   canActivate: [authGuard],
+//   resolve: { isLoggedIn: authResolver },
+// },
+// {
+//   path: 'videos/watch/:videoname',
+//   component: VideoplayerComponent,
+//   canActivate: [authGuard],
+//   resolve: { isLoggedIn: authResolver },
+// },

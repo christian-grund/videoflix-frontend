@@ -49,12 +49,12 @@ export class VideoofferComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.route.data.subscribe((data) => {
-      this.isLoggedIn = data['isLoggedIn']; // Daten vom Resolver
-      if (!this.isLoggedIn) {
-        this.router.navigate(['/login']); // Weiterleitung zur Login-Seite, falls nicht eingeloggt
-      }
-    });
+    // this.route.data.subscribe((data) => {
+    //   this.isLoggedIn = data['isLoggedIn']; // Daten vom Resolver
+    //   if (!this.isLoggedIn) {
+    //     this.router.navigate(['/login']); // Weiterleitung zur Login-Seite, falls nicht eingeloggt
+    //   }
+    // });
 
     await this.dataService.loadVideoData();
 

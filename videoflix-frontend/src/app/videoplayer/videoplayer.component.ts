@@ -184,9 +184,9 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log('video.duration:', video.duration);
       console.log('percentage:', percentage);
 
-      // video.currentTime = video.duration * percentage;
-      video.currentTime = 5;
-      console.log('video.currentTime:', video.currentTime);
+      video.currentTime = video.duration * percentage;
+      // video.currentTime = 5;
+      console.log('seek progress bar - video.currentTime:', video.currentTime);
     }
   }
 
@@ -274,6 +274,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   skip(seconds: number) {
     const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+    // const video: any = document.getElementById('videoPlayer');
 
     const newTime = video.currentTime + seconds;
 
