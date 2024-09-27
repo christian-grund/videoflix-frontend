@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { VideoPopupService } from '../../services/videopopup.service';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit {
     private route: ActivatedRoute,
     private changeDetectorRef: ChangeDetectorRef,
     private authService: AuthService,
+    private videoPopupService: VideoPopupService,
     private router: Router
   ) {}
 
@@ -50,5 +52,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  addVideo() {}
+  openAddVideoPopup() {
+    this.videoPopupService.openAddVideoPopup();
+  }
 }

@@ -36,6 +36,7 @@ export class VideoofferComponent implements OnInit {
   isVideoEnded: boolean = false;
   isMuted: boolean = true;
   isLoggedIn: boolean = false;
+  isAddVideoPopupVisible: boolean = false;
   videoData: {
     name: string;
     title: string;
@@ -91,6 +92,10 @@ export class VideoofferComponent implements OnInit {
       } else {
         this.closePopup();
       }
+    });
+
+    this.videoPopupService.addVideoPopupStatus$.subscribe((status) => {
+      this.isAddVideoPopupVisible = status;
     });
 
     this.previewVideo = this.dataService.getVideoByName('breakout');
@@ -179,7 +184,7 @@ export class VideoofferComponent implements OnInit {
   }
 
   closeAddVideoPopup() {
-    console.log('closeAddVideoPopup');
+    this.videoPopupService.closeAddVideoPopup();
   }
 
   openPopup() {

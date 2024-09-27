@@ -32,9 +32,15 @@
     </div>
     <app-footer></app-footer>
   </div>
-  <div class="overlay" *ngIf="selectedVideo" (click)="closePopup()"></div>
 
-  <div class="popup">
+  <div class="overlay" *ngIf="selectedVideo" (click)="closePopup()"></div>
+  <div
+    class="overlay"
+    *ngIf="isAddVideoPopupVisible"
+    (click)="closeAddVideoPopup()"
+  ></div>
+
+  <div class="popup" *ngIf="isAddVideoPopupVisible">
     <div class="popup-addvideo-content">
       <form class="add-video-container" (ngSubmit)="uploadVideo()">
         <h2>Add your own video</h2>
@@ -106,13 +112,13 @@
         </div>
 
         <!-- [disabled]="" -->
-        <div class="btns-bottom" (click)="closeAddVideoPopup()">
+        <div class="btns-bottom">
           <button type="button" class="btn-default">Cancel</button>
           <button type="submit" class="btn-default">Upload</button>
         </div>
       </form>
 
-      <div (click)="closePopup()" class="close-popup">
+      <div (click)="closeAddVideoPopup()" class="close-popup">
         <img src="../../assets/img/icons/close_black.svg" alt="" />
       </div>
     </div>
