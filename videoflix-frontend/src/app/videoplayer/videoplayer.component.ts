@@ -87,11 +87,25 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   // }
 
   skip(seconds: number) {
-    console.log('skip was called!');
     const video: HTMLVideoElement = this.videoPlayer.nativeElement;
-    video.currentTime = seconds;
+    // video.currentTime = seconds;
     // video.currentTime = 5;
-    console.log('skip video.currentTime:', video.currentTime);
+    // console.log('skip video.currentTime:', video.currentTime);
+
+    // Warten bis die Metadaten des Videos geladen sind
+    video.addEventListener('loadedmetadata', () => {
+      video.currentTime = 5; // Setzt die aktuelle Zeit auf den angegebenen Wert in Sekunden
+      console.log('skip video.currentTime:', video.currentTime);
+    });
+
+    // Falls das Video bereits geladen ist
+    if (video.readyState >= 1) {
+      // 1 bedeutet, dass das Video mindestens die Metadaten geladen hat
+      video.currentTime = 7;
+      console.log('skip video.currentTime:', video.currentTime);
+    } else {
+      console.log('Video metadata is not ready yet.');
+    }
 
     // const newTime = video.currentTime + seconds;
 
@@ -243,11 +257,11 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.isHovering = false;
   }
 
-  formatTime(seconds: number): string {
-    const minutes = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-  }
+  // formatTime(seconds: number): string {
+  //   // const minutes = Math.floor(seconds / 60);
+  //   // const secs = Math.floor(seconds % 60);
+  //   // return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+  // }
 
   ngOnDestroy() {
     // if (typeof cancelAnimationFrame !== 'undefined') {
