@@ -44,7 +44,7 @@
             ></div>
           </div>
           <span
-            >{{ formatTime(currentTime) }} /
+            >{{ formatTime(currentTime1) }} /
             {{ formatTime(videoDuration) }}</span
           >
         </div>
@@ -79,12 +79,15 @@
               <div class="volume-container">
                 <img
                   (click)="toggleVolumeSlider()"
-                  [src]="iconBasePath + (isMuted ? 'mute.svg' : 'volume.svg')"
+                  [src]="iconBasePath + (isMuted ? 'volume.svg' : 'mute.svg')"
                   alt="Sound/Mute"
                 />
 
                 <!-- Volume Slider -->
-                <div class="volume-slider" *ngIf="isVolumeSliderVisible">
+                <div
+                  class="volume-slider"
+                  *ngIf="isVolumeSliderVisible && videoData.has_sound"
+                >
                   <input
                     type="range"
                     min="0"
@@ -93,6 +96,9 @@
                     [value]="currentVolume"
                     (input)="setVolume($event)"
                   />
+                </div>
+                <div class="no-sound-menu" *ngIf="isNoSoundTextVisible">
+                  <p>No sound available <br />for this video</p>
                 </div>
               </div>
             </div>

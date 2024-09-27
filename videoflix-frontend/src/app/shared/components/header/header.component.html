@@ -16,20 +16,37 @@
         class="logo-with-text"
       />
     </div>
-    <button
-      *ngIf="currentUrl === '/videos'"
-      class="btn-default"
-      (click)="logout()"
-    >
-      <div class="btn-content-wrapper">
-        Log out
-        <img
-          src="../../../../assets/img/icons/logout.svg"
-          alt="Logout Icon"
-          class="icon-logout"
-        />
-      </div>
-    </button>
+
+    <div class="btn-videopage-container">
+      <button
+        *ngIf="currentUrl === '/videos'"
+        class="btn-default"
+        (click)="addVideo()"
+      >
+        <div class="btn-content-wrapper">
+          Add Video
+          <img
+            src="../../../../assets/img/icons/add.svg"
+            alt="Logout Icon"
+            class="icon-logout"
+          />
+        </div>
+      </button>
+      <button
+        *ngIf="currentUrl === '/videos'"
+        class="btn-default"
+        (click)="logout()"
+      >
+        <div class="btn-content-wrapper">
+          Log out
+          <img
+            src="../../../../assets/img/icons/logout.svg"
+            alt="Logout Icon"
+            class="icon-logout"
+          />
+        </div>
+      </button>
+    </div>
 
     <button
       *ngIf="

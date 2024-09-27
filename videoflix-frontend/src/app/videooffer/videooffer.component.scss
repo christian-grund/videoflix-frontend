@@ -114,10 +114,100 @@ section {
     max-width: 90%;
     border-radius: 20px;
 
-    .popup-content {
+    .popup-addvideo-content {
       border-radius: 20px;
-      overflow: hidden;
       position: relative;
+      background-color: $color-white;
+      display: flex;
+      justify-content: center;
+
+      .add-video-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center !important;
+        flex-direction: column;
+        width: 100%;
+        max-width: 496px;
+        height: 700px;
+        padding: 40px;
+        box-sizing: border-box;
+        gap: 32px;
+
+        h2 {
+          color: $color-purple;
+          font-size: 36px;
+        }
+
+        .sound-question-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+        }
+
+        .radio-btn-container {
+          display: flex;
+          gap: 16px;
+        }
+
+        label {
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+        }
+
+        input[type="radio"] {
+          margin-right: 8px;
+        }
+
+        .btns-bottom {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+        }
+
+        .upload-container {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+
+          .file-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            margin-bottom: 20px;
+
+            input[type="file"] {
+              display: none; // Hide the default file input
+            }
+
+            span {
+              padding: 10px 20px;
+              background-color: $color-white;
+              color: $color-purple;
+              border-radius: 40px;
+              border: 1px solid $color-black;
+              transition: background-color 0.3s;
+              font-size: 16px;
+
+              &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+              }
+            }
+          }
+
+          .file-name {
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+            word-wrap: break-word; // To handle long file names
+          }
+        }
+      }
+    }
+
+    .popup-content {
+      // FEHLT HIER ETWAS?
 
       .content-top {
         img {
@@ -160,6 +250,7 @@ section {
         }
       }
     }
+
     .close-popup {
       position: absolute;
       top: 16px;
@@ -179,8 +270,8 @@ section {
       img {
         width: 32px;
         height: auto;
-        filter: invert(100%) sepia(4%) saturate(393%) hue-rotate(215deg)
-          brightness(116%) contrast(100%);
+        // filter: invert(100%) sepia(4%) saturate(393%) hue-rotate(215deg)
+        //   brightness(116%) contrast(100%);
       }
     }
   }
@@ -195,4 +286,8 @@ section {
     width: 28px;
     height: auto;
   }
+}
+
+.input-container label {
+  top: 33%;
 }

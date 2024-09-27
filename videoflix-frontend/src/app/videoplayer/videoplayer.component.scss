@@ -150,6 +150,13 @@ section {
                 position: relative;
                 display: inline-block;
 
+                .no-sound-menu {
+                  position: absolute;
+                  right: -156px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                }
+
                 .volume-slider {
                   position: absolute;
                   right: -116px;

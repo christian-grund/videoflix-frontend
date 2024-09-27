@@ -34,6 +34,90 @@
   </div>
   <div class="overlay" *ngIf="selectedVideo" (click)="closePopup()"></div>
 
+  <div class="popup">
+    <div class="popup-addvideo-content">
+      <form class="add-video-container" (ngSubmit)="uploadVideo()">
+        <h2>Add your own video</h2>
+        <p>
+          You can upload up to three videos, each with a maximum size of 25
+          megabytes. The file type must be "mp4".
+        </p>
+        <div class="input-container">
+          <input
+            class="input-default mb-12"
+            type="text"
+            name="videoTitle"
+            [(ngModel)]="videoTitle"
+            #videoNameInput="ngModel"
+            placeholder=" "
+          />
+          <label class="center" for="videoTitle">Video title</label>
+        </div>
+        <div class="input-container">
+          <input
+            class="input-default mb-12"
+            type="text"
+            name="videoDescription"
+            [(ngModel)]="videoDescription"
+            #videoNameInput="ngModel"
+            placeholder=" "
+          />
+          <label class="center" for="videoDescription">Video description</label>
+        </div>
+
+        <div class="sound-question-container">
+          <p>Does the video have sound?</p>
+
+          <div class="radio-btn-container">
+            <label>
+              <input
+                type="radio"
+                name="videoSound"
+                [(ngModel)]="hasSound"
+                [value]="true"
+              />
+              Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="videoSound"
+                [(ngModel)]="hasSound"
+                [value]="false"
+              />
+              No
+            </label>
+          </div>
+        </div>
+
+        <div class="upload-container">
+          <p>Upload Your Video</p>
+          <label class="file-upload">
+            <input
+              type="file"
+              (change)="onFileSelected($event)"
+              accept=".mp4"
+            />
+            <span>Select a file</span>
+          </label>
+          <div class="file-name" *ngIf="selectedFile">
+            {{ selectedFile.name }}
+          </div>
+        </div>
+
+        <!-- [disabled]="" -->
+        <div class="btns-bottom" (click)="closeAddVideoPopup()">
+          <button type="button" class="btn-default">Cancel</button>
+          <button type="submit" class="btn-default">Upload</button>
+        </div>
+      </form>
+
+      <div (click)="closePopup()" class="close-popup">
+        <img src="../../assets/img/icons/close_black.svg" alt="" />
+      </div>
+    </div>
+  </div>
+
   <div class="popup" *ngIf="selectedVideo">
     <div class="popup-content">
       <div class="content-top">

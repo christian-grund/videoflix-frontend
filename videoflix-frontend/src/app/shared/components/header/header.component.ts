@@ -49,4 +49,6 @@ export class HeaderComponent implements OnInit {
       },
     });
   }
+
+  addVideo() {}
 }
