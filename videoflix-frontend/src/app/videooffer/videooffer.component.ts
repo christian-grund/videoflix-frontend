@@ -38,6 +38,8 @@ export class VideoofferComponent implements OnInit {
   videoPlayer!: ElementRef<HTMLVideoElement>;
   @ViewChild(AddvideopopupComponent)
   addVideoPopupComponent!: AddvideopopupComponent;
+  @ViewChild(OpenvideopopupComponent)
+  openVideoPopupComponent!: OpenvideopopupComponent;
   selectedVideo: string | null = null;
   previewVideo: any;
   isPlaying: boolean = false;
@@ -45,6 +47,7 @@ export class VideoofferComponent implements OnInit {
   isMuted: boolean = true;
   isLoggedIn: boolean = false;
   isAddVideoPopupVisible: boolean = false;
+
   videoData: {
     name: string;
     title: string;
@@ -53,7 +56,6 @@ export class VideoofferComponent implements OnInit {
     id: number;
   } | null = null;
 
-  thumbBasePath = 'http://localhost:8000/media/thumbnails/';
   videoBasePath = 'http://localhost:8000/media/videos/';
   iconBasePath = '../../assets/img/icons/';
 
@@ -88,12 +90,6 @@ export class VideoofferComponent implements OnInit {
 
     this.videoPopupService.videoName$.subscribe((videoName) => {
       this.selectedVideo = videoName;
-
-      if (this.selectedVideo) {
-        this.openPopup();
-      } else {
-        this.closePopup();
-      }
     });
 
     this.videoPopupService.addVideoPopupStatus$.subscribe((status) => {
@@ -101,8 +97,16 @@ export class VideoofferComponent implements OnInit {
     });
 
     this.previewVideo = this.dataService.getVideoByName('breakout');
+    if (this.openVideoPopupComponent) {
+      this.openVideoPopupComponent.closePopup();
+    }
+  }
 
-    this.closePopup();
+  ngAfterViewInit() {
+    // Hier kannst du sicher auf openVideoPopupComponent zugreifen
+    if (this.selectedVideo && this.openVideoPopupComponent) {
+      this.openVideoPopupComponent.openPopup();
+    }
   }
 
   // async getHeaders(): Promise<HttpHeaders> {
@@ -119,54 +123,21 @@ export class VideoofferComponent implements OnInit {
   //   }
   // }
 
-  triggerClosePopup(): void {
-    this.addVideoPopupComponent.closeAddVideoPopup(); // Ruft die Methode der Kindkomponente auf
-  }
-
-  openPopup() {
-    if (this.selectedVideo) {
-      this.videoData =
-        this.dataService.getVideoByName(this.selectedVideo) || null;
-    }
-  }
-
   closePopup() {
     this.selectedVideo = null;
-    this.videoData = null;
+  }
+
+  triggerCloseAddVideoPopup(): void {
+    this.addVideoPopupComponent.closeAddVideoPopup();
+  }
+
+  triggerCloseOpenVideoPopup(): void {
+    this.openVideoPopupComponent.closePopup();
   }
 
   openVideo(videoName: string) {
     if (videoName) {
       this.router.navigate([`/videos/watch/${videoName}`]);
-    }
-  }
-
-  isFavorite(): boolean {
-    return this.videoData?.categories.includes('Favorites') ?? false;
-  }
-
-  addToOrRemoveFromFavorites() {
-    if (this.videoData) {
-      const favoriteIndex = this.videoData.categories.indexOf('Favorites');
-
-      if (favoriteIndex === -1) {
-        this.videoData.categories.push('Favorites');
-      } else {
-        this.videoData.categories.splice(favoriteIndex, 1);
-      }
-      this.dataService.updateVideoCategories(
-        this.videoData.id,
-        this.videoData.categories
-      );
-
-      this.dataService
-        .patchBackendVideo(this.videoData.id, this.videoData.categories)
-        .subscribe({
-          next: () =>
-            console.log('Kategorien erfolgreich im Backend aktualisiert.'),
-          error: (error) =>
-            console.error('Fehler beim Aktualisieren der Kategorien:', error),
-        });
     }
   }
 

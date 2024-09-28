@@ -30,7 +30,7 @@ export class DataService {
   async loadVideoData(headers: HttpHeaders) {
     this.getVideosFromBackend(headers).subscribe({
       next: (data) => {
-        console.log('Videodaten geladen:', data);
+        // console.log('Videodaten geladen:', data);
         this.videoData = data;
         this.videoDataSubject.next(this.videoData);
       },

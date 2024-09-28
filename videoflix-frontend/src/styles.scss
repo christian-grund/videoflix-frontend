@@ -186,3 +186,69 @@ app-footer {
   max-width: 90%;
   border-radius: 20px;
 }
+
+.close-popup {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  img {
+    width: 32px;
+  }
+}
+
+.popup-content {
+  // FEHLT HIER ETWAS?
+
+  .content-top {
+    img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+    }
+  }
+
+  .content-bottom {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 40px 40px;
+    height: 256px;
+    box-sizing: border-box;
+    background: $color-black;
+    color: $color-white;
+    margin-top: -4px;
+
+    .categories {
+      display: flex;
+      gap: 16px;
+
+      .category {
+        padding: 6px 12px;
+        background: rgb(65, 65, 65);
+        border-radius: 4px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    .btns-bottom {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .btn-default {
+      align-self: flex-start;
+    }
+  }
+}

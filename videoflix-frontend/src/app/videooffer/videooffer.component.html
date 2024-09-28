@@ -33,11 +33,15 @@
     <app-footer></app-footer>
   </div>
 
-  <div class="overlay" *ngIf="selectedVideo" (click)="closePopup()"></div>
+  <div
+    class="overlay"
+    *ngIf="selectedVideo"
+    (click)="triggerCloseOpenVideoPopup()"
+  ></div>
   <div
     class="overlay"
     *ngIf="isAddVideoPopupVisible"
-    (click)="triggerClosePopup()"
+    (click)="triggerCloseAddVideoPopup()"
   ></div>
 
   <div class="popup" *ngIf="isAddVideoPopupVisible">
@@ -45,61 +49,9 @@
   </div>
 
   <div class="popup" *ngIf="selectedVideo">
-    <div class="popup-content">
-      <div class="content-top">
-        <img
-          [src]="thumbBasePath + videoData?.name + '_with_text.jpg'"
-          [alt]="videoData?.name"
-        />
-      </div>
-      <div class="content-bottom">
-        <div class="categories">
-          <div class="category" *ngFor="let category of videoData?.categories">
-            {{ category }}
-          </div>
-        </div>
-        <p>{{ videoData?.description }}</p>
-        <div class="btns-bottom">
-          <button
-            class="btn-default"
-            (click)="openVideo(videoData?.name || '')"
-          >
-            <div class="btn-text">
-              <img src="../../assets/img/icons/play.png" alt="" />
-              Play
-            </div>
-          </button>
-
-          <button
-            class="btn-default"
-            (click)="addToOrRemoveFromFavorites()"
-            *ngIf="!isFavorite()"
-          >
-            <div class="btn-text">
-              <img
-                class="favorite-icon"
-                src="../../assets/img/icons/favorite.svg"
-                alt=""
-              />
-              Add to Favorites
-            </div>
-          </button>
-
-          <button
-            class="btn-default"
-            (click)="addToOrRemoveFromFavorites()"
-            *ngIf="isFavorite()"
-          >
-            <div class="btn-text">
-              <img src="../../assets/img/icons/favorite_remove.svg" alt="" />
-              Remove from Favorites
-            </div>
-          </button>
-        </div>
-      </div>
-      <div (click)="closePopup()" class="close-popup">
-        <img src="../../assets/img/icons/close.svg" alt="" />
-      </div>
-    </div>
+    <app-openvideopopup
+      [selectedVideo]="selectedVideo"
+      (closePopupEvent)="closePopup()"
+    ></app-openvideopopup>
   </div>
 </section>
