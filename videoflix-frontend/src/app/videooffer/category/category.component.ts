@@ -30,7 +30,6 @@ export class CategoryComponent implements OnInit {
   }
 
   updateCategories(videoData: any[]): void {
-    console.log('videoData:', videoData);
     const categoryMap: { [key: string]: { title: string; videos: any[] } } = {};
 
     videoData.forEach((video: { name: string; categories: string[] }) => {

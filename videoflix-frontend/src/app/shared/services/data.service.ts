@@ -44,7 +44,7 @@ export class DataService {
     this.emailSource.next(email);
   }
 
-  getData(key: string): any[] {
+  getData(): any[] {
     return this.videoData;
   }
 

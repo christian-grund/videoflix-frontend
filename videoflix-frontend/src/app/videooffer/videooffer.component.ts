@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { CategoryComponent } from './category/category.component';
@@ -9,6 +15,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { OpenvideopopupComponent } from './openvideopopup/openvideopopup.component';
+import { AddvideopopupComponent } from './addvideopopup/addvideopopup.component';
 
 @Component({
   selector: 'app-videooffer',
@@ -17,6 +25,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     HeaderComponent,
     FooterComponent,
     CategoryComponent,
+    OpenvideopopupComponent,
+    AddvideopopupComponent,
     CommonModule,
     FormsModule,
   ],
@@ -26,12 +36,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class VideoofferComponent implements OnInit {
   @ViewChild('videoPlayer')
   videoPlayer!: ElementRef<HTMLVideoElement>;
+  @ViewChild(AddvideopopupComponent)
+  addVideoPopupComponent!: AddvideopopupComponent;
   selectedVideo: string | null = null;
-  videoTitle: string = '';
-  videoName: string = '';
-  videoDescription: string = '';
   previewVideo: any;
-  hasSound: boolean = false;
   isPlaying: boolean = false;
   isVideoEnded: boolean = false;
   isMuted: boolean = true;
@@ -45,9 +53,6 @@ export class VideoofferComponent implements OnInit {
     id: number;
   } | null = null;
 
-  selectedFile: File | null = null;
-  fileSizeError: boolean = false;
-
   thumbBasePath = 'http://localhost:8000/media/thumbnails/';
   videoBasePath = 'http://localhost:8000/media/videos/';
   iconBasePath = '../../assets/img/icons/';
@@ -57,8 +62,7 @@ export class VideoofferComponent implements OnInit {
     private dataService: DataService,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
-    private http: HttpClient
+    private route: ActivatedRoute
   ) {}
 
   async ngOnInit() {
@@ -73,9 +77,7 @@ export class VideoofferComponent implements OnInit {
 
     // const token = localStorage.getItem('token');
     const token = '907395f03c73038f77baf0dab199fbb2bc35459a';
-
     const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
-    console.log('headers:', headers);
     await this.dataService.loadVideoData(headers);
 
     this.dataService.videoData$.subscribe((data) => {
@@ -117,74 +119,8 @@ export class VideoofferComponent implements OnInit {
   //   }
   // }
 
-  onFileSelected(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files.length > 0) {
-      this.selectedFile = target.files[0];
-    }
-  }
-
-  uploadVideo() {
-    if (this.selectedFile) {
-      if (this.selectedFile.size <= 26214400) {
-        this.videoName = this.selectedFile.name.replace('.mp4', '');
-
-        const uploadVideoData = new FormData();
-        uploadVideoData.append('name', this.videoName);
-        uploadVideoData.append('title', this.videoTitle);
-        uploadVideoData.append('description', this.videoDescription);
-        uploadVideoData.append('categories', 'My Videos');
-        uploadVideoData.append(
-          'video_file',
-          this.selectedFile,
-          this.selectedFile.name
-        );
-        console.log('uploadVideoData:', uploadVideoData);
-
-        // console.log('headers:', headers);
-
-        if (typeof window !== 'undefined' && window.localStorage) {
-          const token = localStorage.getItem('token');
-          if (token) {
-            const headers = new HttpHeaders().set(
-              'Authorization',
-              `Token ${token}`
-            );
-            console.log('headers:', headers);
-            this.http
-              .post('http://localhost:8000/api/videos/', uploadVideoData, {
-                headers,
-              })
-              .subscribe({
-                next: (response) => {
-                  console.log('Server Response:', response);
-                  console.log('Video erfolgreich hochgeladen.');
-                  this.dataService.loadVideoData(headers);
-                },
-                error: (error) =>
-                  console.error('Fehler beim hochladen des Videos:', error),
-              });
-          } else {
-            console.error('Kein Token im localStorage gefunden');
-          }
-        } else {
-          console.error(
-            'localStorage ist im aktuellen Kontext nicht verfügbar uploadVideo'
-          );
-        }
-
-        this.fileSizeError = false;
-      } else {
-        console.warn('File is bigger than 25 Megabyte! ');
-        this.fileSizeError = true;
-      }
-    } else {
-      console.log('No file selected.');
-    }
-  }
-
-  closeAddVideoPopup() {
-    this.videoPopupService.closeAddVideoPopup();
+  triggerClosePopup(): void {
+    this.addVideoPopupComponent.closeAddVideoPopup(); // Ruft die Methode der Kindkomponente auf
   }
 
   openPopup() {
@@ -215,12 +151,8 @@ export class VideoofferComponent implements OnInit {
 
       if (favoriteIndex === -1) {
         this.videoData.categories.push('Favorites');
-        console.log(
-          `${this.videoData.name} wurde zu den Favoriten hinzugefügt.`
-        );
       } else {
         this.videoData.categories.splice(favoriteIndex, 1);
-        console.log(`${this.videoData.name} wurde aus den Favoriten entfernt.`);
       }
       this.dataService.updateVideoCategories(
         this.videoData.id,

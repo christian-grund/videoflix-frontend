@@ -1,0 +1,107 @@
+<div class="popup-addvideo-content">
+  <form #myForm="ngForm" class="add-video-container" (ngSubmit)="uploadVideo()">
+    <h2>Add your own video</h2>
+    <p>
+      You can upload up to three videos, each with a maximum size of 25
+      megabytes. The file type must be "mp4".
+    </p>
+    <div class="input-popup-container">
+      <p>Title:</p>
+      <input
+        class="input-default"
+        type="text"
+        name="videoTitle"
+        [(ngModel)]="videoTitle"
+        #videoNameInput="ngModel"
+        placeholder=" "
+        required
+      />
+    </div>
+    <div class="input-popup-container">
+      <p>Description:</p>
+      <input
+        class="input-default"
+        type="text"
+        name="videoDescription"
+        [(ngModel)]="videoDescription"
+        #videoNameInput="ngModel"
+        placeholder=" "
+        required
+      />
+    </div>
+
+    <div class="sound-question-container">
+      <p>Does the video have sound?</p>
+
+      <div class="radio-btn-container">
+        <label>
+          <input
+            type="radio"
+            name="videoSound"
+            [(ngModel)]="hasSound"
+            [value]="true"
+          />
+          Yes
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="videoSound"
+            [(ngModel)]="hasSound"
+            [value]="false"
+          />
+          No
+        </label>
+      </div>
+    </div>
+
+    <div class="upload-container">
+      <p>Upload Your Video</p>
+      <label class="file-upload">
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          accept=".mp4"
+          required
+        />
+        <span>Select a file</span>
+      </label>
+      <div class="file-name" *ngIf="selectedFile">
+        {{ selectedFile.name }}
+      </div>
+    </div>
+
+    <div class="userVideoCounterContainer">
+      <div class="upload-max-success" *ngIf="userVideoCounter <= 2">
+        <img src="../../assets/img/icons/check_circle.svg" alt="" />
+        <p *ngIf="userVideoCounter == 0 || userVideoCounter == 1">
+          You can upolad {{ 3 - userVideoCounter }} more Videos
+        </p>
+        <p *ngIf="userVideoCounter == 2">
+          You can upolad {{ 3 - userVideoCounter }} more Video
+        </p>
+      </div>
+      <div class="upload-max-error" *ngIf="userVideoCounter >= 3">
+        <img src="../../assets/img/icons/warning.svg" alt="" />
+        <p>You cannot upload more than 3 Videos!</p>
+      </div>
+    </div>
+
+    <div class="btns-bottom">
+      <button type="button" class="btn-default" (click)="closeAddVideoPopup()">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn-default"
+        [disabled]="myForm['invalid'] && userVideoCounter <= 3"
+      >
+        Upload
+      </button>
+    </div>
+  </form>
+
+  <div (click)="closeAddVideoPopup()" class="close-popup">
+    <img src="../../assets/img/icons/close_black.svg" alt="" />
+  </div>
+</div>

@@ -174,3 +174,15 @@ app-footer {
   top: 12px;
   cursor: pointer;
 }
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  width: 667px;
+  max-width: 90%;
+  border-radius: 20px;
+}
