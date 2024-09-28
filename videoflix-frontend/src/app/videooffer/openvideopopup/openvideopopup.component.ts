@@ -22,7 +22,7 @@ import { VideoPopupService } from '../../shared/services/videopopup.service';
   // encapsulation: ViewEncapsulation.None,
 })
 export class OpenvideopopupComponent implements OnInit {
-  @Input() selectedVideo: string | null = null;
+  @Input() selectedVideoName: string | null = null;
   @Output() closePopupEvent = new EventEmitter<void>();
   videoData: {
     name: string;
@@ -42,9 +42,9 @@ export class OpenvideopopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.videoPopupService.videoName$.subscribe((videoName) => {
-      this.selectedVideo = videoName;
+      this.selectedVideoName = videoName;
 
-      if (this.selectedVideo) {
+      if (this.selectedVideoName) {
         this.openPopup();
       } else {
         this.closePopup();
@@ -52,15 +52,20 @@ export class OpenvideopopupComponent implements OnInit {
     });
   }
 
+  openEditVideoPopup() {
+    this.closePopup();
+    this.videoPopupService.openEditVideoPopup();
+  }
+
   openPopup() {
-    if (this.selectedVideo) {
+    if (this.selectedVideoName) {
       this.videoData =
-        this.dataService.getVideoByName(this.selectedVideo) || null;
+        this.dataService.getVideoByName(this.selectedVideoName) || null;
     }
   }
 
   closePopup() {
-    this.selectedVideo = null;
+    this.selectedVideoName = null;
     this.videoData = null;
     this.closePopupEvent.emit();
   }

@@ -22,6 +22,16 @@
 
       <button
         class="btn-default"
+        *ngIf="videoData && videoData.categories.includes('My Videos')"
+      >
+        <div class="btn-text" (click)="openEditVideoPopup()">
+          <img src="../../assets/img/icons/edit.svg" alt="" />
+          Edit
+        </div>
+      </button>
+
+      <button
+        class="btn-default"
         (click)="addToOrRemoveFromFavorites()"
         *ngIf="!isFavorite()"
       >
@@ -46,8 +56,8 @@
         </div>
       </button>
     </div>
-  </div>
-  <div (click)="closePopup()" class="close-popup">
-    <img src="../../assets/img/icons/close.svg" alt="" />
+    <div (click)="closePopup()" class="close-popup">
+      <img src="../../assets/img/icons/close.svg" alt="" />
+    </div>
   </div>
 </div>

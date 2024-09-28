@@ -40,13 +40,21 @@ export class VideoofferComponent implements OnInit {
   addVideoPopupComponent!: AddvideopopupComponent;
   @ViewChild(OpenvideopopupComponent)
   openVideoPopupComponent!: OpenvideopopupComponent;
-  selectedVideo: string | null = null;
+  selectedVideoName: string | null = null;
   previewVideo: any;
   isPlaying: boolean = false;
   isVideoEnded: boolean = false;
   isMuted: boolean = true;
   isLoggedIn: boolean = false;
   isAddVideoPopupVisible: boolean = false;
+  isEditVideoPopupVisible: boolean = false;
+
+  videoTitle: string = '';
+  videoName: string = '';
+  videoDescription: string = '';
+  hasSound: boolean = false;
+  fileSizeError: boolean = false;
+  selectedFile: File | null = null;
 
   videoData: {
     name: string;
@@ -89,11 +97,15 @@ export class VideoofferComponent implements OnInit {
     });
 
     this.videoPopupService.videoName$.subscribe((videoName) => {
-      this.selectedVideo = videoName;
+      this.selectedVideoName = videoName;
     });
 
     this.videoPopupService.addVideoPopupStatus$.subscribe((status) => {
       this.isAddVideoPopupVisible = status;
+    });
+
+    this.videoPopupService.editVideoPopupStatus$.subscribe((status) => {
+      this.isEditVideoPopupVisible = status;
     });
 
     this.previewVideo = this.dataService.getVideoByName('breakout');
@@ -103,10 +115,22 @@ export class VideoofferComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    // Hier kannst du sicher auf openVideoPopupComponent zugreifen
-    if (this.selectedVideo && this.openVideoPopupComponent) {
+    if (this.selectedVideoName && this.openVideoPopupComponent) {
       this.openVideoPopupComponent.openPopup();
     }
+  }
+
+  saveEditedVideo() {}
+
+  onFileSelected(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+      this.selectedFile = target.files[0];
+    }
+  }
+
+  closeEditVideoPopup() {
+    this.videoPopupService.closeEditVideoPopup();
   }
 
   // async getHeaders(): Promise<HttpHeaders> {
@@ -124,7 +148,7 @@ export class VideoofferComponent implements OnInit {
   // }
 
   closePopup() {
-    this.selectedVideo = null;
+    this.selectedVideoName = null;
   }
 
   triggerCloseAddVideoPopup(): void {

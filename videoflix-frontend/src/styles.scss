@@ -208,47 +208,156 @@ app-footer {
   }
 }
 
-.popup-content {
-  // FEHLT HIER ETWAS?
+.btn-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-  .content-top {
-    img {
-      width: 100%;
-      height: 350px;
-      object-fit: cover;
-    }
+  img {
+    width: 28px;
+    height: auto;
   }
+}
 
-  .content-bottom {
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  width: 667px;
+  max-width: 90%;
+  border-radius: 20px;
+
+  .popup-addvideo-content {
+    border-radius: 20px;
+    position: relative;
+    background-color: $color-white;
     display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    padding: 40px 40px;
-    height: 256px;
-    box-sizing: border-box;
-    background: $color-black;
-    color: $color-white;
-    margin-top: -4px;
+    justify-content: center;
 
-    .categories {
+    .add-video-container {
       display: flex;
-      gap: 16px;
-
-      .category {
-        padding: 6px 12px;
-        background: rgb(65, 65, 65);
-        border-radius: 4px;
-        color: rgba(255, 255, 255, 0.8);
-      }
-    }
-
-    .btns-bottom {
-      display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
+      align-items: center !important;
+      flex-direction: column;
       width: 100%;
-    }
-    .btn-default {
-      align-self: flex-start;
+      max-width: 600px;
+      height: 700px;
+      padding: 40px;
+      box-sizing: border-box;
+      gap: 32px;
+
+      h2 {
+        color: $color-purple;
+        font-size: 36px;
+      }
+
+      .input-popup-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        input {
+          width: 360px;
+          border-radius: 40px;
+        }
+      }
+
+      .sound-question-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+
+      .radio-btn-container {
+        display: flex;
+        gap: 16px;
+      }
+
+      label {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+      }
+
+      input[type="radio"] {
+        margin-right: 8px;
+      }
+
+      .btns-bottom {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .upload-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        .file-upload {
+          position: relative;
+          display: inline-block;
+          cursor: pointer;
+          margin-bottom: 20px;
+
+          input[type="file"] {
+            display: none; // Hide the default file input
+          }
+
+          span {
+            padding: 10px 20px;
+            background-color: $color-white;
+            color: $color-purple;
+            border-radius: 40px;
+            border: 1px solid $color-black;
+            transition: background-color 0.3s;
+            font-size: 16px;
+
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.1);
+            }
+          }
+        }
+
+        .file-name {
+          font-size: 14px;
+          color: #333;
+          text-align: center;
+          word-wrap: break-word; // To handle long file names
+        }
+      }
+
+      .userVideoCounterContainer {
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+
+        .upload-max-error,
+        .upload-max-success {
+          display: flex;
+          // justify-content: space-between;
+          align-items: center;
+          gap: 12px;
+          width: 100%;
+
+          img {
+            width: 22px;
+          }
+
+          &.upload-max-success {
+            color: #008000;
+          }
+
+          &.upload-max-error {
+            color: $color-red;
+          }
+        }
+      }
     }
   }
 }

@@ -11,6 +11,9 @@ export class VideoPopupService {
   private addVideoPopupStatus = new BehaviorSubject<boolean>(false);
   addVideoPopupStatus$ = this.addVideoPopupStatus.asObservable();
 
+  private editVideoPopupStatus = new BehaviorSubject<boolean>(false);
+  editVideoPopupStatus$ = this.editVideoPopupStatus.asObservable();
+
   private triggerCountVideos = new BehaviorSubject<void>(undefined);
   triggerCountVideos$ = this.triggerCountVideos.asObservable();
 
@@ -29,5 +32,13 @@ export class VideoPopupService {
 
   closeAddVideoPopup() {
     this.addVideoPopupStatus.next(false);
+  }
+
+  openEditVideoPopup() {
+    this.editVideoPopupStatus.next(true);
+  }
+
+  closeEditVideoPopup() {
+    this.editVideoPopupStatus.next(false);
   }
 }
