@@ -59,13 +59,11 @@ export class OpenvideopopupComponent implements OnInit {
 
   openPopup() {
     if (this.selectedVideoName) {
-      this.videoData =
-        this.dataService.getVideoByName(this.selectedVideoName) || null;
+      this.videoData = this.dataService.getVideoByName(this.selectedVideoName) || null;
     }
   }
 
   closePopup() {
-    console.log('closePopup');
     this.selectedVideoName = null;
     this.videoData = null;
     this.closePopupEvent.emit();
@@ -91,18 +89,13 @@ export class OpenvideopopupComponent implements OnInit {
       } else {
         this.videoData.categories.splice(favoriteIndex, 1);
       }
-      this.dataService.updateVideoCategories(
-        this.videoData.id,
-        this.videoData.categories
-      );
+      this.dataService.updateVideoCategories(this.videoData.id, this.videoData.categories);
 
       this.dataService
-        .patchBackendVideo(this.videoData.id, this.videoData.categories)
+        .patchBackendVideoCategories(this.videoData.id, this.videoData.categories)
         .subscribe({
-          next: () =>
-            console.log('Kategorien erfolgreich im Backend aktualisiert.'),
-          error: (error) =>
-            console.error('Fehler beim Aktualisieren der Kategorien:', error),
+          next: () => console.log('Kategorien erfolgreich im Backend aktualisiert.'),
+          error: (error) => console.error('Fehler beim Aktualisieren der Kategorien:', error),
         });
     }
   }

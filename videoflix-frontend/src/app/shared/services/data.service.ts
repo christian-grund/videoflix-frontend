@@ -63,9 +63,32 @@ export class DataService {
     }
   }
 
-  patchBackendVideo(id: number, categories: string[]): Observable<any> {
-    return this.http.patch<any[]>(`http://localhost:8000/api/videos/${id}/`, {
-      categories,
+  getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Token ${token}`,
+    });
+    return headers;
+  }
+
+  async patchBackendVideo(videoId: number, videoData: {}): Promise<any> {
+    const headers = this.getAuthHeaders();
+
+    return firstValueFrom(
+      this.http.patch<any>(`http://localhost:8000/api/videos/${videoId}/`, videoData, {
+        headers,
+      })
+    );
+  }
+
+  patchBackendVideoCategories(videoId: number, categories: string[]): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Token ${token}`,
+    });
+    const body = { categories: categories };
+    return this.http.patch<any[]>(`http://localhost:8000/api/videos/${videoId}/`, body, {
+      headers,
     });
   }
 }

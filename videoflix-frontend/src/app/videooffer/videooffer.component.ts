@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { CategoryComponent } from './category/category.component';
@@ -54,8 +48,8 @@ export class VideoofferComponent implements OnInit {
   videoName: string = '';
   videoDescription: string = '';
   hasSound: boolean = false;
-  fileSizeError: boolean = false;
   selectedFile: File | null = null;
+  fileSizeError: boolean = false;
   editVideoName: string | null = null;
 
   videoData: {
@@ -64,6 +58,8 @@ export class VideoofferComponent implements OnInit {
     description: string;
     categories: any[];
     id: number;
+    has_sound: boolean;
+    video_file: File;
   } | null = null;
 
   videoBasePath = 'http://localhost:8000/media/videos/';
@@ -102,9 +98,20 @@ export class VideoofferComponent implements OnInit {
       this.selectedVideoName = videoName;
     });
 
-    this.videoPopupService.editVideoName$.subscribe((editVideoName1) => {
-      this.editVideoName = editVideoName1;
+    this.videoPopupService.editVideoName$.subscribe((videoName) => {
+      this.editVideoName = videoName;
       console.log('videooffer oninit editVideoName:', this.editVideoName);
+      if (this.editVideoName) {
+        this.videoData = this.dataService.getVideoByName(this.editVideoName) || null;
+        console.log('videooffer oninit videoData:', this.videoData);
+
+        if (this.videoData) {
+          this.videoTitle = this.videoData.title;
+          this.videoDescription = this.videoData.description;
+          this.hasSound = this.videoData.has_sound;
+          this.selectedFile = this.videoData.video_file;
+        }
+      }
     });
 
     this.videoPopupService.addVideoPopupStatus$.subscribe((status) => {
@@ -127,7 +134,27 @@ export class VideoofferComponent implements OnInit {
     }
   }
 
-  saveEditedVideo() {}
+  async saveEditedVideo() {
+    if (this.videoData) {
+      const formData = new FormData();
+
+      formData.append('title', this.videoTitle);
+      formData.append('description', this.videoDescription);
+      formData.append('has_sound', this.hasSound.toString());
+      if (this.selectedFile instanceof File) {
+        formData.append('video_file', this.selectedFile);
+        formData.append('name', this.selectedFile!.name.replace('.mp4', ''));
+      }
+      try {
+        const response = await this.dataService.patchBackendVideo(this.videoData.id, formData);
+        console.log('Video erfolgreich im Backend aktualisiert:', response);
+      } catch (error) {
+        console.error('Fehler beim Aktualisieren der Kategorien:', error);
+      }
+    }
+    this.closeEditVideoPopup();
+    this.dataService.loadVideoData(this.dataService.getAuthHeaders());
+  }
 
   onFileSelected(event: Event) {
     const target = event.target as HTMLInputElement;
