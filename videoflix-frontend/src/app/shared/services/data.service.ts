@@ -81,11 +81,14 @@ export class DataService {
     );
   }
 
+  deleteBackendVideo(videoId: number): Promise<any> {
+    const headers = this.getAuthHeaders();
+
+    return firstValueFrom(this.http.delete<any>(`${this.apiUrl}${videoId}/`, { headers }));
+  }
+
   patchBackendVideoCategories(videoId: number, categories: string[]): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Token ${token}`,
-    });
+    const headers = this.getAuthHeaders();
     const body = { categories: categories };
     return this.http.patch<any[]>(`http://localhost:8000/api/videos/${videoId}/`, body, {
       headers,
