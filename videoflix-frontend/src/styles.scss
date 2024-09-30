@@ -252,6 +252,7 @@ app-footer {
       h2 {
         color: $color-purple;
         font-size: 36px;
+        margin-top: 16px;
       }
 
       .input-popup-container {
@@ -297,29 +298,35 @@ app-footer {
       .upload-container {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         width: 100%;
 
-        .file-upload {
-          position: relative;
-          display: inline-block;
-          cursor: pointer;
-          margin-bottom: 20px;
+        .file-upload-wrapper {
+          display: flex;
+          align-items: center;
+          gap: 12px;
 
-          input[type="file"] {
-            display: none; // Hide the default file input
-          }
+          .file-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
 
-          span {
-            padding: 10px 20px;
-            background-color: $color-white;
-            color: $color-purple;
-            border-radius: 40px;
-            border: 1px solid $color-black;
-            transition: background-color 0.3s;
-            font-size: 16px;
+            input[type="file"] {
+              display: none; // Hide the default file input
+            }
 
-            &:hover {
-              background-color: rgba(0, 0, 0, 0.1);
+            span {
+              padding: 10px 20px;
+              background-color: $color-white;
+              color: $color-purple;
+              border-radius: 40px;
+              border: 1px solid $color-black;
+              transition: background-color 0.3s;
+              font-size: 16px;
+
+              &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+              }
             }
           }
         }
@@ -332,7 +339,7 @@ app-footer {
         }
       }
 
-      .userVideoCounterContainer {
+      .user-video-counter-container {
         display: flex;
         justify-content: flex-start;
         width: 100%;
@@ -340,7 +347,6 @@ app-footer {
         .upload-max-error,
         .upload-max-success {
           display: flex;
-          // justify-content: space-between;
           align-items: center;
           gap: 12px;
           width: 100%;
@@ -350,7 +356,7 @@ app-footer {
           }
 
           &.upload-max-success {
-            color: #008000;
+            color: $color-green;
           }
 
           &.upload-max-error {
@@ -358,10 +364,64 @@ app-footer {
           }
         }
       }
+
+      .check-file-size-container {
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+
+        .file-size-check,
+        .file-size-error,
+        .file-size-success {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          width: 100%;
+
+          img {
+            width: 22px;
+          }
+
+          &.file-size-success {
+            color: $color-green;
+          }
+
+          &.file-size-error {
+            color: $color-red;
+          }
+
+          &.file-size-check {
+            img {
+              animation: spin 3s linear infinite;
+            }
+          }
+        }
+      }
     }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
 .bg-red {
   background-color: $color-red;
+
+  &:hover {
+    background-color: #f6395c;
+  }
+}
+
+.height-550 {
+  height: 550px !important;
+}
+
+.mt-40 {
+  margin-top: 40px;
 }

@@ -47,16 +47,18 @@
 
     <div class="upload-container">
       <p>Upload Your Video</p>
-      <label class="file-upload">
-        <input type="file" (change)="onFileSelected($event)" accept=".mp4" required />
-        <span>Select a file</span>
-      </label>
-      <div class="file-name" *ngIf="selectedFile">
-        {{ selectedFile.name }}
+      <div class="file-upload-wrapper">
+        <label class="file-upload">
+          <input type="file" (change)="onFileSelected($event)" accept=".mp4" required />
+          <span>Select a file</span>
+        </label>
+        <div class="file-name" *ngIf="selectedFile">
+          {{ selectedFile.name }}
+        </div>
       </div>
     </div>
 
-    <div class="userVideoCounterContainer">
+    <div class="user-video-counter-container">
       <div class="upload-max-success" *ngIf="userVideoCounter <= 2">
         <img src="../../assets/img/icons/check_circle.svg" alt="" />
         <p *ngIf="userVideoCounter == 0 || userVideoCounter == 1">
@@ -67,6 +69,21 @@
       <div class="upload-max-error" *ngIf="userVideoCounter >= 3">
         <img src="../../assets/img/icons/warning.svg" alt="" />
         <p>You cannot upload more than 3 Videos!</p>
+      </div>
+    </div>
+
+    <div class="check-file-size-container">
+      <div class="file-size-check" *ngIf="!fileInserted">
+        <img src="../../../assets/img/icons/waiting.svg" alt="file-size-warning" />
+        <p>Waiting for file to check size</p>
+      </div>
+      <div class="file-size-success" *ngIf="fileInserted && !fileSizeError">
+        <img src="../../../assets/img/icons/check_circle.svg" alt="file-size-succes" />
+        <p>File size accepted</p>
+      </div>
+      <div class="file-size-error" *ngIf="fileInserted && fileSizeError">
+        <img src="../../../assets/img/icons/warning.svg" alt="file-size-warning" />
+        <p>The size of your file is bigger than 25 megabytes.</p>
       </div>
     </div>
 

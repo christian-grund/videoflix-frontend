@@ -23,6 +23,7 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
   videoDescription: string = '';
   userVideoCounter: number = 0;
   hasSound: boolean = false;
+  fileInserted: boolean = false;
   fileSizeError: boolean = false;
   selectedFile: File | null = null;
 
@@ -51,6 +52,14 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       this.selectedFile = target.files[0];
+      this.fileInserted = true;
+      if (this.selectedFile.size <= 26214400) {
+        this.fileSizeError = false;
+      } else {
+        this.fileSizeError = true;
+      }
+    } else {
+      this.fileInserted = false;
     }
   }
 
@@ -64,11 +73,7 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
         uploadVideoData.append('title', this.videoTitle);
         uploadVideoData.append('description', this.videoDescription);
         uploadVideoData.append('categories', 'My Videos');
-        uploadVideoData.append(
-          'video_file',
-          this.selectedFile,
-          this.selectedFile.name
-        );
+        uploadVideoData.append('video_file', this.selectedFile, this.selectedFile.name);
         console.log('uploadVideoData:', uploadVideoData);
 
         // console.log('headers:', headers);
@@ -76,33 +81,24 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
         if (typeof window !== 'undefined' && window.localStorage) {
           const token = localStorage.getItem('token');
           if (token) {
-            const headers = new HttpHeaders().set(
-              'Authorization',
-              `Token ${token}`
-            );
+            const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
             this.http
               .post('http://localhost:8000/api/videos/', uploadVideoData, {
                 headers,
               })
               .subscribe({
                 next: (response) => {
-                  console.log(
-                    'Video erfolgreich hochgeladen. Server Response:',
-                    response
-                  );
+                  console.log('Video erfolgreich hochgeladen. Server Response:', response);
                   this.dataService.loadVideoData(headers);
                 },
-                error: (error) =>
-                  console.error('Fehler beim hochladen des Videos:', error),
+                error: (error) => console.error('Fehler beim hochladen des Videos:', error),
               });
             this.closeAddVideoPopup();
           } else {
             console.error('Kein Token im localStorage gefunden');
           }
         } else {
-          console.error(
-            'localStorage ist im aktuellen Kontext nicht verfügbar uploadVideo'
-          );
+          console.error('localStorage ist im aktuellen Kontext nicht verfügbar uploadVideo');
         }
 
         this.fileSizeError = false;

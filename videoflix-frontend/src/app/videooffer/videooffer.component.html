@@ -42,7 +42,7 @@
 
   <div class="popup" *ngIf="editVideoName">
     <div class="popup-addvideo-content">
-      <form #myForm="ngForm" class="add-video-container" (ngSubmit)="saveEditedVideo()">
+      <form #myForm="ngForm" class="add-video-container height-550" (ngSubmit)="saveEditedVideo()">
         <h2>Edit your video</h2>
 
         <div class="input-popup-container">
@@ -87,16 +87,18 @@
 
         <div class="upload-container">
           <p>Upload Your Video</p>
-          <label class="file-upload">
-            <input type="file" (change)="onFileSelected($event)" accept=".mp4" required />
-            <span>Select a file</span>
-          </label>
-          <div class="file-name" *ngIf="selectedFile">
-            {{ selectedFile.name }}
+          <div class="file-upload-wrapper">
+            <label class="file-upload">
+              <input type="file" (change)="onFileSelected($event)" accept=".mp4" required />
+              <span>Select a file</span>
+            </label>
+            <div class="file-name" *ngIf="selectedFile">
+              {{ selectedFile.name }}
+            </div>
           </div>
         </div>
 
-        <div class="btns-bottom">
+        <div class="btns-bottom mt-40">
           <button type="button" class="btn-default" (click)="closeEditVideoPopup()">
             <div class="btn-text">
               <img class="favorite-icon" src="../../assets/img/icons/close_white.svg" alt="" />
@@ -104,7 +106,7 @@
             </div>
           </button>
 
-          <button type="button" class="btn-default bg-red" (click)="deleteVideo()">
+          <button type="button" class="btn-default bg-red hover-red" (click)="deleteVideo()">
             <div class="btn-text">
               <img class="favorite-icon" src="../../assets/img/icons/delete.svg" alt="" />
               Delete

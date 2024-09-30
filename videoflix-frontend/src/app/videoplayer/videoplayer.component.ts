@@ -58,7 +58,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   async ngOnInit() {
     // const token = localStorage.getItem('token');
-    const token = '907395f03c73038f77baf0dab199fbb2bc35459a';
+    const token = 'aa6299bd5a2fc15db72404ffd0247ce5ef5e39b5';
     const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
     await this.dataService.loadVideoData(headers);
 
@@ -222,9 +222,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.progress = (video.currentTime / video.duration) * 100;
     }
     if (typeof requestAnimationFrame !== 'undefined') {
-      this.animationFrameId = requestAnimationFrame(() =>
-        this.updateProgress()
-      );
+      this.animationFrameId = requestAnimationFrame(() => this.updateProgress());
     }
   }
 
@@ -298,9 +296,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   toggleFullscreen() {
-    const videoContainer = document.querySelector(
-      '.video-container'
-    ) as HTMLElement;
+    const videoContainer = document.querySelector('.video-container') as HTMLElement;
     if (document.fullscreenElement) {
       document.exitFullscreen();
     } else {

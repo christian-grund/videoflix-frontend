@@ -11,6 +11,7 @@ import { AuthService } from '../shared/services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OpenvideopopupComponent } from './openvideopopup/openvideopopup.component';
 import { AddvideopopupComponent } from './addvideopopup/addvideopopup.component';
+import { EditvideopopupComponent } from './editvideopopup/editvideopopup.component';
 
 @Component({
   selector: 'app-videooffer',
@@ -21,6 +22,7 @@ import { AddvideopopupComponent } from './addvideopopup/addvideopopup.component'
     CategoryComponent,
     OpenvideopopupComponent,
     AddvideopopupComponent,
+    EditvideopopupComponent,
     CommonModule,
     FormsModule,
   ],
@@ -84,7 +86,7 @@ export class VideoofferComponent implements OnInit {
     // });
 
     // const token = localStorage.getItem('token');
-    const token = '907395f03c73038f77baf0dab199fbb2bc35459a';
+    const token = 'aa6299bd5a2fc15db72404ffd0247ce5ef5e39b5';
     const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
     await this.dataService.loadVideoData(headers);
 
@@ -100,7 +102,6 @@ export class VideoofferComponent implements OnInit {
 
     this.videoPopupService.editVideoName$.subscribe((videoName) => {
       this.editVideoName = videoName;
-      console.log('videooffer oninit editVideoName:', this.editVideoName);
       if (this.editVideoName) {
         this.videoData = this.dataService.getVideoByName(this.editVideoName) || null;
         console.log('videooffer oninit videoData:', this.videoData);
