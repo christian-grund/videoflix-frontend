@@ -38,6 +38,13 @@
     *ngIf="selectedVideoName"
     (click)="triggerCloseOpenVideoPopup()"
   ></div>
+
+  <div
+    class="overlay"
+    *ngIf="editVideoName"
+    (click)="closeEditVideoPopup()"
+  ></div>
+
   <div
     class="overlay"
     *ngIf="isAddVideoPopupVisible"
@@ -48,7 +55,7 @@
     <app-addvideopopup></app-addvideopopup>
   </div>
 
-  <div class="popup" *ngIf="isEditVideoPopupVisible">
+  <div class="popup" *ngIf="editVideoName">
     <div class="popup-addvideo-content">
       <form
         #myForm="ngForm"

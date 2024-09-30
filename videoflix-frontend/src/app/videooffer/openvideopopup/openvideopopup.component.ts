@@ -52,9 +52,9 @@ export class OpenvideopopupComponent implements OnInit {
     });
   }
 
-  openEditVideoPopup() {
+  openEditVideoPopup(videoName: string) {
     this.closePopup();
-    this.videoPopupService.openEditVideoPopup();
+    this.videoPopupService.openEditVideoPopup(videoName);
   }
 
   openPopup() {
@@ -65,6 +65,7 @@ export class OpenvideopopupComponent implements OnInit {
   }
 
   closePopup() {
+    console.log('closePopup');
     this.selectedVideoName = null;
     this.videoData = null;
     this.closePopupEvent.emit();
@@ -72,6 +73,7 @@ export class OpenvideopopupComponent implements OnInit {
 
   openVideo(videoName: string) {
     if (videoName) {
+      this.closePopup();
       this.router.navigate([`/videos/watch/${videoName}`]);
     }
   }

@@ -41,6 +41,7 @@ export class VideoofferComponent implements OnInit {
   @ViewChild(OpenvideopopupComponent)
   openVideoPopupComponent!: OpenvideopopupComponent;
   selectedVideoName: string | null = null;
+
   previewVideo: any;
   isPlaying: boolean = false;
   isVideoEnded: boolean = false;
@@ -55,6 +56,7 @@ export class VideoofferComponent implements OnInit {
   hasSound: boolean = false;
   fileSizeError: boolean = false;
   selectedFile: File | null = null;
+  editVideoName: string | null = null;
 
   videoData: {
     name: string;
@@ -100,13 +102,18 @@ export class VideoofferComponent implements OnInit {
       this.selectedVideoName = videoName;
     });
 
+    this.videoPopupService.editVideoName$.subscribe((editVideoName1) => {
+      this.editVideoName = editVideoName1;
+      console.log('videooffer oninit editVideoName:', this.editVideoName);
+    });
+
     this.videoPopupService.addVideoPopupStatus$.subscribe((status) => {
       this.isAddVideoPopupVisible = status;
     });
 
-    this.videoPopupService.editVideoPopupStatus$.subscribe((status) => {
-      this.isEditVideoPopupVisible = status;
-    });
+    // this.videoPopupService.openEditVideoPopup.subscribe((status) => {
+    //   // this.isEditVideoPopupVisible = status;
+    // });
 
     this.previewVideo = this.dataService.getVideoByName('breakout');
     if (this.openVideoPopupComponent) {

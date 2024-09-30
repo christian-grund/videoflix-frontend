@@ -24,7 +24,7 @@
         class="btn-default"
         *ngIf="videoData && videoData.categories.includes('My Videos')"
       >
-        <div class="btn-text" (click)="openEditVideoPopup()">
+        <div class="btn-text" (click)="openEditVideoPopup(videoData.name)">
           <img src="../../assets/img/icons/edit.svg" alt="" />
           Edit
         </div>
