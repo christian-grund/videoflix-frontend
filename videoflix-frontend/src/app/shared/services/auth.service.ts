@@ -29,10 +29,8 @@ export class AuthService {
   }
 
   checkAuthStatus(): void {
-    console.log('Checking auth status...');
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('token');
-      console.log('Token in localStorage:', token);
       this.isLoggedInSubject.next(!!token); // true, wenn Token vorhanden, false wenn nicht
     } else {
       this.isLoggedInSubject.next(false); // Auf dem Server false

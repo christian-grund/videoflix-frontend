@@ -1,3 +1,4 @@
+<div *ngIf="isLoading" class="loader">Loading...</div>
 <div class="popup-addvideo-content">
   <form #myForm="ngForm" class="add-video-container" (ngSubmit)="uploadVideo()">
     <h2>Add your own video</h2>

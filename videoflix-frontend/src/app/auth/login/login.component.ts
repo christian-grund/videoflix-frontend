@@ -40,17 +40,9 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         this.matchError = false;
         localStorage.setItem('token', response.token);
-        console.log('Login successful!', response);
-        this.message = 'Login successful!';
         this.authService.checkAuthStatus();
         setTimeout(() => {
-          this.router.navigate(['/videos']).then((navigated: boolean) => {
-            if (navigated) {
-              console.log('Navigation to /videos successful');
-            } else {
-              console.log('Navigation to /videos failed');
-            }
-          });
+          this.router.navigate(['/videos']);
         }, 100);
       },
       error: (error) => {

@@ -11,15 +11,11 @@ import { VideoPopupService } from '../../shared/services/videopopup.service';
   styleUrl: './category.component.scss',
 })
 export class CategoryComponent implements OnInit {
-  // public basePath = './../../../assets/img/thumbnails/';
   public basePath = 'http://localhost:8000/media/thumbnails/';
 
   public categories: any[] = [];
 
-  constructor(
-    private dataService: DataService,
-    private videoPopupService: VideoPopupService
-  ) {}
+  constructor(private dataService: DataService, private videoPopupService: VideoPopupService) {}
 
   ngOnInit() {
     this.dataService.videoData$.subscribe((videoData) => {
