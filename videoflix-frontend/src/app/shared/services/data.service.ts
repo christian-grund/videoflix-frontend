@@ -3,6 +3,8 @@ import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from './auth.service';
+// import { isPlatformBrowser } from '@angular/common';
+// import { Inject, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +21,16 @@ export class DataService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  setData(uploadVideoData: { [key: string]: any }): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'api/videos/', uploadVideoData);
+  getAuthHeaders(): HttpHeaders {
+    const headers: HttpHeaders = new HttpHeaders({
+      Authorization: `Token ${localStorage.getItem('token')}`,
+    });
+    return headers;
+  }
+
+  setVideosInBackend(uploadVideoData: { [key: string]: any }): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(this.apiUrl, uploadVideoData, { headers });
   }
 
   getVideosFromBackend(headers: HttpHeaders) {
@@ -61,14 +71,6 @@ export class DataService {
     } else {
       console.error(`Video mit der ID ${id} wurde nicht gefunden.`);
     }
-  }
-
-  getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Token ${token}`,
-    });
-    return headers;
   }
 
   async patchBackendVideo(videoId: number, videoData: {}): Promise<any> {

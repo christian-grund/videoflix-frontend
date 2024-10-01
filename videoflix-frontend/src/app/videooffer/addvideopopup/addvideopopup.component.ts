@@ -64,50 +64,26 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
   }
 
   uploadVideo() {
-    if (this.selectedFile) {
-      if (this.selectedFile.size <= 26214400 && this.userVideoCounter <= 3) {
-        this.videoName = this.selectedFile.name.replace('.mp4', '');
+    if (this.selectedFile && this.selectedFile.size <= 26214400 && this.userVideoCounter <= 3) {
+      this.videoName = this.selectedFile.name.replace('.mp4', '');
 
-        const uploadVideoData = new FormData();
-        uploadVideoData.append('name', this.videoName);
-        uploadVideoData.append('title', this.videoTitle);
-        uploadVideoData.append('description', this.videoDescription);
-        uploadVideoData.append('categories', 'My Videos');
-        uploadVideoData.append('video_file', this.selectedFile, this.selectedFile.name);
-        console.log('uploadVideoData:', uploadVideoData);
+      const uploadVideoData = new FormData();
+      uploadVideoData.append('name', this.videoName);
+      uploadVideoData.append('title', this.videoTitle);
+      uploadVideoData.append('description', this.videoDescription);
+      uploadVideoData.append('categories', 'My Videos');
+      uploadVideoData.append('video_file', this.selectedFile, this.selectedFile.name);
 
-        // console.log('headers:', headers);
-
-        if (typeof window !== 'undefined' && window.localStorage) {
-          const token = localStorage.getItem('token');
-          if (token) {
-            const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
-            this.http
-              .post('http://localhost:8000/api/videos/', uploadVideoData, {
-                headers,
-              })
-              .subscribe({
-                next: (response) => {
-                  console.log('Video erfolgreich hochgeladen. Server Response:', response);
-                  this.dataService.loadVideoData(headers);
-                },
-                error: (error) => console.error('Fehler beim hochladen des Videos:', error),
-              });
-            this.closeAddVideoPopup();
-          } else {
-            console.error('Kein Token im localStorage gefunden');
-          }
-        } else {
-          console.error('localStorage ist im aktuellen Kontext nicht verfügbar uploadVideo');
-        }
-
-        this.fileSizeError = false;
-      } else {
-        console.warn('File is bigger than 25 Megabyte! ');
-        this.fileSizeError = true;
-      }
+      this.dataService.setVideosInBackend(uploadVideoData).subscribe({
+        next: () => {
+          this.dataService.loadVideoData(this.dataService.getAuthHeaders());
+        },
+        error: (error) => console.error('Fehler beim hochladen des Videos:', error),
+      });
+      this.closeAddVideoPopup();
+      this.fileSizeError = false;
     } else {
-      console.log('No file selected.');
+      this.fileSizeError = true;
     }
   }
 

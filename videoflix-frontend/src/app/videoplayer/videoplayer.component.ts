@@ -11,6 +11,8 @@ import {
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DataService } from '../shared/services/data.service';
 import { HttpHeaders } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'app-videoplayer',
@@ -52,18 +54,18 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     private dataService: DataService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnInit() {
-    // const token = localStorage.getItem('token');
-    const token = 'aa6299bd5a2fc15db72404ffd0247ce5ef5e39b5';
-    const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
-    this.dataService.loadVideoData(headers);
-
-    this.route.paramMap.subscribe((params) => {
-      this.videoName = params.get('videoname')!;
-    });
+  async ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      const headers = new HttpHeaders().set(
+        'Authorization',
+        `Token ${localStorage.getItem('token')}`
+      );
+      await this.dataService.loadVideoData(headers);
+    }
 
     this.dataService.videoData$.subscribe((videoData) => {
       if (videoData && videoData.length > 0) {
@@ -74,28 +76,10 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     });
-  }
 
-  // getHttpHeaders() {
-  //   const token = localStorage.getItem('token');
-  //   const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
-
-  //   return headers;
-  // }
-
-  skip(seconds: number) {
-    const video: HTMLVideoElement = this.videoPlayer.nativeElement;
-    video.currentTime += seconds;
-
-    const newTime = video.currentTime + seconds;
-
-    if (newTime < 0) {
-      video.currentTime = 0;
-    } else if (newTime > video.duration) {
-      video.currentTime = video.duration;
-    } else {
-      video.currentTime = newTime;
-    }
+    this.route.paramMap.subscribe((params) => {
+      this.videoName = params.get('videoname')!;
+    });
   }
 
   ngAfterViewInit() {
@@ -165,6 +149,21 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   setHeaderVisible() {
     this.isHeaderVisible = true;
+  }
+
+  skip(seconds: number) {
+    const video: HTMLVideoElement = this.videoPlayer.nativeElement;
+    video.currentTime += seconds;
+
+    const newTime = video.currentTime + seconds;
+
+    if (newTime < 0) {
+      video.currentTime = 0;
+    } else if (newTime > video.duration) {
+      video.currentTime = video.duration;
+    } else {
+      video.currentTime = newTime;
+    }
   }
 
   startUpdatingProgress() {

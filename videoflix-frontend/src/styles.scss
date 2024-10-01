@@ -277,6 +277,7 @@ app-footer {
       .radio-btn-container {
         display: flex;
         gap: 16px;
+        padding-right: 8px;
       }
 
       label {
@@ -304,7 +305,6 @@ app-footer {
         .file-upload-wrapper {
           display: flex;
           align-items: center;
-          gap: 12px;
 
           .file-upload {
             position: relative;

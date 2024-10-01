@@ -37,11 +37,6 @@ export class EditvideopopupComponent implements OnInit {
   constructor(private videoPopupService: VideoPopupService, private dataService: DataService) {}
 
   ngOnInit() {
-    console.log('editvideopopup');
-    // const token = 'aa6299bd5a2fc15db72404ffd0247ce5ef5e39b5';
-    // const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
-    // await this.dataService.loadVideoData(headers);
-
     this.videoPopupService.editVideoName$.subscribe((videoName) => {
       this.editVideoName = videoName;
       console.log('editVideoName:', this.editVideoName);

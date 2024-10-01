@@ -12,6 +12,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OpenvideopopupComponent } from './openvideopopup/openvideopopup.component';
 import { AddvideopopupComponent } from './addvideopopup/addvideopopup.component';
 import { EditvideopopupComponent } from './editvideopopup/editvideopopup.component';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'app-videooffer',
@@ -67,7 +69,8 @@ export class VideoofferComponent implements OnInit {
     private dataService: DataService,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   async ngOnInit() {
@@ -80,10 +83,13 @@ export class VideoofferComponent implements OnInit {
     //   }
     // });
 
-    // const token = localStorage.getItem('token');
-    const token = 'aa6299bd5a2fc15db72404ffd0247ce5ef5e39b5';
-    const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
-    await this.dataService.loadVideoData(headers);
+    if (isPlatformBrowser(this.platformId)) {
+      const headers = new HttpHeaders().set(
+        'Authorization',
+        `Token ${localStorage.getItem('token')}`
+      );
+      await this.dataService.loadVideoData(headers);
+    }
 
     this.dataService.videoData$.subscribe((data) => {
       if (data.length > 0) {
@@ -114,30 +120,6 @@ export class VideoofferComponent implements OnInit {
       this.openVideoPopupComponent.openPopup();
     }
   }
-
-  // async getHeaders(): Promise<HttpHeaders> {
-  //   const token = localStorage.getItem('token');
-
-  //   // Überprüfen, ob ein Token vorhanden ist
-  //   if (token) {
-  //     return new HttpHeaders({
-  //       Authorization: `Token ${token}`,
-  //     });
-  //   } else {
-  //     console.error('Kein Token im localStorage gefunden');
-  //     return new HttpHeaders(); // Leere Header zurückgeben
-  //   }
-  // }
-
-  // getHttpHeaders() {
-  //   const token = localStorage.getItem('token');
-  //   const headers = new HttpHeaders().set(
-  //     'Authorization',
-  //     `Token ${localStorage.getItem('token')}`
-  //   );
-
-  //   return headers;
-  // }
 
   closePopup() {
     this.selectedVideoName = null;
