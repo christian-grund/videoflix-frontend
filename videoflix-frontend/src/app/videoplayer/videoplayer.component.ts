@@ -25,6 +25,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
   videoName!: string;
   videoResolution: string = '_720p';
+  videoStartTime: number = 0;
   videoData: any;
   intervalId: any;
   isPlaying = false;
@@ -37,7 +38,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   isVolumeSliderVisible = false;
   hasSound = false;
   videoDuration: number = 0;
-  currentTime1: number = 0;
+  currentTime: number = 0;
   progress: number = 0;
   hoverProgress = 0;
   currentVolume: number = 0.5;
@@ -99,7 +100,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
       videoPlayer.addEventListener('timeupdate', () => {
-        this.currentTime1 = videoPlayer.currentTime;
+        this.currentTime = videoPlayer.currentTime;
         this.cdr.detectChanges();
       });
       videoPlayer.addEventListener('fullscreenchange', () => {
@@ -113,11 +114,16 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.videoPlayer) {
       this.videoDuration = this.videoPlayer.nativeElement.duration;
     }
+    const videoPlayer = this.videoPlayer.nativeElement;
+    videoPlayer.currentTime = this.videoStartTime;
+    if (this.isPlaying) {
+      videoPlayer.play();
+    }
   }
 
   onTimeUpdate() {
     if (this.videoPlayer) {
-      this.currentTime1 = this.videoPlayer.nativeElement.currentTime;
+      this.currentTime = this.videoPlayer.nativeElement.currentTime;
     }
   }
 
@@ -223,6 +229,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   playPause() {
     const videoPlayer = this.videoPlayer.nativeElement;
+    videoPlayer.currentTime = this.videoStartTime;
 
     if (videoPlayer.paused) {
       videoPlayer.play();
@@ -285,6 +292,11 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setResolution(resolution: number) {
+    const videoPlayer = this.videoPlayer.nativeElement;
+    this.videoStartTime = videoPlayer.currentTime;
+    console.log('videoStartTime:', this.videoStartTime);
+    this.isPlaying = !videoPlayer.paused;
+
     this.selectedResolution = resolution;
     this.videoResolution = `_${resolution}p`;
   }
