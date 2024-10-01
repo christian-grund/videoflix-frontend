@@ -10,7 +10,7 @@ import { VideoofferComponent } from './videooffer/videooffer.component';
 import { VideoplayerComponent } from './videoplayer/videoplayer.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { ActivateComponent } from './auth/activate/activate.component';
-import { authResolver } from './shared/resolvers/auth.resolver';
+// import { authResolver } from './shared/resolvers/auth.resolver';
 
 export const routes: Routes = [
   { path: '', component: StartpageComponent },
@@ -18,10 +18,12 @@ export const routes: Routes = [
   {
     path: 'videos',
     component: VideoofferComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'videos/watch/:videoname',
     component: VideoplayerComponent,
+    canActivate: [authGuard],
   },
   { path: 'signup', component: SignupComponent },
   { path: 'activate', component: ActivateComponent },

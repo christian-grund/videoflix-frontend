@@ -10,13 +10,7 @@ import { DataService } from '../../shared/services/data.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    HeaderComponent,
-    FooterComponent,
-    RouterModule,
-    FormsModule,
-    CommonModule,
-  ],
+  imports: [HeaderComponent, FooterComponent, RouterModule, FormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -41,19 +35,28 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    console.log('login');
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
         this.matchError = false;
         localStorage.setItem('token', response.token);
+        console.log('Login successful!', response);
         this.message = 'Login successful!';
-        this.router.navigate(['/videos']);
+        this.authService.checkAuthStatus();
+        setTimeout(() => {
+          this.router.navigate(['/videos']).then((navigated: boolean) => {
+            if (navigated) {
+              console.log('Navigation to /videos successful');
+            } else {
+              console.log('Navigation to /videos failed');
+            }
+          });
+        }, 100);
       },
       error: (error) => {
         this.message =
           'Login failed: ' +
-          (error.error.non_field_errors
-            ? error.error.non_field_errors[0]
-            : 'Unknown error');
+          (error.error.non_field_errors ? error.error.non_field_errors[0] : 'Unknown error');
         this.matchError = true;
       },
     });

@@ -11,6 +11,8 @@ import { VideoofferComponent } from './videooffer/videooffer.component';
 import { ImprintComponent } from './textsites/imprint/imprint.component';
 import { DataprivacyComponent } from './textsites/dataprivacy/dataprivacy.component';
 import { ActivateComponent } from './auth/activate/activate.component';
+import { Router, NavigationStart, Event as NavigationEvent } from '@angular/router';
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -34,4 +36,8 @@ import { ActivateComponent } from './auth/activate/activate.component';
 })
 export class AppComponent {
   title = 'videoflix';
+
+  constructor(private authService: AuthService) {
+    this.authService.checkAuthStatus(); // Authentifizierungsstatus beim App-Start prüfen
+  }
 }

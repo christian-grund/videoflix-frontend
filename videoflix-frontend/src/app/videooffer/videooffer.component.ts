@@ -48,6 +48,7 @@ export class VideoofferComponent implements OnInit {
   isVideoEnded: boolean = false;
   isMuted: boolean = true;
   isLoggedIn: boolean = false;
+  isLoading: boolean = true;
   isAddVideoPopupVisible: boolean = false;
   isEditVideoPopupVisible: boolean = false;
 
@@ -74,14 +75,13 @@ export class VideoofferComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    ///////////// nur das, ohne authguard testen!!!!
+    this.authService.checkAuthStatus();
 
-    // this.route.data.subscribe((data) => {
-    //   this.isLoggedIn = data['isLoggedIn']; // Daten vom Resolver
-    //   if (!this.isLoggedIn) {
-    //     this.router.navigate(['/login']); // Weiterleitung zur Login-Seite, falls nicht eingeloggt
-    //   }
-    // });
+    this.authService.isLoggedIn().subscribe((isLoggedIn) => {
+      if (isLoggedIn !== null) {
+        this.isLoading = false; // Ladeanzeige beenden, wenn der Status bekannt ist
+      }
+    });
 
     if (isPlatformBrowser(this.platformId)) {
       const headers = new HttpHeaders().set(
