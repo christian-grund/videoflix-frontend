@@ -36,7 +36,10 @@ export class VideoofferComponent implements OnInit {
   addVideoPopupComponent!: AddvideopopupComponent;
   @ViewChild(OpenvideopopupComponent)
   openVideoPopupComponent!: OpenvideopopupComponent;
+  @ViewChild(EditvideopopupComponent)
+  editVideoPopupComponent!: EditvideopopupComponent;
   selectedVideoName: string | null = null;
+  editVideoName: string | null = null;
 
   previewVideo: any;
   isPlaying: boolean = false;
@@ -45,14 +48,6 @@ export class VideoofferComponent implements OnInit {
   isLoggedIn: boolean = false;
   isAddVideoPopupVisible: boolean = false;
   isEditVideoPopupVisible: boolean = false;
-
-  videoTitle: string = '';
-  videoName: string = '';
-  videoDescription: string = '';
-  hasSound: boolean = false;
-  selectedFile: File | null = null;
-  fileSizeError: boolean = false;
-  editVideoName: string | null = null;
 
   videoData: {
     name: string;
@@ -102,26 +97,11 @@ export class VideoofferComponent implements OnInit {
 
     this.videoPopupService.editVideoName$.subscribe((videoName) => {
       this.editVideoName = videoName;
-      if (this.editVideoName) {
-        this.videoData = this.dataService.getVideoByName(this.editVideoName) || null;
-        console.log('videooffer oninit videoData:', this.videoData);
-
-        if (this.videoData) {
-          this.videoTitle = this.videoData.title;
-          this.videoDescription = this.videoData.description;
-          this.hasSound = this.videoData.has_sound;
-          this.selectedFile = this.videoData.video_file;
-        }
-      }
     });
 
     this.videoPopupService.addVideoPopupStatus$.subscribe((status) => {
       this.isAddVideoPopupVisible = status;
     });
-
-    // this.videoPopupService.openEditVideoPopup.subscribe((status) => {
-    //   // this.isEditVideoPopupVisible = status;
-    // });
 
     this.previewVideo = this.dataService.getVideoByName('breakout');
     if (this.openVideoPopupComponent) {
@@ -133,52 +113,6 @@ export class VideoofferComponent implements OnInit {
     if (this.selectedVideoName && this.openVideoPopupComponent) {
       this.openVideoPopupComponent.openPopup();
     }
-  }
-
-  async saveEditedVideo() {
-    if (this.videoData) {
-      const formData = new FormData();
-
-      formData.append('title', this.videoTitle);
-      formData.append('description', this.videoDescription);
-      formData.append('has_sound', this.hasSound.toString());
-      if (this.selectedFile instanceof File) {
-        formData.append('video_file', this.selectedFile);
-        formData.append('name', this.selectedFile!.name.replace('.mp4', ''));
-      }
-      try {
-        const response = await this.dataService.patchBackendVideo(this.videoData.id, formData);
-        console.log('Video erfolgreich im Backend aktualisiert:', response);
-      } catch (error) {
-        console.error('Fehler beim Aktualisieren der Kategorien:', error);
-      }
-    }
-    this.closeEditVideoPopup();
-    this.dataService.loadVideoData(this.dataService.getAuthHeaders());
-  }
-
-  async deleteVideo() {
-    if (this.videoData) {
-      try {
-        const response = await this.dataService.deleteBackendVideo(this.videoData.id);
-        console.log('Video wurde erfolgreich gelöscht:', response);
-      } catch (error) {
-        console.log('Fehler beim löschen des Videos:', error);
-      }
-    }
-    this.closeEditVideoPopup();
-    this.dataService.loadVideoData(this.dataService.getAuthHeaders());
-  }
-
-  onFileSelected(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files.length > 0) {
-      this.selectedFile = target.files[0];
-    }
-  }
-
-  closeEditVideoPopup() {
-    this.videoPopupService.closeEditVideoPopup();
   }
 
   // async getHeaders(): Promise<HttpHeaders> {
@@ -195,12 +129,26 @@ export class VideoofferComponent implements OnInit {
   //   }
   // }
 
+  // getHttpHeaders() {
+  //   const token = localStorage.getItem('token');
+  //   const headers = new HttpHeaders().set(
+  //     'Authorization',
+  //     `Token ${localStorage.getItem('token')}`
+  //   );
+
+  //   return headers;
+  // }
+
   closePopup() {
     this.selectedVideoName = null;
   }
 
   triggerCloseAddVideoPopup(): void {
     this.addVideoPopupComponent.closeAddVideoPopup();
+  }
+
+  triggerCloseEditVideoPopup(): void {
+    this.editVideoPopupComponent.closeEditVideoPopup();
   }
 
   triggerCloseOpenVideoPopup(): void {
@@ -228,14 +176,4 @@ export class VideoofferComponent implements OnInit {
     videoPlayer.currentTime = 0;
     videoPlayer.play();
   }
-
-  // getHttpHeaders() {
-  //   const token = localStorage.getItem('token');
-  //   const headers = new HttpHeaders().set(
-  //     'Authorization',
-  //     `Token ${localStorage.getItem('token')}`
-  //   );
-
-  //   return headers;
-  // }
 }
