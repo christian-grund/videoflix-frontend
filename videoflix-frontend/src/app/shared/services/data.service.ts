@@ -17,6 +17,7 @@ export class DataService {
   private videoDataSubject = new BehaviorSubject<any[]>(this.videoData);
   videoData$ = this.videoDataSubject.asObservable();
 
+  private baseUrl = 'http://localhost:8000/';
   private apiUrl = 'http://localhost:8000/api/videos/';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
@@ -77,7 +78,7 @@ export class DataService {
     const headers = this.getAuthHeaders();
 
     return firstValueFrom(
-      this.http.patch<any>(`http://localhost:8000/api/videos/${videoId}/`, videoData, {
+      this.http.patch<any>(`${this.apiUrl}${videoId}/`, videoData, {
         headers,
       })
     );
@@ -92,8 +93,12 @@ export class DataService {
   patchBackendVideoCategories(videoId: number, categories: string[]): Observable<any> {
     const headers = this.getAuthHeaders();
     const body = { categories: categories };
-    return this.http.patch<any[]>(`http://localhost:8000/api/videos/${videoId}/`, body, {
+    return this.http.patch<any[]>(`${this.apiUrl}${videoId}/`, body, {
       headers,
     });
+  }
+
+  checkThumbnailStatus(videoName: string) {
+    return this.http.get<{ status: string }>(`${this.baseUrl}check-thumbnail-status/${videoName}`);
   }
 }

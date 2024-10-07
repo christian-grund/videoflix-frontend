@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { DataService } from '../../shared/services/data.service';
 import { VideoPopupService } from '../../shared/services/videopopup.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-addvideopopup',
@@ -26,6 +26,8 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
   fileInserted: boolean = false;
   fileSizeError: boolean = false;
   selectedFile: File | null = null;
+
+  isLoading: boolean = false;
 
   constructor(
     private dataService: DataService,
@@ -63,7 +65,7 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
     }
   }
 
-  uploadVideo() {
+  async uploadVideo() {
     if (this.selectedFile && this.selectedFile.size <= 26214400 && this.userVideoCounter <= 3) {
       this.videoName = this.selectedFile.name.replace('.mp4', '');
 
@@ -74,17 +76,51 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
       uploadVideoData.append('categories', 'My Videos');
       uploadVideoData.append('video_file', this.selectedFile, this.selectedFile.name);
 
-      this.dataService.setVideosInBackend(uploadVideoData).subscribe({
-        next: () => {
-          this.dataService.loadVideoData(this.dataService.getAuthHeaders());
-        },
-        error: (error) => console.error('Fehler beim hochladen des Videos:', error),
-      });
-      this.closeAddVideoPopup();
+      this.isLoading = true;
+
+      try {
+        // Warte auf das Hochladen des Videos
+        await firstValueFrom(this.dataService.setVideosInBackend(uploadVideoData));
+
+        // Führe die Überprüfung des Thumbnail-Status aus
+        await this.checkThumbnailStatus();
+
+        // Nachdem der Status überprüft wurde, lade die Video-Daten neu
+      } catch (error) {
+        console.error('Fehler beim Hochladen des Videos oder der Statusüberprüfung:', error);
+      } finally {
+        this.isLoading = false; // Setze den Ladezustand zurück
+      }
+
       this.fileSizeError = false;
     } else {
       this.fileSizeError = true;
     }
+  }
+
+  async checkThumbnailStatus() {
+    const interval = setInterval(() => {
+      this.dataService.checkThumbnailStatus(this.videoName).subscribe({
+        next: (response) => {
+          console.log('Response:', response);
+          if (response.status === 'completed') {
+            console.log('Thumbnail wurde erfolgreich erstellt');
+            clearInterval(interval); // Stoppe das Intervall
+            setTimeout(() => {
+              this.dataService.loadVideoData(this.dataService.getAuthHeaders());
+            }, 1000);
+            this.isLoading = false; // Setze isLoading auf false
+            this.closeAddVideoPopup(); // Schließe das Popup
+          } else {
+            console.log('Thumbnail in Bearbeitung...');
+          }
+        },
+        error: (error) => {
+          console.error('Fehler beim Überprüfen des Thumbnail-Status:', error);
+          clearInterval(interval); // Stoppe das Intervall bei einem Fehler
+        },
+      });
+    }, 500); // Überprüfe alle 5 Sekunden
   }
 
   countUserUploadedVideos() {
