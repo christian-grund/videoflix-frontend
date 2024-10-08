@@ -13,10 +13,12 @@ import { HttpHeaders } from '@angular/common/http';
   styleUrl: './editvideopopup.component.scss',
 })
 export class EditvideopopupComponent implements OnInit {
+  videoTitleOrigin: string = '';
   videoTitle: string = '';
   videoName: string = '';
   videoDescription: string = '';
   hasSound: boolean = false;
+  isLoading: boolean = false;
   selectedFile: File | null = null;
   fileSizeError: boolean = false;
   editVideoName: string | null = null;
@@ -39,13 +41,11 @@ export class EditvideopopupComponent implements OnInit {
   ngOnInit() {
     this.videoPopupService.editVideoName$.subscribe((videoName) => {
       this.editVideoName = videoName;
-      console.log('editVideoName:', this.editVideoName);
       if (this.editVideoName) {
         this.videoData = this.dataService.getVideoByName(this.editVideoName) || null;
-        console.log('videooffer oninit videoData:', this.videoData);
-
         if (this.videoData) {
           this.videoTitle = this.videoData.title;
+          this.videoTitleOrigin = this.videoData.title;
           this.videoDescription = this.videoData.description;
           this.hasSound = this.videoData.has_sound;
           this.selectedFile = this.videoData.video_file;
@@ -56,8 +56,8 @@ export class EditvideopopupComponent implements OnInit {
 
   async saveEditedVideo() {
     if (this.videoData) {
+      this.isLoading = true;
       const formData = new FormData();
-
       formData.append('title', this.videoTitle);
       formData.append('description', this.videoDescription);
       formData.append('has_sound', this.hasSound.toString());
@@ -68,12 +68,39 @@ export class EditvideopopupComponent implements OnInit {
       try {
         const response = await this.dataService.patchBackendVideo(this.videoData.id, formData);
         console.log('Video erfolgreich im Backend aktualisiert:', response);
+        this.checkUpdatedThumbnailStatus();
       } catch (error) {
         console.error('Fehler beim Aktualisieren der Kategorien:', error);
       }
     }
-    this.closeEditVideoPopup();
+    // this.closeEditVideoPopup();
     this.dataService.loadVideoData(this.dataService.getAuthHeaders());
+  }
+
+  checkUpdatedThumbnailStatus() {
+    const interval = setInterval(() => {
+      this.dataService.loadThumbnailStatus(this.editVideoName as string).subscribe({
+        next: (response) => {
+          if (response.status === 'completed') {
+            console.log('Thumbnail wurde erfolgreich erstellt');
+            clearInterval(interval);
+            setTimeout(() => {
+              this.dataService.loadVideoData(this.dataService.getAuthHeaders());
+            }, 1000);
+
+            this.dataService.triggerConvertionCheck(this.videoName);
+            this.isLoading = false;
+            this.closeEditVideoPopup();
+          } else {
+            console.log('Thumbnail in Bearbeitung...');
+          }
+        },
+        error: (error) => {
+          console.error('Fehler beim Überprüfen des Thumbnail-Status:', error);
+          clearInterval(interval);
+        },
+      });
+    }, 500);
   }
 
   async deleteVideo() {

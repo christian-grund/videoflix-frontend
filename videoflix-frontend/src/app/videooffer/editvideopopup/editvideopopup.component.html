@@ -1,4 +1,10 @@
 <div class="popup" *ngIf="editVideoName">
+  <div class="loader-container" *ngIf="isLoading">
+    <div class="loader">
+      <img class="spin" [src]="iconBasePath + 'waiting.svg'" alt="loading..." />
+      <p>Loading...</p>
+    </div>
+  </div>
   <div class="popup-addvideo-content">
     <form #myForm="ngForm" class="add-video-container height-550" (ngSubmit)="saveEditedVideo()">
       <h2>Edit your video</h2>
