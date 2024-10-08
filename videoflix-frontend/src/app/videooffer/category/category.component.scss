@@ -91,3 +91,8 @@
     }
   }
 }
+
+.disabled {
+  cursor: not-allowed; /* Zeigt an, dass das Element nicht klickbar ist */
+  opacity: 0.5; /* Optional: Mache das Bild transparenter */
+}

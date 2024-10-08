@@ -6,7 +6,12 @@
         <img
           [src]="basePath + video.name + '_with_text.jpg'"
           [alt]="video.name"
-          (click)="openVideoInfo(video.name)"
+          [class.disabled]="videoName === video.name && !convertionFinished"
+          (click)="
+            videoName === video.name && !convertionFinished
+              ? $event.stopPropagation()
+              : openVideoInfo(video.name)
+          "
         />
         <p class="text" *ngIf="videoName === video.name">Converting video:</p>
         <p class="progress" *ngIf="videoName === video.name">{{ convertionProgress }} %</p>

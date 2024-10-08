@@ -20,6 +20,9 @@ export class VideoPopupService {
   private triggerCountVideos = new BehaviorSubject<void>(undefined);
   triggerCountVideos$ = this.triggerCountVideos.asObservable();
 
+  // private addVideoPopupStatus = new BehaviorSubject<boolean>(false);
+  // addVideoPopupStatus$ = this.addVideoPopupStatus.asObservable();
+
   openVideoPopup(videoName: string) {
     this.videoNameSubject.next(videoName);
   }
