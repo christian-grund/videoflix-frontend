@@ -67,7 +67,11 @@
               <div class="volume-container">
                 <img
                   (click)="toggleVolumeSlider()"
-                  [src]="iconBasePath + (isMuted ? 'volume.svg' : 'mute.svg')"
+                  [src]="
+                    !videoData.has_sound
+                      ? iconBasePath + 'mute.svg'
+                      : iconBasePath + (isMuted ? 'mute.svg' : 'volume.svg')
+                  "
                   alt="Sound/Mute"
                 />
 
@@ -82,7 +86,7 @@
                     (input)="setVolume($event)"
                   />
                 </div>
-                <div class="no-sound-menu" *ngIf="isNoSoundTextVisible">
+                <div class="no-sound-menu" *ngIf="isNoSoundTextVisible && !videoData.has_sound">
                   <p>No sound available <br />for this video</p>
                 </div>
               </div>

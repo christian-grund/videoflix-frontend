@@ -71,10 +71,6 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataService.videoData$.subscribe((videoData) => {
       if (videoData && videoData.length > 0) {
         this.videoData = this.dataService.getVideoByName(this.videoName);
-
-        if (!this.videoData) {
-          console.error('Video not found!');
-        }
       }
     });
 
@@ -229,7 +225,6 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   playPause() {
     const videoPlayer = this.videoPlayer.nativeElement;
-    videoPlayer.currentTime = this.videoStartTime;
 
     if (videoPlayer.paused) {
       videoPlayer.play();
