@@ -16,6 +16,8 @@ export class DataService {
   currentEmail = this.emailSource.asObservable();
   private videoDataSubject = new BehaviorSubject<any[]>(this.videoData);
   videoData$ = this.videoDataSubject.asObservable();
+  private conversionCheckSubject = new BehaviorSubject<string>('');
+  conversionCheck$ = this.conversionCheckSubject.asObservable();
 
   private baseUrl = 'http://localhost:8000/';
   private apiUrl = 'http://localhost:8000/api/videos/';
@@ -98,7 +100,15 @@ export class DataService {
     });
   }
 
-  checkThumbnailStatus(videoName: string) {
+  loadThumbnailStatus(videoName: string) {
     return this.http.get<{ status: string }>(`${this.baseUrl}check-thumbnail-status/${videoName}`);
+  }
+
+  loadConvertionStatus(videoName: string) {
+    return this.http.get<{ status: string }>(`${this.baseUrl}check-convertion-status/${videoName}`);
+  }
+
+  triggerConvertionCheck(videoName: string) {
+    this.conversionCheckSubject.next(videoName); // Video-Name an alle Subscriber senden
   }
 }

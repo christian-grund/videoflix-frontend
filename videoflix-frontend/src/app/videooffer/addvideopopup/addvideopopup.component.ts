@@ -67,6 +67,7 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
 
   async uploadVideo() {
     if (this.selectedFile && this.selectedFile.size <= 26214400 && this.userVideoCounter <= 3) {
+      this.isLoading = true;
       this.videoName = this.selectedFile.name.replace('.mp4', '');
 
       const uploadVideoData = new FormData();
@@ -76,14 +77,12 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
       uploadVideoData.append('categories', 'My Videos');
       uploadVideoData.append('video_file', this.selectedFile, this.selectedFile.name);
 
-      this.isLoading = true;
-
       try {
         // Warte auf das Hochladen des Videos
         await firstValueFrom(this.dataService.setVideosInBackend(uploadVideoData));
 
         // Führe die Überprüfung des Thumbnail-Status aus
-        await this.checkThumbnailStatus();
+        this.checkThumbnailStatus();
 
         // Nachdem der Status überprüft wurde, lade die Video-Daten neu
       } catch (error) {
@@ -98,29 +97,31 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
     }
   }
 
-  async checkThumbnailStatus() {
+  checkThumbnailStatus() {
     const interval = setInterval(() => {
-      this.dataService.checkThumbnailStatus(this.videoName).subscribe({
+      this.dataService.loadThumbnailStatus(this.videoName).subscribe({
         next: (response) => {
           console.log('Response:', response);
           if (response.status === 'completed') {
             console.log('Thumbnail wurde erfolgreich erstellt');
-            clearInterval(interval); // Stoppe das Intervall
+            clearInterval(interval);
             setTimeout(() => {
               this.dataService.loadVideoData(this.dataService.getAuthHeaders());
             }, 1000);
-            this.isLoading = false; // Setze isLoading auf false
-            this.closeAddVideoPopup(); // Schließe das Popup
+            this.isLoading = false;
+            this.closeAddVideoPopup();
+            // this.dataService.loadConvertionStatus(this.videoName);
+            this.dataService.triggerConvertionCheck(this.videoName);
           } else {
             console.log('Thumbnail in Bearbeitung...');
           }
         },
         error: (error) => {
           console.error('Fehler beim Überprüfen des Thumbnail-Status:', error);
-          clearInterval(interval); // Stoppe das Intervall bei einem Fehler
+          clearInterval(interval);
         },
       });
-    }, 500); // Überprüfe alle 5 Sekunden
+    }, 500);
   }
 
   countUserUploadedVideos() {
