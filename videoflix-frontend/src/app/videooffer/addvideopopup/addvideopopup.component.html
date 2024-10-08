@@ -1,4 +1,9 @@
-<div *ngIf="isLoading" class="loader">Loading...</div>
+<div class="loader-container" *ngIf="isLoading">
+  <div class="loader">
+    <img class="spin" [src]="iconBasePath + 'waiting.svg'" alt="loading..." />
+    <p>Loading...</p>
+  </div>
+</div>
 <div class="popup-addvideo-content">
   <form #myForm="ngForm" class="add-video-container" (ngSubmit)="uploadVideo()">
     <h2>Add your own video</h2>
@@ -98,7 +103,7 @@
       <button
         type="submit"
         class="btn-default"
-        [disabled]="myForm['invalid'] && userVideoCounter <= 3"
+        [disabled]="myForm.invalid || !selectedFile || userVideoCounter >= 3"
       >
         <div class="btn-text">
           <img class="favorite-icon" src="../../../assets/img/icons/upload.svg" alt="" />

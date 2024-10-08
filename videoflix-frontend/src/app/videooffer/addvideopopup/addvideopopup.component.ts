@@ -15,19 +15,18 @@ import { firstValueFrom, Subscription } from 'rxjs';
   encapsulation: ViewEncapsulation.None, //
 })
 export class AddvideopopupComponent implements OnInit, OnDestroy {
-  // subscriptions auch im constructor???
   private subscriptions: Subscription = new Subscription();
-
   videoTitle: string = '';
   videoName: string = '';
   videoDescription: string = '';
   userVideoCounter: number = 0;
   hasSound: boolean = false;
+  isLoading: boolean = false;
   fileInserted: boolean = false;
   fileSizeError: boolean = false;
   selectedFile: File | null = null;
 
-  isLoading: boolean = false;
+  iconBasePath = '../../../assets/img/icons/';
 
   constructor(
     private dataService: DataService,
@@ -44,9 +43,8 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Aufräumen der Subscriptions
     if (this.subscriptions) {
-      this.subscriptions.unsubscribe(); // unsubscribe aufrufen, um alle Subscriptions zu beenden
+      this.subscriptions.unsubscribe();
     }
   }
 
@@ -78,19 +76,13 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
       uploadVideoData.append('video_file', this.selectedFile, this.selectedFile.name);
 
       try {
-        // Warte auf das Hochladen des Videos
         await firstValueFrom(this.dataService.setVideosInBackend(uploadVideoData));
-
-        // Führe die Überprüfung des Thumbnail-Status aus
         this.checkThumbnailStatus();
-
-        // Nachdem der Status überprüft wurde, lade die Video-Daten neu
       } catch (error) {
         console.error('Fehler beim Hochladen des Videos oder der Statusüberprüfung:', error);
       } finally {
-        this.isLoading = false; // Setze den Ladezustand zurück
+        this.isLoading = false;
       }
-
       this.fileSizeError = false;
     } else {
       this.fileSizeError = true;
@@ -101,7 +93,6 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
     const interval = setInterval(() => {
       this.dataService.loadThumbnailStatus(this.videoName).subscribe({
         next: (response) => {
-          console.log('Response:', response);
           if (response.status === 'completed') {
             console.log('Thumbnail wurde erfolgreich erstellt');
             clearInterval(interval);
@@ -110,7 +101,6 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
             }, 1000);
             this.isLoading = false;
             this.closeAddVideoPopup();
-            // this.dataService.loadConvertionStatus(this.videoName);
             this.dataService.triggerConvertionCheck(this.videoName);
           } else {
             console.log('Thumbnail in Bearbeitung...');
@@ -132,7 +122,6 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
         this.userVideoCounter++;
       }
     });
-    console.log('userVideoCounter:', this.userVideoCounter);
   }
 
   closeAddVideoPopup() {

@@ -21,9 +21,6 @@ export class CategoryComponent implements OnInit {
   public categories: any[] = [];
   videoName: string = '';
 
-  // is360pConverted: boolean = true;
-  // is720pConverted: boolean = false;
-  // is1080pConverted: boolean = false;
   convertionProgress: number = 0;
   convertionFinished: boolean = false;
 
@@ -33,7 +30,6 @@ export class CategoryComponent implements OnInit {
     this.dataService.videoData$.subscribe((videoData) => {
       if (videoData.length > 0) {
         this.updateCategories(videoData);
-        console.log('videoData:', videoData);
       }
     });
 
@@ -41,7 +37,6 @@ export class CategoryComponent implements OnInit {
       if (videoName) {
         this.checkConvertionStatus(videoName);
         this.videoName = videoName;
-        console.log('this.videoName:', this.videoName);
       }
     });
   }
@@ -75,17 +70,14 @@ export class CategoryComponent implements OnInit {
 
           if (convertedResponse['360p_status'] === 'completed') {
             this.convertionProgress = 33;
-            console.log('360p Status:', convertedResponse['360p_status']);
           }
 
           if (convertedResponse['720p_status'] === 'completed') {
             this.convertionProgress = 67;
-            console.log('720p Status:', convertedResponse['720p_status']);
           }
 
           if (convertedResponse['1080p_status'] === 'completed') {
             this.convertionProgress = 100;
-            console.log('1080p Status:', convertedResponse['1080p_status']);
           }
 
           if (
@@ -95,7 +87,6 @@ export class CategoryComponent implements OnInit {
           ) {
             this.convertionFinished = true;
             clearInterval(interval);
-            console.log('convertionFinished');
           }
         },
         error: (error) => {

@@ -44,6 +44,7 @@ export class VideoofferComponent implements OnInit {
   editVideoName: string | null = null;
 
   previewVideo: any;
+  canPlayVideo = false;
   isPlaying: boolean = false;
   isVideoEnded: boolean = false;
   isMuted: boolean = true;
@@ -143,9 +144,15 @@ export class VideoofferComponent implements OnInit {
     }
   }
 
+  enableVideoPlay() {
+    this.canPlayVideo = true;
+  }
+
   playVideo() {
-    const videoPlayer = this.videoPlayer.nativeElement;
-    videoPlayer.play();
+    if (this.canPlayVideo) {
+      const videoPlayer = this.videoPlayer.nativeElement;
+      videoPlayer.play();
+    }
   }
 
   pauseVideo() {
