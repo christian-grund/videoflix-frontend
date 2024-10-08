@@ -2,12 +2,15 @@
   <div class="category-content">
     <h2>{{ category.title }}</h2>
     <div class="category-videos">
-      <img
-        *ngFor="let video of category.videos"
-        [src]="basePath + video.name + '_with_text.jpg'"
-        [alt]="video.name"
-        (click)="openVideoInfo(video.name)"
-      />
+      <div class="category-video" *ngFor="let video of category.videos">
+        <img
+          [src]="basePath + video.name + '_with_text.jpg'"
+          [alt]="video.name"
+          (click)="openVideoInfo(video.name)"
+        />
+        <p class="text" *ngIf="videoName === video.name">Converting video:</p>
+        <p class="progress" *ngIf="videoName === video.name">{{ convertionProgress }} %</p>
+      </div>
     </div>
   </div>
 </div>

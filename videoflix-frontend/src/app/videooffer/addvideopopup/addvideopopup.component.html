@@ -51,7 +51,7 @@
       <div class="file-upload-wrapper">
         <label class="file-upload">
           <input type="file" (change)="onFileSelected($event)" accept=".mp4" required />
-          <span>Select a file</span>
+          <span>Select file</span>
         </label>
         <div class="file-name" *ngIf="selectedFile">
           {{ selectedFile.name }}
@@ -63,13 +63,13 @@
       <div class="upload-max-success" *ngIf="userVideoCounter <= 2">
         <img src="../../assets/img/icons/check_circle.svg" alt="" />
         <p *ngIf="userVideoCounter == 0 || userVideoCounter == 1">
-          You can upload {{ 3 - userVideoCounter }} more Videos
+          You can upload {{ 3 - userVideoCounter }} more videos
         </p>
-        <p *ngIf="userVideoCounter == 2">You can upolad {{ 3 - userVideoCounter }} more Video</p>
+        <p *ngIf="userVideoCounter == 2">You can upolad {{ 3 - userVideoCounter }} more video</p>
       </div>
       <div class="upload-max-error" *ngIf="userVideoCounter >= 3">
         <img src="../../assets/img/icons/warning.svg" alt="" />
-        <p>You cannot upload more than 3 Videos!</p>
+        <p>You cannot upload more than 3 videos!</p>
       </div>
     </div>
 

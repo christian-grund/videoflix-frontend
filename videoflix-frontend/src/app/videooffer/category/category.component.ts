@@ -19,10 +19,12 @@ interface ConversionStatusResponse {
 export class CategoryComponent implements OnInit {
   public basePath = 'http://localhost:8000/media/thumbnails/';
   public categories: any[] = [];
+  videoName: string = '';
 
-  is360pConverted: boolean = true;
-  is720pConverted: boolean = false;
-  is1080pConverted: boolean = false;
+  // is360pConverted: boolean = true;
+  // is720pConverted: boolean = false;
+  // is1080pConverted: boolean = false;
+  convertionProgress: number = 0;
   convertionFinished: boolean = false;
 
   constructor(private dataService: DataService, private videoPopupService: VideoPopupService) {}
@@ -31,12 +33,15 @@ export class CategoryComponent implements OnInit {
     this.dataService.videoData$.subscribe((videoData) => {
       if (videoData.length > 0) {
         this.updateCategories(videoData);
+        console.log('videoData:', videoData);
       }
     });
 
     this.dataService.conversionCheck$.subscribe((videoName: string) => {
       if (videoName) {
         this.checkConvertionStatus(videoName);
+        this.videoName = videoName;
+        console.log('this.videoName:', this.videoName);
       }
     });
   }
@@ -69,24 +74,18 @@ export class CategoryComponent implements OnInit {
           console.log('Response:', convertedResponse);
 
           if (convertedResponse['360p_status'] === 'completed') {
-            this.is360pConverted = true;
+            this.convertionProgress = 33;
             console.log('360p Status:', convertedResponse['360p_status']);
-          } else {
-            this.is360pConverted = false;
           }
 
           if (convertedResponse['720p_status'] === 'completed') {
-            this.is720pConverted = true;
+            this.convertionProgress = 67;
             console.log('720p Status:', convertedResponse['720p_status']);
-          } else {
-            this.is720pConverted = false;
           }
 
           if (convertedResponse['1080p_status'] === 'completed') {
-            this.is1080pConverted = true;
+            this.convertionProgress = 100;
             console.log('1080p Status:', convertedResponse['1080p_status']);
-          } else {
-            this.is1080pConverted = false;
           }
 
           if (
