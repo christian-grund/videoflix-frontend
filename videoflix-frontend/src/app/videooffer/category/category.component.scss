@@ -65,7 +65,6 @@
             cursor: pointer;
             transform: scale(1.1);
             transition: transform 0.225s ease-in-out;
-            // transform-origin: bottom;
           }
         }
 
@@ -74,18 +73,18 @@
           color: $color-white;
           font-size: 26px;
           left: 50%;
-          transform: translateX(-50%); /* Nur horizontal zentrieren */
+          transform: translateX(-50%);
         }
 
         .text {
           position: absolute;
-          top: 25%; /* Mittig */
-          transform: translate(-50%, -50%); /* Vollständig zentriert */
+          top: 25%;
+          transform: translate(-50%, -50%);
         }
 
         .progress {
-          top: 50%; /* Weiter oben */
-          transform: translate(-50%, -25%); /* Nur horizontal zentrieren */
+          top: 50%;
+          transform: translate(-50%, -25%);
         }
       }
     }
@@ -93,6 +92,6 @@
 }
 
 .disabled {
-  cursor: wait !important; /* Zeigt an, dass das Element nicht klickbar ist */
-  opacity: 0.5; /* Optional: Mache das Bild transparenter */
+  cursor: wait !important;
+  opacity: 0.5;
 }

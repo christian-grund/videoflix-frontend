@@ -1,31 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../shared/services/data.service';
-import { NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-startpage',
   standalone: true,
-  imports: [
-    HeaderComponent,
-    FooterComponent,
-    RouterModule,
-    FormsModule,
-    CommonModule,
-  ],
+  imports: [HeaderComponent, FooterComponent, RouterModule, FormsModule, CommonModule],
   templateUrl: './startpage.component.html',
   styleUrl: './startpage.component.scss',
 })
-export class StartpageComponent {
+export class StartpageComponent implements OnInit {
   email: string = '';
   emailValid: boolean = false;
   emailError: boolean = false;
+  isIntroPlaying: boolean = false;
 
   constructor(private router: Router, private dataService: DataService) {}
+
+  ngOnInit(): void {
+    this.isIntroPlaying = true;
+
+    setTimeout(() => {
+      this.isIntroPlaying = false;
+    }, 4000);
+  }
 
   onEmailChange(value: string) {
     this.email = value;

@@ -7,21 +7,10 @@
 <div class="popup-addvideo-content">
   <form #myForm="ngForm" class="add-video-container" (ngSubmit)="uploadVideo()">
     <h2>Add your own video</h2>
-    <p>
-      You can upload up to three videos, each with a maximum size of 50 megabytes. The file type
-      must be "mp4".
-    </p>
+    <p>You can upload up to three videos, each with a maximum size of 50 megabytes. The file type must be "mp4".</p>
     <div class="input-popup-container">
       <p>Title:</p>
-      <input
-        class="input-default"
-        type="text"
-        name="videoTitle"
-        [(ngModel)]="videoTitle"
-        #videoNameInput="ngModel"
-        placeholder=" "
-        required
-      />
+      <input class="input-default" type="text" name="videoTitle" [(ngModel)]="videoTitle" #videoNameInput="ngModel" placeholder=" " required />
     </div>
     <div class="input-popup-container">
       <p>Description:</p>
@@ -67,9 +56,7 @@
     <div class="user-video-counter-container">
       <div class="upload-max-success" *ngIf="userVideoCounter <= 2">
         <img src="../../assets/img/icons/check_circle.svg" alt="" />
-        <p *ngIf="userVideoCounter == 0 || userVideoCounter == 1">
-          You can upload {{ 3 - userVideoCounter }} more videos
-        </p>
+        <p *ngIf="userVideoCounter == 0 || userVideoCounter == 1">You can upload {{ 3 - userVideoCounter }} more videos</p>
         <p *ngIf="userVideoCounter == 2">You can upolad {{ 3 - userVideoCounter }} more video</p>
       </div>
       <div class="upload-max-error" *ngIf="userVideoCounter >= 3">
@@ -100,11 +87,7 @@
           Cancel
         </div>
       </button>
-      <button
-        type="submit"
-        class="btn-default"
-        [disabled]="myForm.invalid || !selectedFile || userVideoCounter >= 3"
-      >
+      <button type="submit" class="btn-default" [disabled]="myForm.invalid || !selectedFile || userVideoCounter >= 3">
         <div class="btn-text">
           <img class="favorite-icon" src="../../../assets/img/icons/upload.svg" alt="" />
           Upload

@@ -28,11 +28,7 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
 
   iconBasePath = '../../../assets/img/icons/';
 
-  constructor(
-    private dataService: DataService,
-    private videoPopupService: VideoPopupService,
-    private http: HttpClient
-  ) {}
+  constructor(private dataService: DataService, private videoPopupService: VideoPopupService, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.subscriptions.add(
@@ -102,8 +98,6 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
             this.isLoading = false;
             this.closeAddVideoPopup();
             this.dataService.triggerConvertionCheck(this.videoName);
-          } else {
-            console.log('Thumbnail in Bearbeitung...');
           }
         },
         error: (error) => {

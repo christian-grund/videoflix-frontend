@@ -1,3 +1,6 @@
+<div class="intro-animation" *ngIf="isIntroPlaying">
+  <img src="../../../assets/img/icons/logo_with_text.svg" class="logo-animation" alt="" />
+</div>
 <section>
   <div class="sp-main">
     <app-header></app-header>
@@ -22,17 +25,12 @@
             />
             <label for="email">Email Address</label>
             <div class="input-error" [ngClass]="{ active: emailError }">
-              <img
-                src="../../../assets/img/icons/warning.svg"
-                alt="email-format-warning"
-              />
+              <img src="../../../assets/img/icons/warning.svg" alt="email-format-warning" />
               <p>Invalid email format.</p>
             </div>
           </div>
         </div>
-        <button class="btn-default" type="submit" [disabled]="!email">
-          Sign up >
-        </button>
+        <button class="btn-default" type="submit" [disabled]="!email">Sign up ></button>
       </form>
     </div>
     <app-footer></app-footer>
