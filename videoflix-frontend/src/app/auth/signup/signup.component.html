@@ -21,10 +21,7 @@
             <label for="email">Email Address</label>
           </div>
           <div class="input-error" [ngClass]="{ active: emailError }">
-            <img
-              src="../../../assets/img/icons/warning.svg"
-              alt="email-format-warning"
-            />
+            <img src="../../../assets/img/icons/warning.svg" alt="email-format-warning" />
             <p>Invalid email format.</p>
           </div>
         </div>
@@ -70,39 +67,19 @@
             />
           </div>
 
-          <div
-            class="input-error"
-            [ngClass]="{ active: passwordError || isUserAlreadyRegistered }"
-          >
-            <img
-              src="../../../assets/img/icons/warning.svg"
-              alt="password-match-warning"
-            />
+          <div class="input-error" [ngClass]="{ active: passwordError || isUserAlreadyRegistered }">
+            <img src="../../../assets/img/icons/warning.svg" alt="password-match-warning" />
             <p *ngIf="passwordError">Passwords must match.</p>
-            <p *ngIf="isUserAlreadyRegistered">
-              An account with this email address already exists.
-            </p>
+            <p *ngIf="isUserAlreadyRegistered">An account with this email address already exists.</p>
           </div>
         </div>
 
-        <button
-          class="btn-default"
-          type="submit"
-          [disabled]="!email || !password || !confirmPassword"
-        >
-          Get Started
-        </button>
+        <button class="btn-default" type="submit" [disabled]="!email || !password || !confirmPassword">Get Started</button>
       </form>
       <div class="card" *ngIf="formSubmitted">
         <h1>Account created!</h1>
-        <p>
-          Thank you for registering. Please check your email inbox for a
-          confirmation message.
-        </p>
-        <p>
-          To complete your registration and activate your account, click on the
-          link provided in the email.
-        </p>
+        <p>Thank you for registering. Please check your email inbox for a confirmation message.</p>
+        <p>To complete your registration and activate your account, click on the link provided in the email.</p>
         <p>You can close this window now.</p>
       </div>
     </div>

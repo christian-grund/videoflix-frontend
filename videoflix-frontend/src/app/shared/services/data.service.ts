@@ -108,6 +108,6 @@ export class DataService {
   }
 
   triggerConvertionCheck(videoName: string) {
-    this.conversionCheckSubject.next(videoName); // Video-Name an alle Subscriber senden
+    this.conversionCheckSubject.next(videoName);
   }
 }

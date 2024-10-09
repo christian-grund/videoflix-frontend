@@ -11,13 +11,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [
-    HeaderComponent,
-    FooterComponent,
-    FormsModule,
-    CommonModule,
-    HttpClientModule,
-  ],
+  imports: [HeaderComponent, FooterComponent, FormsModule, CommonModule, HttpClientModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
@@ -34,11 +28,7 @@ export class SignupComponent implements OnInit {
   formSubmitted: boolean = false;
   isUserAlreadyRegistered: boolean = false;
 
-  constructor(
-    private dataService: DataService,
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private dataService: DataService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.dataService.currentEmail.subscribe((email) => (this.email = email));
@@ -55,10 +45,6 @@ export class SignupComponent implements OnInit {
 
     this.passwordError = this.password !== this.confirmPassword;
 
-    // if (this.isUserAlreadyRegistered) {
-    //   console.warn('User is already registered');
-    // } else
-
     if (!this.emailError && !this.passwordError) {
       console.log('Form valid!');
       this.dataService.changeEmail(this.email);
@@ -67,24 +53,17 @@ export class SignupComponent implements OnInit {
   }
 
   register() {
-    this.authService
-      .register({ email: this.email, password: this.password })
-      .subscribe({
-        next: (response) => {
-          this.message = 'User registered successfuly!';
-          this.isUserAlreadyRegistered = false;
-          this.formSubmitted = true;
-        },
-        error: (error) => {
-          // Falls `non_field_errors` nicht vorhanden ist, zeige eine allgemeine Fehlermeldung an
-          this.message =
-            'Registration failed: ' +
-            (error.error.non_field_errors
-              ? error.error.non_field_errors[0]
-              : 'Unknown error');
-          this.isUserAlreadyRegistered = true;
-        },
-      });
+    this.authService.register({ email: this.email, password: this.password }).subscribe({
+      next: (response) => {
+        this.message = 'User registered successfuly!';
+        this.isUserAlreadyRegistered = false;
+        this.formSubmitted = true;
+      },
+      error: (error) => {
+        this.message = 'Registration failed: ' + (error.error.non_field_errors ? error.error.non_field_errors[0] : 'Unknown error');
+        this.isUserAlreadyRegistered = true;
+      },
+    });
   }
 
   validateEmail(email: string): boolean {

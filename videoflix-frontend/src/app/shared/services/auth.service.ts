@@ -7,8 +7,7 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class AuthService {
-  private tokenKey = 'token'; // Schlüssel für den Token im LocalStorage
-  private apiUrl = 'http://localhost:8000/'; // Dein Backend-Endpunkt
+  private apiUrl = 'http://localhost:8000/';
   private isLoggedInSubject = new BehaviorSubject<boolean | null>(null);
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: object) {}
@@ -31,27 +30,15 @@ export class AuthService {
   checkAuthStatus(): void {
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('token');
-      this.isLoggedInSubject.next(!!token); // true, wenn Token vorhanden, false wenn nicht
+      this.isLoggedInSubject.next(!!token);
     } else {
-      this.isLoggedInSubject.next(false); // Auf dem Server false
+      this.isLoggedInSubject.next(false);
     }
   }
 
   isLoggedIn(): Observable<boolean | null> {
     return this.isLoggedInSubject.asObservable();
   }
-
-  // isLoggedIn(): Promise<boolean> {
-  //   return new Promise((resolve) => {
-  //     // Wenn wir uns im Browser befinden, prüfen wir den token
-  //     if (typeof window !== 'undefined') {
-  //       const token = localStorage.getItem('token');
-  //       resolve(!!token); // true, wenn token vorhanden ist
-  //     } else {
-  //       resolve(false); // false, wenn auf dem Server
-  //     }
-  //   });
-  // }
 
   activateAccount(token: string): Observable<any> {
     return this.http.post(`${this.apiUrl}activate/`, { token });

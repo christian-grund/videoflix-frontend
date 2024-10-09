@@ -1,10 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { VideoPopupService } from '../../services/videopopup.service';
@@ -31,7 +26,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.route.url.subscribe((segments) => {
       this.currentUrl = '/' + segments.map((segment) => segment.path).join('/');
-      this.changeDetectorRef.detectChanges(); // Hier wird die Change Detection ausgelöst
+      this.changeDetectorRef.detectChanges();
     });
   }
 
@@ -42,12 +37,11 @@ export class HeaderComponent implements OnInit {
         this.message = 'Logout successful!';
         this.router.navigate(['/']);
         setTimeout(() => {
-          location.reload(); // Seite neuladen, um alte Routen zu invalidieren
+          location.reload();
         }, 0);
       },
       error: (error) => {
-        this.message =
-          'Logout failed: ' + (error.error ? error.error : 'Unknown error');
+        this.message = 'Logout failed: ' + (error.error ? error.error : 'Unknown error');
       },
     });
   }
