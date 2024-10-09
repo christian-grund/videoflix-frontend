@@ -5,21 +5,13 @@
       <p>Generating new thumbnail...</p>
     </div>
   </div>
-  <div class="popup-addvideo-content">
-    <form #myForm="ngForm" class="add-video-container height-550" (ngSubmit)="saveEditedVideo()">
+  <div class="popup-edit-video-content">
+    <form #myForm="ngForm" class="edit-video-container height-550" (ngSubmit)="saveEditedVideo()">
       <h2>Edit your video</h2>
 
       <div class="input-popup-container">
         <p>Title:</p>
-        <input
-          class="input-default"
-          type="text"
-          name="videoTitle"
-          [(ngModel)]="videoTitle"
-          #videoNameInput="ngModel"
-          placeholder=" "
-          required
-        />
+        <input class="input-default" type="text" name="videoTitle" [(ngModel)]="videoTitle" #videoNameInput="ngModel" placeholder=" " required />
       </div>
       <div class="input-popup-container">
         <p>Description:</p>

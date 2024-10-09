@@ -1,9 +1,6 @@
 <div class="popup-content">
   <div class="content-top">
-    <img
-      [src]="thumbBasePath + videoData?.name + '_with_text.jpg'"
-      [alt]="videoData?.name"
-    />
+    <img [src]="thumbBasePath + videoData?.name + '_with_text.jpg'" [alt]="videoData?.name" />
   </div>
   <div class="content-bottom">
     <div class="categories">
@@ -20,36 +17,21 @@
         </div>
       </button>
 
-      <button
-        class="btn-default"
-        *ngIf="videoData && videoData.categories.includes('My Videos')"
-      >
+      <button class="btn-default" *ngIf="videoData && videoData.categories.includes('My Videos')">
         <div class="btn-text" (click)="openEditVideoPopup(videoData.name)">
           <img src="../../assets/img/icons/edit.svg" alt="" />
           Edit
         </div>
       </button>
 
-      <button
-        class="btn-default"
-        (click)="addToOrRemoveFromFavorites()"
-        *ngIf="!isFavorite()"
-      >
+      <button class="btn-default" (click)="addToOrRemoveFromFavorites()" *ngIf="!isFavorite()">
         <div class="btn-text">
-          <img
-            class="favorite-icon"
-            src="../../assets/img/icons/favorite.svg"
-            alt=""
-          />
+          <img class="favorite-icon" src="../../assets/img/icons/favorite.svg" alt="" />
           Add to Favorites
         </div>
       </button>
 
-      <button
-        class="btn-default"
-        (click)="addToOrRemoveFromFavorites()"
-        *ngIf="isFavorite()"
-      >
+      <button class="btn-default" (click)="addToOrRemoveFromFavorites()" *ngIf="isFavorite()">
         <div class="btn-text">
           <img src="../../assets/img/icons/favorite_remove.svg" alt="" />
           Remove from Favorites

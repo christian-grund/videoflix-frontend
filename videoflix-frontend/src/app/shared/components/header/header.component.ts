@@ -34,6 +34,7 @@ export class HeaderComponent implements OnInit {
     this.authService.logout().subscribe({
       next: (response) => {
         localStorage.removeItem('token');
+        localStorage.removeItem('introPlayed');
         this.message = 'Logout successful!';
         this.router.navigate(['/']);
         setTimeout(() => {

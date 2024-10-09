@@ -73,7 +73,6 @@ export class EditvideopopupComponent implements OnInit {
         console.error('Fehler beim Aktualisieren der Kategorien:', error);
       }
     }
-    // this.closeEditVideoPopup();
     this.dataService.loadVideoData(this.dataService.getAuthHeaders());
   }
 
@@ -107,9 +106,8 @@ export class EditvideopopupComponent implements OnInit {
     if (this.videoData) {
       try {
         const response = await this.dataService.deleteBackendVideo(this.videoData.id);
-        console.log('Video wurde erfolgreich gelöscht:', response);
       } catch (error) {
-        console.log('Fehler beim löschen des Videos:', error);
+        console.error('Fehler beim löschen des Videos:', error);
       }
     }
     this.closeEditVideoPopup();

@@ -1,13 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../../shared/services/data.service';
 import { Router } from '@angular/router';
@@ -19,7 +11,6 @@ import { VideoPopupService } from '../../shared/services/videopopup.service';
   imports: [CommonModule, FormsModule],
   templateUrl: './openvideopopup.component.html',
   styleUrl: './openvideopopup.component.scss',
-  // encapsulation: ViewEncapsulation.None,
 })
 export class OpenvideopopupComponent implements OnInit {
   @Input() selectedVideoName: string | null = null;
@@ -34,11 +25,7 @@ export class OpenvideopopupComponent implements OnInit {
 
   thumbBasePath = 'http://localhost:8000/media/thumbnails/';
 
-  constructor(
-    private dataService: DataService,
-    private router: Router,
-    private videoPopupService: VideoPopupService
-  ) {}
+  constructor(private dataService: DataService, private router: Router, private videoPopupService: VideoPopupService) {}
 
   ngOnInit(): void {
     this.videoPopupService.videoName$.subscribe((videoName) => {
@@ -91,12 +78,10 @@ export class OpenvideopopupComponent implements OnInit {
       }
       this.dataService.updateVideoCategories(this.videoData.id, this.videoData.categories);
 
-      this.dataService
-        .patchBackendVideoCategories(this.videoData.id, this.videoData.categories)
-        .subscribe({
-          next: () => console.log('Kategorien erfolgreich im Backend aktualisiert.'),
-          error: (error) => console.error('Fehler beim Aktualisieren der Kategorien:', error),
-        });
+      this.dataService.patchBackendVideoCategories(this.videoData.id, this.videoData.categories).subscribe({
+        next: () => console.log('Kategorien erfolgreich im Backend aktualisiert.'),
+        error: (error) => console.error('Fehler beim Aktualisieren der Kategorien:', error),
+      });
     }
   }
 }

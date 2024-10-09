@@ -38,6 +38,6 @@ export class AppComponent {
   title = 'videoflix';
 
   constructor(private authService: AuthService) {
-    this.authService.checkAuthStatus(); // Authentifizierungsstatus beim App-Start prüfen
+    this.authService.checkAuthStatus();
   }
 }

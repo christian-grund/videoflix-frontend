@@ -1,10 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../shared/services/data.service';
 import { CommonModule } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-startpage',
@@ -19,14 +20,24 @@ export class StartpageComponent implements OnInit {
   emailError: boolean = false;
   isIntroPlaying: boolean = false;
 
-  constructor(private router: Router, private dataService: DataService) {}
+  constructor(private router: Router, private dataService: DataService, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
-    this.isIntroPlaying = true;
+    if (isPlatformBrowser(this.platformId)) {
+      const introPlayed = localStorage.getItem('introPlayed');
 
-    setTimeout(() => {
-      this.isIntroPlaying = false;
-    }, 4000);
+      if (!introPlayed) {
+        this.isIntroPlaying = true;
+        setTimeout(() => {
+          this.isIntroPlaying = false;
+          // Setze Flag, dass die Intro-Animation gespielt wurde
+          localStorage.setItem('introPlayed', 'true');
+        }, 4000);
+      } else {
+        // Animation wurde schon abgespielt
+        this.isIntroPlaying = false;
+      }
+    }
   }
 
   onEmailChange(value: string) {

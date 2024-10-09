@@ -53,11 +53,7 @@ section {
           height: 108px;
           padding: 0 44px;
           box-sizing: border-box;
-          background: linear-gradient(
-            to bottom,
-            rgba(0, 0, 0, 0.7),
-            rgba(0, 0, 0, 0)
-          );
+          background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
 
           img {
             width: 48px;
@@ -129,7 +125,6 @@ section {
           flex-direction: column;
           padding: 0 24px;
           box-sizing: border-box;
-          z-index: 10000000000 !important;
 
           .control-buttons {
             display: flex;
@@ -170,10 +165,9 @@ section {
                     width: 100px;
                     position: relative;
                     background-color: transparent;
-                    // top: -5px;
 
                     &::-webkit-slider-runnable-track {
-                      background-color: #b5b5b5 !important; // Farbe der Leiste
+                      background-color: #b5b5b5 !important;
                       height: 5px;
                       position: relative;
                       top: -5px;
@@ -181,8 +175,8 @@ section {
 
                     &::-webkit-slider-thumb {
                       appearance: none;
-                      background-color: $color-white; // Farbe des Schiebereglers
-                      border: 2px solid $color-white; // Rahmenfarbe des Schiebereglers
+                      background-color: $color-white;
+                      border: 2px solid $color-white;
                       width: 15px;
                       height: 15px;
                       border-radius: 50%;
@@ -192,15 +186,15 @@ section {
                     }
 
                     &::-moz-range-track {
-                      background: #b5b5b5; // Farbe der Leiste in Firefox
+                      background: #b5b5b5;
                       height: 5px;
                       position: relative;
                       top: -5px;
                     }
 
                     &::-moz-range-thumb {
-                      background: $color-white; // Farbe des Schiebereglers in Firefox
-                      border: 2px solid $color-white; // Rahmenfarbe des Schiebereglers
+                      background: $color-white;
+                      border: 2px solid $color-white;
                       width: 15px;
                       height: 15px;
                       border-radius: 50%;
@@ -268,7 +262,7 @@ section {
 
 .video:fullscreen + .progress-bar-container,
 .video:fullscreen + .controls {
-  display: flex !important; // Sicherstellen, dass die benutzerdefinierten Controls im Fullscreen-Modus sichtbar sind
+  display: flex !important;
 }
 
 .video:fullscreen {
@@ -283,8 +277,7 @@ video::-webkit-media-controls-enclosure {
 }
 
 .video-container:fullscreen {
-  /* Optional: Falls weitere Stile für den Fullscreen-Modus benötigt werden */
   .controls {
-    display: flex; // Ensure the custom controls are visible in fullscreen mode
+    display: flex;
   }
 }

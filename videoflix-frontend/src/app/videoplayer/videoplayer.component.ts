@@ -1,13 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DataService } from '../shared/services/data.service';
 import { HttpHeaders } from '@angular/common/http';
@@ -61,10 +53,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   async ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      const headers = new HttpHeaders().set(
-        'Authorization',
-        `Token ${localStorage.getItem('token')}`
-      );
+      const headers = new HttpHeaders().set('Authorization', `Token ${localStorage.getItem('token')}`);
       await this.dataService.loadVideoData(headers);
     }
 
@@ -261,7 +250,6 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
       videoContainer
         .requestFullscreen()
         .then(() => {
-          // Optional: Update the controls visibility or any other logic after entering fullscreen
           this.updateControlsVisibility();
         })
         .catch((err) => {
@@ -273,7 +261,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   updateControlsVisibility() {
     const controls = document.querySelector('.controls') as HTMLElement;
     if (controls) {
-      controls.style.display = 'flex'; // Ensure the custom controls are always visible
+      controls.style.display = 'flex';
     }
   }
 

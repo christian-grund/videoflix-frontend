@@ -15,16 +15,8 @@ import { ActivateComponent } from './auth/activate/activate.component';
 export const routes: Routes = [
   { path: '', component: StartpageComponent },
   { path: 'home', component: StartpageComponent },
-  {
-    path: 'videos',
-    component: VideoofferComponent,
-    canActivate: [authGuard],
-  },
-  {
-    path: 'videos/watch/:videoname',
-    component: VideoplayerComponent,
-    canActivate: [authGuard],
-  },
+  { path: 'videos', component: VideoofferComponent, canActivate: [authGuard] },
+  { path: 'videos/watch/:videoname', component: VideoplayerComponent, canActivate: [authGuard] },
   { path: 'signup', component: SignupComponent },
   { path: 'activate', component: ActivateComponent },
   { path: 'login', component: LoginComponent },
@@ -33,16 +25,3 @@ export const routes: Routes = [
   { path: 'imprint', component: ImprintComponent },
   { path: 'dataprivacy', component: DataprivacyComponent },
 ];
-
-// {
-//   path: 'videos',
-//   component: VideoofferComponent,
-//   canActivate: [authGuard],
-//   resolve: { isLoggedIn: authResolver },
-// },
-// {
-//   path: 'videos/watch/:videoname',
-//   component: VideoplayerComponent,
-//   canActivate: [authGuard],
-//   resolve: { isLoggedIn: authResolver },
-// },

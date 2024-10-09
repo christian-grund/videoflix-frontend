@@ -1,144 +1,166 @@
 @import "../../shared/style/colors.scss";
 
-// .popup {
-//   position: fixed;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-//   z-index: 1000;
-//   width: 667px;
-//   max-width: 90%;
-//   border-radius: 20px;
+.popup-add-video-content {
+  border-radius: 20px;
+  position: relative;
+  background-color: $color-white;
+  display: flex;
+  justify-content: center;
 
-//   .popup-addvideo-content {
-//     border-radius: 20px;
-//     position: relative;
-//     background-color: $color-white;
-//     display: flex;
-//     justify-content: center;
+  .add-video-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center !important;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    height: 700px;
+    padding: 40px;
+    box-sizing: border-box;
+    gap: 32px;
 
-//     .add-video-container {
-//       display: flex;
-//       justify-content: flex-start;
-//       align-items: center !important;
-//       flex-direction: column;
-//       width: 100%;
-//       max-width: 600px;
-//       height: 700px;
-//       padding: 40px;
-//       box-sizing: border-box;
-//       gap: 32px;
+    h2 {
+      color: $color-purple;
+      font-size: 36px;
+      margin-top: 16px;
+    }
 
-//       h2 {
-//         color: $color-purple;
-//         font-size: 36px;
-//       }
+    .input-popup-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
 
-//       .input-popup-container {
-//         display: flex;
-//         justify-content: space-between;
-//         align-items: center;
-//         width: 100%;
+      input {
+        width: 360px;
+        border-radius: 40px;
+      }
+    }
 
-//         input {
-//           width: 360px;
-//           border-radius: 40px;
-//         }
-//       }
+    .sound-question-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
 
-//       .sound-question-container {
-//         display: flex;
-//         justify-content: space-between;
-//         align-items: center;
-//         width: 100%;
-//       }
+    .radio-btn-container {
+      display: flex;
+      gap: 16px;
+      padding-right: 8px;
+    }
 
-//       .radio-btn-container {
-//         display: flex;
-//         gap: 16px;
-//       }
+    label {
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+    }
 
-//       label {
-//         font-size: 16px;
-//         display: flex;
-//         align-items: center;
-//       }
+    input[type="radio"] {
+      margin-right: 8px;
+    }
 
-//       input[type="radio"] {
-//         margin-right: 8px;
-//       }
+    .btns-bottom {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
 
-//       .btns-bottom {
-//         display: flex;
-//         justify-content: space-between;
-//         width: 100%;
-//       }
+    .upload-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
 
-//       .upload-container {
-//         display: flex;
-//         justify-content: space-between;
-//         width: 100%;
+      .file-upload-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
 
-//         .file-upload {
-//           position: relative;
-//           display: inline-block;
-//           cursor: pointer;
-//           margin-bottom: 20px;
+        .file-upload {
+          position: relative;
+          display: inline-block;
+          cursor: pointer;
 
-//           input[type="file"] {
-//             display: none; // Hide the default file input
-//           }
+          input[type="file"] {
+            display: none; // Hide the default file input
+          }
 
-//           span {
-//             padding: 10px 20px;
-//             background-color: $color-white;
-//             color: $color-purple;
-//             border-radius: 40px;
-//             border: 1px solid $color-black;
-//             transition: background-color 0.3s;
-//             font-size: 16px;
+          span {
+            padding: 10px 20px;
+            background-color: $color-white;
+            color: $color-purple;
+            border-radius: 40px;
+            border: 1px solid $color-black;
+            transition: background-color 0.3s;
+            font-size: 16px;
 
-//             &:hover {
-//               background-color: rgba(0, 0, 0, 0.1);
-//             }
-//           }
-//         }
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.1);
+            }
+          }
+        }
+      }
 
-//         .file-name {
-//           font-size: 14px;
-//           color: #333;
-//           text-align: center;
-//           word-wrap: break-word; // To handle long file names
-//         }
-//       }
+      .file-name {
+        font-size: 14px;
+        color: #333;
+        text-align: center;
+        word-wrap: break-word; // To handle long file names
+      }
+    }
 
-//       .userVideoCounterContainer {
-//         display: flex;
-//         justify-content: flex-start;
-//         width: 100%;
+    .user-video-counter-container {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
 
-//         .upload-max-error,
-//         .upload-max-success {
-//           display: flex;
-//           // justify-content: space-between;
-//           align-items: center;
-//           gap: 12px;
-//           width: 100%;
+      .upload-max-error,
+      .upload-max-success {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
 
-//           img {
-//             width: 22px;
-//           }
+        img {
+          width: 22px;
+        }
 
-//           &.upload-max-success {
-//             color: #008000;
-//           }
+        &.upload-max-success {
+          color: $color-green;
+        }
 
-//           &.upload-max-error {
-//             color: $color-red;
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
+        &.upload-max-error {
+          color: $color-red;
+        }
+      }
+    }
+
+    .check-file-size-container {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+
+      .file-size-check,
+      .file-size-error,
+      .file-size-success {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+
+        img {
+          width: 22px;
+        }
+
+        &.file-size-success {
+          color: $color-green;
+        }
+
+        &.file-size-error {
+          color: $color-red;
+        }
+      }
+    }
+  }
+}

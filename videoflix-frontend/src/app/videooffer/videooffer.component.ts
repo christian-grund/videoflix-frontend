@@ -32,14 +32,10 @@ import { Inject, PLATFORM_ID } from '@angular/core';
   styleUrl: './videooffer.component.scss',
 })
 export class VideoofferComponent implements OnInit {
-  @ViewChild('videoPlayer')
-  videoPlayer!: ElementRef<HTMLVideoElement>;
-  @ViewChild(AddvideopopupComponent)
-  addVideoPopupComponent!: AddvideopopupComponent;
-  @ViewChild(OpenvideopopupComponent)
-  openVideoPopupComponent!: OpenvideopopupComponent;
-  @ViewChild(EditvideopopupComponent)
-  editVideoPopupComponent!: EditvideopopupComponent;
+  @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
+  @ViewChild(AddvideopopupComponent) addVideoPopupComponent!: AddvideopopupComponent;
+  @ViewChild(OpenvideopopupComponent) openVideoPopupComponent!: OpenvideopopupComponent;
+  @ViewChild(EditvideopopupComponent) editVideoPopupComponent!: EditvideopopupComponent;
   selectedVideoName: string | null = null;
   editVideoName: string | null = null;
 
@@ -80,15 +76,12 @@ export class VideoofferComponent implements OnInit {
 
     this.authService.isLoggedIn().subscribe((isLoggedIn) => {
       if (isLoggedIn !== null) {
-        this.isLoading = false; // Ladeanzeige beenden, wenn der Status bekannt ist
+        this.isLoading = false;
       }
     });
 
     if (isPlatformBrowser(this.platformId)) {
-      const headers = new HttpHeaders().set(
-        'Authorization',
-        `Token ${localStorage.getItem('token')}`
-      );
+      const headers = new HttpHeaders().set('Authorization', `Token ${localStorage.getItem('token')}`);
       await this.dataService.loadVideoData(headers);
     }
 
