@@ -43,6 +43,6 @@
     "video.js": "^8.17.3"
   },
   "prettier": {
-    "printWidth": 100
+    "printWidth": 150
   }
 }

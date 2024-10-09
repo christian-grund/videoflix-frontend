@@ -9,13 +9,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-resetpassword',
   standalone: true,
-  imports: [
-    HeaderComponent,
-    FooterComponent,
-    FormsModule,
-    CommonModule,
-    RouterModule,
-  ],
+  imports: [HeaderComponent, FooterComponent, FormsModule, CommonModule, RouterModule],
   templateUrl: './resetpassword.component.html',
   styleUrl: './resetpassword.component.scss',
 })
@@ -28,33 +22,25 @@ export class ResetpasswordComponent implements OnInit {
   token: string | null = null;
   uid: number | null = null;
 
-  constructor(
-    private authService: AuthService,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private authService: AuthService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {}
 
   onSubmit() {
-    this.matchError = !this.passwordMatch(); // Setzt den matchError direkt basierend auf dem Vergleich
-    console.log('passwordMatch:', !this.matchError); // Zeigt das Gegenteil von matchError an
+    this.matchError = !this.passwordMatch();
 
     this.route.queryParams.subscribe((params) => {
       this.token = params['token'];
       this.uid = parseInt(params['uid'], 10);
       if (this.token && this.uid) {
-        this.authService
-          .passwordResetConfirm(this.token, this.uid, this.password)
-          .subscribe({
-            next: (response) => {
-              console.log('Password successfuly changed', response);
-              this.formSubmitted = true;
-            },
-            error: (error) => {
-              console.error('An error occured:', error);
-              this.formSubmitted = false;
-            },
-          });
+        this.authService.passwordResetConfirm(this.token, this.uid, this.password).subscribe({
+          next: (response) => {
+            this.formSubmitted = true;
+          },
+          error: (error) => {
+            this.formSubmitted = false;
+          },
+        });
       }
     });
   }

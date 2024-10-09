@@ -61,12 +61,12 @@ export class CategoryComponent implements OnInit {
   }
 
   checkConvertionStatus(videoName: string) {
-    console.log('videoName:', videoName);
+    this.convertionProgress = 0;
+    this.convertionFinished = false;
     const interval = setInterval(() => {
       this.dataService.loadConvertionStatus(videoName).subscribe({
         next: (response) => {
           const convertedResponse = response as unknown as ConversionStatusResponse;
-          console.log('Response:', convertedResponse);
 
           if (convertedResponse['360p_status'] === 'completed') {
             this.convertionProgress = 33;

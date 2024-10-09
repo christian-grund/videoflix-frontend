@@ -22,11 +22,7 @@ export class LoginComponent implements OnInit {
   matchError: boolean = false;
   isRememberMeChecked: boolean = false;
 
-  constructor(
-    private dataService: DataService,
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private dataService: DataService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.dataService.currentEmail.subscribe((email) => (this.email = email));
@@ -45,9 +41,7 @@ export class LoginComponent implements OnInit {
         }, 100);
       },
       error: (error) => {
-        this.message =
-          'Login failed: ' +
-          (error.error.non_field_errors ? error.error.non_field_errors[0] : 'Unknown error');
+        this.message = 'Login failed: ' + (error.error.non_field_errors ? error.error.non_field_errors[0] : 'Unknown error');
         this.matchError = true;
       },
     });

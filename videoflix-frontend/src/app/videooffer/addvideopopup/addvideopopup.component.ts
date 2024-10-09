@@ -53,7 +53,7 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
     if (target.files && target.files.length > 0) {
       this.selectedFile = target.files[0];
       this.fileInserted = true;
-      if (this.selectedFile.size <= 26214400) {
+      if (this.selectedFile.size <= 52428800) {
         this.fileSizeError = false;
       } else {
         this.fileSizeError = true;
@@ -64,7 +64,7 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
   }
 
   async uploadVideo() {
-    if (this.selectedFile && this.selectedFile.size <= 26214400 && this.userVideoCounter <= 3) {
+    if (this.selectedFile && this.selectedFile.size <= 52428800 && this.userVideoCounter <= 3) {
       this.isLoading = true;
       this.videoName = this.selectedFile.name.replace('.mp4', '');
 
