@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   showPassword: boolean = false;
   matchError: boolean = false;
   isRememberMeChecked: boolean = false;
+  isUserRegistered: boolean = true;
 
   constructor(private dataService: DataService, private authService: AuthService, private router: Router) {}
 
@@ -30,27 +31,44 @@ export class LoginComponent implements OnInit {
     this.checkSavedCredentials();
   }
 
-  login() {
-    this.authService.login(this.email, this.password).subscribe({
+  async login() {
+    await this.checkUserRegistered();
+    if (!this.isUserRegistered) {
+      this.authService.login(this.email, this.password).subscribe({
+        next: (response) => {
+          this.matchError = false;
+          localStorage.setItem('token', response.token);
+          this.authService.checkAuthStatus();
+          setTimeout(() => {
+            this.router.navigate(['/videos']);
+          }, 100);
+        },
+        error: (error) => {
+          this.message = 'Login failed: ' + (error.error.non_field_errors ? error.error.non_field_errors[0] : 'Unknown error');
+          this.matchError = true;
+        },
+      });
+
+      if (this.isRememberMeChecked) {
+        this.saveCredentials();
+      } else {
+        this.deleteCredentials();
+      }
+    }
+  }
+
+  async checkUserRegistered() {
+    this.authService.checkUserExists(this.email).subscribe({
       next: (response) => {
-        this.matchError = false;
-        localStorage.setItem('token', response.token);
-        this.authService.checkAuthStatus();
-        setTimeout(() => {
-          this.router.navigate(['/videos']);
-        }, 100);
+        console.log('checkUserRegistered', response);
+        if (response.exists) {
+          this.isUserRegistered = true;
+        }
       },
-      error: (error) => {
-        this.message = 'Login failed: ' + (error.error.non_field_errors ? error.error.non_field_errors[0] : 'Unknown error');
-        this.matchError = true;
+      error: () => {
+        this.isUserRegistered = false;
       },
     });
-
-    if (this.isRememberMeChecked) {
-      this.saveCredentials();
-    } else {
-      this.deleteCredentials();
-    }
   }
 
   saveCredentials() {

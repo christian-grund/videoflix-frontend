@@ -6,14 +6,7 @@
         <h1>Log in</h1>
 
         <div class="input-container">
-          <input
-            class="input-default mb-12"
-            type="email"
-            name="email"
-            [(ngModel)]="email"
-            #emailInput="ngModel"
-            placeholder=" "
-          />
+          <input class="input-default mb-12" type="email" name="email" [(ngModel)]="email" #emailInput="ngModel" placeholder=" " />
           <label for="email">Email Address</label>
         </div>
 
@@ -37,31 +30,20 @@
               (click)="togglePasswordVisibility()"
             />
           </div>
-          <div class="input-error" [ngClass]="{ active: matchError }">
-            <img
-              src="../../../assets/img/icons/warning.svg"
-              alt="password-match-warning"
-            />
-            <p>Email and password don't match.</p>
+          <div class="input-error" [ngClass]="{ active: matchError || !isUserRegistered }">
+            <img src="../../../assets/img/icons/warning.svg" alt="password-match-warning" />
+            <p *ngIf="matchError">Email and password don't match.</p>
+            <p *ngIf="!isUserRegistered">No account found with this email.</p>
           </div>
         </div>
 
         <div class="remember-me">
-          <input
-            type="checkbox"
-            id="rememberMe"
-            name="remember-me"
-            [(ngModel)]="isRememberMeChecked"
-          />
+          <input type="checkbox" id="rememberMe" name="remember-me" [(ngModel)]="isRememberMeChecked" />
           <label for="rememberMe">Remember me</label>
         </div>
-        <button class="btn-default" [disabled]="!email || !password">
-          Log in
-        </button>
+        <button class="btn-default" [disabled]="!email || !password">Log in</button>
       </form>
-      <a [routerLink]="['/forgot-password']" class="forgot-pw"
-        >Forgot password?</a
-      >
+      <a [routerLink]="['/forgot-password']" class="forgot-pw">Forgot password?</a>
       <div class="sign-up-link">
         <p>New to Videoflix?</p>
         <a [routerLink]="['/signup']">Sign up now</a>

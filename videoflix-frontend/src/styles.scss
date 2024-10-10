@@ -140,10 +140,10 @@ app-footer {
   align-self: flex-start;
   gap: 12px;
   margin-top: 8px;
-
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s, height 0.3s, opacity 0.3s ease;
+  padding-left: 2px;
 
   img {
     width: 18px;
@@ -264,5 +264,31 @@ app-footer {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 400px) {
+  .btn-default {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  .passwordVisibility {
+    right: 16px !important;
+  }
+
+  .input-container {
+    input {
+      &:focus,
+      &:not(:placeholder-shown) {
+        & + label {
+          left: 12px !important;
+        }
+      }
+    }
+
+    label {
+      left: 12px !important;
+    }
   }
 }

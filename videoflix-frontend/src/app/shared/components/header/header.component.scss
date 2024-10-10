@@ -58,3 +58,19 @@
   height: 48px;
   cursor: pointer;
 }
+
+@media (max-width: 800px) {
+  .header-content {
+    padding: 0 32px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .header-content {
+    padding: 0 16px !important;
+  }
+
+  .logo-with-text {
+    width: 160px !important;
+  }
+}
