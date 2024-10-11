@@ -49,6 +49,7 @@ a {
   border-width: 0;
   transition: background-color 0.3s ease;
   width: auto !important;
+  flex-shrink: 0;
 
   &:hover {
     cursor: pointer;
@@ -99,10 +100,12 @@ app-footer {
 
 .input-container {
   position: relative;
+  // display: inline-block;
   width: 100%;
 
   input {
-    width: 360px;
+    // width: 400px !important;
+    width: 100%;
     border-radius: 40px;
     padding: 20px 28px 4px 24px;
 
@@ -130,6 +133,7 @@ app-footer {
 }
 
 .input-error-container {
+  // width: 80% !important;
   width: 100%;
   margin-bottom: -24px;
 }
@@ -265,6 +269,21 @@ app-footer {
   100% {
     transform: rotate(360deg);
   }
+}
+
+@media (max-width: 700px) {
+  // .input-error-container {
+  //   flex-grow: 1 !important;
+  // }
+
+  // .input-container {
+  //   flex-grow: 1 !important;
+  //   input {
+  //     width: unset !important;
+  //     // display: inline-block !important;
+  //     flex-grow: 1 !important;
+  //   }
+  // }
 }
 
 @media (max-width: 400px) {

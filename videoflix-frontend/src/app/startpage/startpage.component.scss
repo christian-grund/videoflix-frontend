@@ -44,8 +44,11 @@ section {
 
       .sign-up-form {
         display: flex;
+        justify-content: space-between;
         align-items: center;
         gap: 16px;
+        // width: 100%;
+        // flex-grow: 1;
 
         .input-error-container {
           width: unset !important;
@@ -91,15 +94,11 @@ section {
   z-index: 10;
   background-color: $color-black;
 
-  audio {
+  .logo-animation {
+    width: 80vw;
     z-index: 12;
+    animation: growAnimation 3s ease-in-out;
   }
-}
-
-.logo-animation {
-  width: 80vw;
-  z-index: 12;
-  animation: growAnimation 3s ease-in-out;
 }
 
 @keyframes growAnimation {
@@ -113,7 +112,14 @@ section {
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
+  h1 {
+    font-size: 40px;
+  }
+
+  .input-error-container {
+    width: calc(100% - 200px) !important;
+  }
 }
 
 @media (max-width: 400px) {
