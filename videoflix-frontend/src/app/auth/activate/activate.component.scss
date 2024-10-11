@@ -9,7 +9,7 @@ section {
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.95);
 
-  .login-main {
+  .activate-main {
     width: 100%;
     max-width: 1440px !important;
     height: 100vh;
@@ -17,17 +17,12 @@ section {
     justify-content: center;
     align-items: center;
     position: relative;
-    background-image: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.4),
-        rgba(0, 0, 0, 0.2),
-        rgba(0, 0, 0, 0.4)
-      ),
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)),
       url("../../../assets/img/background/log_in_bg.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
 
-    .login-content {
+    .activate-content {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -60,8 +55,35 @@ section {
         p {
           color: $color-black;
           font-size: 20px;
+          word-break: normal;
         }
       }
     }
+  }
+}
+
+@media (max-width: 800px) {
+  .activate-content {
+    margin: 0 32px !important;
+    padding: 24px 32px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .activate-content {
+    margin: 0 16px !important;
+    padding: 24px 20px !important;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
+  img {
+    height: 38px !important;
+  }
+
+  p {
+    font-size: 19px !important;
   }
 }
