@@ -69,3 +69,31 @@ section {
     }
   }
 }
+
+@media (max-width: 800px) {
+  .data-privacy-content {
+    padding: 100px 48px !important;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
+  h2 {
+    font-size: 28px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .data-privacy-content {
+    padding: 100px 24px !important;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+}

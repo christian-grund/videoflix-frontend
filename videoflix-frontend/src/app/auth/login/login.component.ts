@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   async login() {
     await this.checkUserRegistered();
-    if (!this.isUserRegistered) {
+    if (this.isUserRegistered) {
       this.authService.login(this.email, this.password).subscribe({
         next: (response) => {
           this.matchError = false;

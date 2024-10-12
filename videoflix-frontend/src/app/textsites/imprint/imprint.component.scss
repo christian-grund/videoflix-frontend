@@ -69,3 +69,35 @@ section {
     }
   }
 }
+
+@media (max-width: 800px) {
+  .imprint-content {
+    padding: 100px 48px !important;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
+  h2 {
+    font-size: 28px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .imprint-content {
+    padding: 100px 24px !important;
+  }
+
+  h1 {
+    font-size: 32px !important;
+  }
+
+  h2 {
+    font-size: 22px !important;
+  }
+
+  h3 {
+    font-size: 18px !important;
+  }
+}
