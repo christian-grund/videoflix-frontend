@@ -33,7 +33,7 @@ section {
       .video-container {
         width: 100%;
         max-width: 1440px;
-        height: 100%;
+        // height: 100%;
         margin: 0 auto;
         background: $color-black;
         color: $color-white;
@@ -41,7 +41,6 @@ section {
         border-radius: 10px;
         position: relative;
         padding-bottom: 60px;
-        position: relative;
         box-sizing: border-box;
 
         .video-header {
@@ -357,27 +356,19 @@ video::-webkit-media-controls-enclosure {
 }
 
 @media (max-height: 575px) {
-  // video {
-  //   max-height: 100% !important; /* Kleinere Videogröße auf mobilen Geräten */
-  // }
-
   // .progress-bar-container {
-  //   height: 8% !important; /* Kleinere Progress-Bar */
+  //   bottom: 48px !important;
   // }
 
   // .controls {
-  //   height: 15% !important; /* Kleinere Steuerungselemente */
+  //   bottom: 8px !important;
   // }
-
-  .progress-bar-container {
-    bottom: 48px !important;
-  }
-
-  .controls {
-    bottom: 8px !important;
-  }
 
   .video-container {
     padding: unset !important;
+
+    video {
+      height: 100%;
+    }
   }
 }

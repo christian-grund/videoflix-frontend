@@ -102,3 +102,52 @@ section {
 .input-container label {
   top: 33%;
 }
+
+@media (max-width: 1440px) {
+  .preview-top {
+    height: auto !important;
+    video {
+      position: static !important;
+    }
+  }
+
+  .preview-text {
+    top: 21% !important;
+  }
+}
+
+@media (max-width: 1000px) {
+  .preview-top {
+    margin-top: 100px !important;
+  }
+
+  h1 {
+    font-size: 10vw !important;
+  }
+
+  .preview-text {
+    gap: 0 !important;
+
+    p {
+      padding-bottom: 24px;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .preview-text {
+    top: 10% !important;
+    left: 32px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .preview-text {
+    // top: 10% !important;
+    left: 20px !important;
+
+    p {
+      font-size: 15px;
+    }
+  }
+}
