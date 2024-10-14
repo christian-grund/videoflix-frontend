@@ -8,6 +8,7 @@ body {
   font-family: "DM Sans";
   margin: 0;
   padding: 0;
+  // overflow-y: auto;
 }
 
 h1 {
@@ -184,7 +185,11 @@ app-footer {
   z-index: 1000;
   width: 667px;
   max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
   border-radius: 20px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .close-popup {

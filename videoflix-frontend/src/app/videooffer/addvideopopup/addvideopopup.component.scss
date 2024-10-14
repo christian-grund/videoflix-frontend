@@ -7,6 +7,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  overflow-y: auto;
 
   .add-video-container {
     display: flex;
@@ -16,7 +17,7 @@
     width: 100%;
     padding: 60px 40px;
     box-sizing: border-box;
-    gap: 24px;
+    gap: 32px;
 
     h2 {
       color: $color-purple;
@@ -173,6 +174,7 @@
 @media (max-width: 800px) {
   .add-video-container {
     padding: 24px 32px !important;
+    gap: 24px !important;
   }
 }
 
