@@ -8,7 +8,7 @@
         {{ category }}
       </div>
     </div>
-    <p>{{ videoData?.description }}</p>
+    <p class="description">{{ videoData?.description }}</p>
     <div class="btns-bottom">
       <button class="btn-default" (click)="openVideo(videoData?.name || '')">
         <div class="btn-text">
@@ -27,14 +27,14 @@
       <button class="btn-default" (click)="addToOrRemoveFromFavorites()" *ngIf="!isFavorite()">
         <div class="btn-text">
           <img class="favorite-icon" src="../../assets/img/icons/favorite.svg" alt="" />
-          Add to Favorites
+          <p class="favorites-text">Add to Favorites</p>
         </div>
       </button>
 
       <button class="btn-default" (click)="addToOrRemoveFromFavorites()" *ngIf="isFavorite()">
         <div class="btn-text">
           <img src="../../assets/img/icons/favorite_remove.svg" alt="" />
-          Remove from Favorites
+          <p class="favorites-text">Remove from Favorites</p>
         </div>
       </button>
     </div>
