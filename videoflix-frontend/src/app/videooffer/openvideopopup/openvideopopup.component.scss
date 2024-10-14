@@ -68,16 +68,6 @@
   }
 }
 
-// @media (min-width: 650px) {
-//   .favorites-text-long {
-//     display: flex;
-//   }
-
-//   .favorites-text-short {
-//     display: none;
-//   }
-// }
-
 @media (max-width: 650px) {
   .content-top img {
     height: unset !important;
@@ -91,11 +81,10 @@
     gap: 16px;
   }
 
-  .btns-bottom {
-    flex-direction: column;
-    gap: 16px;
-    align-items: center !important;
-    justify-content: center !important;
+  @media (max-width: 550px) {
+    .btn-text p {
+      display: none !important;
+    }
   }
 }
 

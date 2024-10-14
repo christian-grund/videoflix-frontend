@@ -13,14 +13,14 @@
       <button class="btn-default" (click)="openVideo(videoData?.name || '')">
         <div class="btn-text">
           <img src="../../assets/img/icons/play.png" alt="" />
-          Play
+          <p>Play</p>
         </div>
       </button>
 
       <button class="btn-default" *ngIf="videoData && videoData.categories.includes('My Videos')">
         <div class="btn-text" (click)="openEditVideoPopup(videoData.name)">
           <img src="../../assets/img/icons/edit.svg" alt="" />
-          Edit
+          <p>Edit</p>
         </div>
       </button>
 

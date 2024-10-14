@@ -1,4 +1,4 @@
-<div class="popup" *ngIf="editVideoName">
+<div *ngIf="editVideoName">
   <div class="loader-container" *ngIf="isLoading">
     <div class="loader">
       <img class="spin" [src]="iconBasePath + 'waiting.svg'" alt="loading..." />
@@ -6,11 +6,11 @@
     </div>
   </div>
   <div class="popup-edit-video-content">
-    <form #myForm="ngForm" class="edit-video-container height-550" (ngSubmit)="saveEditedVideo()">
+    <form #myForm="ngForm" class="edit-video-container" (ngSubmit)="saveEditedVideo()">
       <h2>Edit your video</h2>
 
       <div class="input-popup-container">
-        <p>Title:</p>
+        <p class="title">Title:</p>
         <input class="input-default" type="text" name="videoTitle" [(ngModel)]="videoTitle" #videoNameInput="ngModel" placeholder=" " required />
       </div>
       <div class="input-popup-container">
@@ -54,25 +54,25 @@
         </div>
       </div>
 
-      <div class="btns-bottom mt-40">
+      <div class="btns-bottom">
         <button type="button" class="btn-default" (click)="closeEditVideoPopup()">
           <div class="btn-text">
             <img class="favorite-icon" src="../../assets/img/icons/close_white.svg" alt="" />
-            Cancel
+            <p>Cancel</p>
           </div>
         </button>
 
         <button type="button" class="btn-default bg-red hover-red" (click)="deleteVideo()">
           <div class="btn-text">
             <img class="favorite-icon" src="../../assets/img/icons/delete.svg" alt="" />
-            Delete
+            <p>Delete</p>
           </div>
         </button>
 
         <button type="submit" class="btn-default" [disabled]="myForm['invalid']">
           <div class="btn-text">
             <img class="favorite-icon" src="../../assets/img/icons/check_white.svg" alt="" />
-            Save
+            <p>Save</p>
           </div>
         </button>
       </div>
