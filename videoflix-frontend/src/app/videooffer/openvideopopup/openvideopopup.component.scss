@@ -97,11 +97,6 @@
     align-items: center !important;
     justify-content: center !important;
   }
-
-  .close-popup {
-    top: 8px;
-    right: 8px;
-  }
 }
 
 @media (max-width: 650px) {
@@ -118,10 +113,5 @@
 
   .description {
     max-width: 314px;
-  }
-
-  .close-popup {
-    top: 4px;
-    right: 4px;
   }
 }

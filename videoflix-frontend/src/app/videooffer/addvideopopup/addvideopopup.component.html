@@ -10,7 +10,7 @@
     <h2>Add your own video</h2>
     <p>You can upload up to three videos, each with a maximum size of 50 megabytes. The file type must be "mp4".</p>
     <div class="input-popup-container">
-      <p>Title:</p>
+      <p class="title">Title:</p>
       <input class="input-default" type="text" name="videoTitle" [(ngModel)]="videoTitle" #videoNameInput="ngModel" placeholder=" " required />
     </div>
     <div class="input-popup-container">
@@ -85,13 +85,13 @@
       <button type="button" class="btn-default" (click)="closeAddVideoPopup()">
         <div class="btn-text">
           <img class="favorite-icon" src="../../../assets/img/icons/close_white.svg" alt="" />
-          Cancel
+          <p>Cancel</p>
         </div>
       </button>
       <button type="submit" class="btn-default" [disabled]="myForm.invalid || !selectedFile || userVideoCounter >= 3">
         <div class="btn-text">
           <img class="favorite-icon" src="../../../assets/img/icons/upload.svg" alt="" />
-          Upload
+          <p>Upload</p>
         </div>
       </button>
     </div>
