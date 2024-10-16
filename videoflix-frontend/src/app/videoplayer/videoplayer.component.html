@@ -7,72 +7,74 @@
           <img src="../../assets/img/icons/logo_no_text.svg" alt="" />
         </div>
 
-        <video
-          #videoPlayer
-          class="video"
-          id="videoPlayer"
-          preload="metadata"
-          (loadedmetadata)="onMetadataLoaded()"
-          (timeupdate)="onTimeUpdate()"
-          (play)="startUpdatingProgress()"
-          (pause)="stopUpdatingProgress()"
-          (ended)="onVideoEnded()"
-          (click)="playPause()"
-          (mouseenter)="startTimer()"
-          (mouseleave)="startTimer()"
-          [src]="videoBasePath + videoName + videoResolution + '.mp4'"
-        ></video>
+        <div class="video-wrapper">
+          <video
+            #videoPlayer
+            class="video"
+            id="videoPlayer"
+            preload="metadata"
+            (loadedmetadata)="onMetadataLoaded()"
+            (timeupdate)="onTimeUpdate()"
+            (play)="startUpdatingProgress()"
+            (pause)="stopUpdatingProgress()"
+            (ended)="onVideoEnded()"
+            (click)="playPause()"
+            (mouseenter)="startTimer()"
+            (mouseleave)="startTimer()"
+            [src]="videoBasePath + videoName + videoResolution + '.mp4'"
+          ></video>
 
-        <div class="progress-bar-container">
-          <div class="progress-container" (click)="seek($event)" (mousemove)="onMouseMove($event)" (mouseleave)="resetHover()">
-            <div class="progress-bar" [style.width.%]="progress"></div>
-            <div class="progress-hover" [style.width.%]="hoverProgress" *ngIf="isHovering"></div>
+          <div class="progress-bar-container">
+            <div class="progress-container" (click)="seek($event)" (mousemove)="onMouseMove($event)" (mouseleave)="resetHover()">
+              <div class="progress-bar" [style.width.%]="progress"></div>
+              <div class="progress-hover" [style.width.%]="hoverProgress" *ngIf="isHovering"></div>
+            </div>
+            <span>{{ formatTime(currentTime) }} / {{ formatTime(videoDuration) }}</span>
           </div>
-          <span>{{ formatTime(currentTime) }} / {{ formatTime(videoDuration) }}</span>
-        </div>
 
-        <div class="controls">
-          <div class="control-buttons">
-            <div class="btns-left">
-              <img
-                (click)="playPause()"
-                [src]="iconBasePath + (isVideoEnded ? 'replay.svg' : isPlaying ? 'pause.svg' : 'play.svg')"
-                alt="Play/Pause"
-              />
-
-              <img (click)="skip(-5)" src="../../assets/img/icons/videoplayer/replay_10.svg" alt="Replay-10" />
-              <img (click)="skip(5)" src="../../assets/img/icons/videoplayer/forward_10.svg" alt="Forward-10" />
-
-              <div class="volume-container">
+          <div class="controls">
+            <div class="control-buttons">
+              <div class="btns-left">
                 <img
-                  (click)="toggleVolumeSlider()"
-                  [src]="!videoData.has_sound ? iconBasePath + 'mute.svg' : iconBasePath + (isMuted ? 'mute.svg' : 'volume.svg')"
-                  alt="Sound/Mute"
+                  (click)="playPause()"
+                  [src]="iconBasePath + (isVideoEnded ? 'replay.svg' : isPlaying ? 'pause.svg' : 'play.svg')"
+                  alt="Play/Pause"
                 />
 
-                <div class="volume-slider" *ngIf="isVolumeSliderVisible && videoData.has_sound">
-                  <input type="range" min="0" max="1" step="0.01" [value]="currentVolume" (input)="setVolume($event)" />
-                </div>
-                <div class="no-sound-menu" *ngIf="isNoSoundTextVisible && !videoData.has_sound">
-                  <p>No sound available <br />for this video</p>
+                <img (click)="skip(-5)" src="../../assets/img/icons/videoplayer/replay_10.svg" alt="Replay-10" />
+                <img (click)="skip(5)" src="../../assets/img/icons/videoplayer/forward_10.svg" alt="Forward-10" />
+
+                <div class="volume-container">
+                  <img
+                    (click)="toggleVolumeSlider()"
+                    [src]="!videoData.has_sound ? iconBasePath + 'mute.svg' : iconBasePath + (isMuted ? 'mute.svg' : 'volume.svg')"
+                    alt="Sound/Mute"
+                  />
+
+                  <div class="volume-slider" *ngIf="isVolumeSliderVisible && videoData.has_sound">
+                    <input type="range" min="0" max="1" step="0.01" [value]="currentVolume" (input)="setVolume($event)" />
+                  </div>
+                  <div class="no-sound-menu" *ngIf="isNoSoundTextVisible && !videoData.has_sound">
+                    <p>No sound available <br />for this video</p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="video-title">
-              {{ videoData.title }}
-            </div>
-
-            <div class="btns-right">
-              <img (click)="toggleResolutionMenu()" src="../../assets/img/icons/videoplayer/tune.svg" alt="Tune" />
-              <div class="resolution-menu" *ngIf="isResolutionMenuVisible">
-                <ul>
-                  <li *ngFor="let res of resolutions" (click)="setResolution(res)" [ngClass]="{ selected: res === selectedResolution }">
-                    {{ res }}p
-                  </li>
-                </ul>
+              <div class="video-title">
+                {{ videoData.title }}
               </div>
-              <img (click)="toggleFullscreen()" src="../../assets/img/icons/videoplayer/fullscreen_open.svg" alt="Fullscreen" />
+
+              <div class="btns-right">
+                <img (click)="toggleResolutionMenu()" src="../../assets/img/icons/videoplayer/tune.svg" alt="Tune" />
+                <div class="resolution-menu" *ngIf="isResolutionMenuVisible">
+                  <ul>
+                    <li *ngFor="let res of resolutions" (click)="setResolution(res)" [ngClass]="{ selected: res === selectedResolution }">
+                      {{ res }}p
+                    </li>
+                  </ul>
+                </div>
+                <img (click)="toggleFullscreen()" src="../../assets/img/icons/videoplayer/fullscreen_open.svg" alt="Fullscreen" />
+              </div>
             </div>
           </div>
         </div>
