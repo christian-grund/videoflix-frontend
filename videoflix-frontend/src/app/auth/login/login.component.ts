@@ -39,21 +39,22 @@ export class LoginComponent implements OnInit {
           this.matchError = false;
           localStorage.setItem('token', response.token);
           this.authService.checkAuthStatus();
-          setTimeout(() => {
-            this.router.navigate(['/videos']);
-          }, 100);
+          setTimeout(() => {this.router.navigate(['/videos'])}, 100);
         },
         error: (error) => {
           this.message = 'Login failed: ' + (error.error.non_field_errors ? error.error.non_field_errors[0] : 'Unknown error');
           this.matchError = true;
         },
       });
+      this.checkRememberMe();
+    }
+  }
 
-      if (this.isRememberMeChecked) {
-        this.saveCredentials();
-      } else {
-        this.deleteCredentials();
-      }
+  checkRememberMe() {
+    if (this.isRememberMeChecked) {
+      this.saveCredentials();
+    } else {
+      this.deleteCredentials();
     }
   }
 

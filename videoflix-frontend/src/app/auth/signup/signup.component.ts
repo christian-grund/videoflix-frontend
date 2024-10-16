@@ -31,6 +31,10 @@ export class SignupComponent implements OnInit {
   constructor(private dataService: DataService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    this.subscribeCurrentEmail();
+  }
+
+  subscribeCurrentEmail() {
     this.dataService.currentEmail.subscribe((email) => (this.email = email));
   }
 
@@ -42,11 +46,9 @@ export class SignupComponent implements OnInit {
   onSubmit() {
     this.onEmailChange(this.email);
     this.emailError = !this.emailValid;
-
     this.passwordError = this.password !== this.confirmPassword;
 
     if (!this.emailError && !this.passwordError) {
-      console.log('Form valid!');
       this.dataService.changeEmail(this.email);
       this.register();
     }
@@ -54,8 +56,7 @@ export class SignupComponent implements OnInit {
 
   register() {
     this.authService.register({ email: this.email, password: this.password }).subscribe({
-      next: (response) => {
-        this.message = 'User registered successfuly!';
+      next: () => {
         this.isUserAlreadyRegistered = false;
         this.formSubmitted = true;
       },

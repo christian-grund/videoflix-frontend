@@ -28,25 +28,24 @@ export class ResetpasswordComponent implements OnInit {
 
   onSubmit() {
     this.matchError = !this.passwordMatch();
+    this.checkQueryParams();
+  }
 
+  checkQueryParams() {
     this.route.queryParams.subscribe((params) => {
       this.token = params['token'];
       this.uid = parseInt(params['uid'], 10);
       if (this.token && this.uid) {
         this.authService.passwordResetConfirm(this.token, this.uid, this.password).subscribe({
-          next: (response) => {
-            this.formSubmitted = true;
-          },
-          error: (error) => {
-            this.formSubmitted = false;
-          },
+          next: () => {this.formSubmitted = true},
+          error: () => {this.formSubmitted = false},
         });
       }
     });
   }
 
   passwordMatch(): boolean {
-    return this.password === this.confirmPassword; // Direkter Vergleich mit Rückgabewert
+    return this.password === this.confirmPassword; 
   }
 
   togglePasswordVisibility() {
