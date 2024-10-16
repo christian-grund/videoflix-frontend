@@ -70,24 +70,29 @@ export class VideoofferComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-
   async ngOnInit() {
     this.checkAuthStatus();
     this.setupAuthListener();
-    
+
     if (isPlatformBrowser(this.platformId)) {
       await this.loadVideoData();
     }
-    
+
     this.setupDataListeners();
     this.setupPopupListeners();
     this.closePopupIfOpen();
   }
 
+  /**
+   * Checks the current authentication status using the authService.
+   */
   checkAuthStatus() {
     this.authService.checkAuthStatus();
   }
-  
+
+  /**
+   * Sets up a listener to monitor the authentication status and updates the loading state accordingly.
+   */
   setupAuthListener(): void {
     this.authService.isLoggedIn().subscribe((isLoggedIn) => {
       if (isLoggedIn !== null) {
@@ -95,12 +100,20 @@ export class VideoofferComponent implements OnInit {
       }
     });
   }
-  
+
+  /**
+   * Loads video data from the data service with an authorization token from local storage.
+   * @returns {Promise<void>} A promise that resolves when the video data has been loaded.
+   */
   async loadVideoData(): Promise<void> {
     const headers = new HttpHeaders().set('Authorization', `Token ${localStorage.getItem('token')}`);
     await this.dataService.loadVideoData(headers);
   }
-  
+
+  /**
+   * Sets up listeners for video data changes, updating the preview video
+   * when new data is available.
+   */
   setupDataListeners(): void {
     this.dataService.videoData$.subscribe((data) => {
       if (data.length > 0) {
@@ -108,61 +121,93 @@ export class VideoofferComponent implements OnInit {
       }
     });
   }
-  
+
+  /**
+   * Sets up listeners for popup events, including the video name, edit video name,
+   * and add video popup visibility status.
+   */
   setupPopupListeners(): void {
     this.videoPopupService.videoName$.subscribe((videoName) => {
       this.selectedVideoName = videoName;
     });
-  
+
     this.videoPopupService.editVideoName$.subscribe((videoName) => {
       this.editVideoName = videoName;
     });
-  
+
     this.videoPopupService.addVideoPopupStatus$.subscribe((status) => {
       this.isAddVideoPopupVisible = status;
     });
   }
-  
+
+  /**
+   * Closes the video popup if it is open and resets the preview video to the
+   * 'breakout' video.
+   */
   closePopupIfOpen(): void {
     this.previewVideo = this.dataService.getVideoByName('breakout');
     if (this.openVideoPopupComponent) {
       this.openVideoPopupComponent.closePopup();
     }
   }
-  
 
+  /**
+   * Opens the video popup if a video name is selected and the popup component is available.
+   */
   ngAfterViewInit() {
     if (this.selectedVideoName && this.openVideoPopupComponent) {
       this.openVideoPopupComponent.openPopup();
     }
   }
 
+  /**
+   * Resets the selected video name to null, effectively closing the popup.
+   */
   closePopup() {
     this.selectedVideoName = null;
   }
 
+  /**
+   * Triggers the closing of the add video popup component.
+   */
   triggerCloseAddVideoPopup(): void {
     this.addVideoPopupComponent.closeAddVideoPopup();
   }
 
+  /**
+   * Triggers the closing of the edit video popup component.
+   */
   triggerCloseEditVideoPopup(): void {
     this.editVideoPopupComponent.closeEditVideoPopup();
   }
 
+  /**
+   * Triggers the closing of the open video popup component.
+   */
   triggerCloseOpenVideoPopup(): void {
     this.openVideoPopupComponent.closePopup();
   }
 
+  /**
+   * Navigates to the video watch page for the specified video name.
+   * @param {string} videoName - The name of the video to watch.
+   */
   openVideo(videoName: string) {
     if (videoName) {
       this.router.navigate([`/videos/watch/${videoName}`]);
     }
   }
 
+  /**
+   * Enables the ability to play video by setting the corresponding flag.
+   */
   enableVideoPlay() {
     this.canPlayVideo = true;
   }
 
+  /**
+   * Plays the video if the canPlayVideo flag is true.
+   */
   playVideo() {
     if (this.canPlayVideo) {
       const videoPlayer = this.videoPlayer.nativeElement;
@@ -170,11 +215,17 @@ export class VideoofferComponent implements OnInit {
     }
   }
 
+  /**
+   * Pauses the currently playing video.
+   */
   pauseVideo() {
     const videoPlayer = this.videoPlayer.nativeElement;
     videoPlayer.pause();
   }
 
+  /**
+   * Replays the video from the beginning and starts playback.
+   */
   replayVideo() {
     const videoPlayer = this.videoPlayer.nativeElement;
     videoPlayer.currentTime = 0;
