@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { VideoPopupService } from '../../shared/services/videopopup.service';
 import { DataService } from '../../shared/services/data.service';
 import { HttpHeaders } from '@angular/common/http';
+import { response } from 'express';
 
 @Component({
   selector: 'app-editvideopopup',
@@ -64,7 +65,7 @@ export class EditvideopopupComponent implements OnInit {
       const formData = this.updateFormData();
       try {
         const response = await this.dataService.patchBackendVideo(this.videoData.id, formData);
-        this.checkUpdatedThumbnailStatus();
+        this.checkUpdatedThumbnailInterval();
       } catch (error) {
         console.error('Fehler beim Aktualisieren der Kategorien:', error);
       }
@@ -84,30 +85,32 @@ export class EditvideopopupComponent implements OnInit {
     return formData;
   }
 
-  checkUpdatedThumbnailStatus() {
-    const interval = setInterval(() => {
-      this.dataService.loadThumbnailStatus(this.editVideoName as string).subscribe({
-        next: (response) => {
-          if (response.status === 'completed') {
-            console.log('Thumbnail wurde erfolgreich erstellt');
-            clearInterval(interval);
-            setTimeout(() => {
-              this.dataService.loadVideoData(this.dataService.getAuthHeaders());
-            }, 1000);
+  checkUpdatedThumbnailInterval() {
+    const interval: NodeJS.Timeout = setInterval(() => this.checkUpdatedThumbnailStatus(interval), 500);
+  }
 
-            this.dataService.triggerConvertionCheck(this.videoName);
-            this.isLoading = false;
-            this.closeEditVideoPopup();
-          } else {
-            console.log('Thumbnail in Bearbeitung...');
-          }
-        },
-        error: (error) => {
-          console.error('Fehler beim Überprüfen des Thumbnail-Status:', error);
-          clearInterval(interval);
-        },
-      });
-    }, 500);
+  checkUpdatedThumbnailStatus(interval: NodeJS.Timeout) {
+    this.dataService.loadThumbnailStatus(this.editVideoName as string).subscribe({
+      next: (response) => this.handleThumbnailRespone(response, interval),
+      error: (error) => this.handleThumbnailError(error, interval),
+    });
+  }
+
+  handleThumbnailRespone(response: any, interval: NodeJS.Timeout) {
+    if (response.status === 'completed') {
+      clearInterval(interval);
+      setTimeout(() => this.dataService.loadVideoData(this.dataService.getAuthHeaders()), 1000);
+      this.dataService.triggerConvertionCheck(this.videoName);
+      this.isLoading = false;
+      this.closeEditVideoPopup();
+    } else {
+      console.log('Creating Thumbnail...');
+    }
+  }
+
+  handleThumbnailError(error: any, interval: NodeJS.Timeout) {
+    console.error('Fehler beim Überprüfen des Thumbnail-Status:', error);
+    clearInterval(interval);
   }
 
   async deleteVideo() {

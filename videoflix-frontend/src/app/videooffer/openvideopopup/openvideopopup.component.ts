@@ -28,6 +28,10 @@ export class OpenvideopopupComponent implements OnInit {
   constructor(private dataService: DataService, private router: Router, private videoPopupService: VideoPopupService) {}
 
   ngOnInit(): void {
+    this.subscribeVideoName();
+  }
+
+  subscribeVideoName() {
     this.videoPopupService.videoName$.subscribe((videoName) => {
       this.selectedVideoName = videoName;
 
@@ -76,8 +80,19 @@ export class OpenvideopopupComponent implements OnInit {
       } else {
         this.videoData.categories.splice(favoriteIndex, 1);
       }
-      this.dataService.updateVideoCategories(this.videoData.id, this.videoData.categories);
+      this.updateVideoCategories();
+      this.patchBackendVideoCategories();
+    }
+  }
 
+  updateVideoCategories() {
+    if (this.videoData) {
+      this.dataService.updateVideoCategories(this.videoData.id, this.videoData.categories);
+    }
+  }
+
+  patchBackendVideoCategories() {
+    if (this.videoData) {
       this.dataService.patchBackendVideoCategories(this.videoData.id, this.videoData.categories).subscribe({
         next: () => console.log('Kategorien erfolgreich im Backend aktualisiert.'),
         error: (error) => console.error('Fehler beim Aktualisieren der Kategorien:', error),
