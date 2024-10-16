@@ -52,47 +52,73 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   async ngOnInit() {
+    await this.loadData();
+    this.getVideoData();
+    this.subscribeToRouteUrl();
+  }
+
+  async loadData() {
     if (isPlatformBrowser(this.platformId)) {
       const headers = new HttpHeaders().set('Authorization', `Token ${localStorage.getItem('token')}`);
       await this.dataService.loadVideoData(headers);
     }
+  }
 
+  getVideoData() {
     this.dataService.videoData$.subscribe((videoData) => {
       if (videoData && videoData.length > 0) {
         this.videoData = this.dataService.getVideoByName(this.videoName);
       }
     });
+  }
 
+  subscribeToRouteUrl() {
     this.route.paramMap.subscribe((params) => {
       this.videoName = params.get('videoname')!;
     });
   }
 
+
   ngAfterViewInit() {
     if (this.videoPlayer) {
-      const video = this.videoPlayer.nativeElement;
-
       const videoPlayer = this.videoPlayer.nativeElement;
-      videoPlayer.addEventListener('loadedmetadata', () => {
+
+      this.onLoadedmetadata(videoPlayer);
+      this.onCanPlayThrough(videoPlayer);
+      this.onTimeUpdateEvent(videoPlayer);
+      this.onFullscreenChange(videoPlayer);
+    }
+  }
+
+  onLoadedmetadata(videoPlayer: any) {
+    videoPlayer.addEventListener('loadedmetadata', () => {
+      this.videoDuration = videoPlayer.duration;
+      this.cdr.detectChanges();
+      setTimeout(() => {}, 100);
+    });
+  }
+
+  onCanPlayThrough(videoPlayer: any) {
+    videoPlayer.addEventListener('canplaythrough', () => {
+      if (this.videoDuration === 0) {
         this.videoDuration = videoPlayer.duration;
         this.cdr.detectChanges();
-        setTimeout(() => {}, 100);
-      });
-      videoPlayer.addEventListener('canplaythrough', () => {
-        if (this.videoDuration === 0) {
-          this.videoDuration = videoPlayer.duration;
-          this.cdr.detectChanges();
-        }
-      });
-      videoPlayer.addEventListener('timeupdate', () => {
-        this.currentTime = videoPlayer.currentTime;
-        this.cdr.detectChanges();
-      });
-      videoPlayer.addEventListener('fullscreenchange', () => {
-        this.isFullscreen = !!document.fullscreenElement;
-        this.updateControlsVisibility();
-      });
-    }
+      }
+    });
+  }
+
+  onTimeUpdateEvent(videoPlayer: any) {
+    videoPlayer.addEventListener('timeupdate', () => {
+      this.currentTime = videoPlayer.currentTime;
+      this.cdr.detectChanges();
+    });
+  }
+
+  onFullscreenChange(videoPlayer: any) {
+    videoPlayer.addEventListener('fullscreenchange', () => {
+      this.isFullscreen = !!document.fullscreenElement;
+      this.updateControlsVisibility();
+    });
   }
 
   onMetadataLoaded() {
@@ -277,7 +303,6 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   setResolution(resolution: number) {
     const videoPlayer = this.videoPlayer.nativeElement;
     this.videoStartTime = videoPlayer.currentTime;
-    console.log('videoStartTime:', this.videoStartTime);
     this.isPlaying = !videoPlayer.paused;
 
     this.selectedResolution = resolution;

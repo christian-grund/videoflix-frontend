@@ -23,6 +23,10 @@ export class StartpageComponent implements OnInit {
   constructor(private router: Router, private dataService: DataService, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
+   this.checkIntroPlayed();
+  }
+
+  checkIntroPlayed() {
     if (isPlatformBrowser(this.platformId)) {
       const introPlayed = localStorage.getItem('introPlayed');
 
@@ -30,11 +34,9 @@ export class StartpageComponent implements OnInit {
         this.isIntroPlaying = true;
         setTimeout(() => {
           this.isIntroPlaying = false;
-          // Setze Flag, dass die Intro-Animation gespielt wurde
           localStorage.setItem('introPlayed', 'true');
         }, 4000);
       } else {
-        // Animation wurde schon abgespielt
         this.isIntroPlaying = false;
       }
     }
@@ -47,14 +49,11 @@ export class StartpageComponent implements OnInit {
 
   onSubmit() {
     if (this.emailValid) {
-      console.log('emailValid:', this.emailValid);
       this.emailError = false;
       this.dataService.changeEmail(this.email);
       this.router.navigate(['/signup']);
     } else {
-      console.log('Invalid email');
       this.emailError = true;
-      console.log('emailError:', this.emailError);
     }
   }
 
