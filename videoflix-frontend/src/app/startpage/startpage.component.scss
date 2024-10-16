@@ -44,14 +44,13 @@ section {
 
       .sign-up-form {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
-        gap: 16px;
-        // width: 100%;
-        // flex-grow: 1;
+        gap: 80px;
+        width: 100%;
 
         .input-error-container {
-          width: unset !important;
+          width: unset;
         }
         .input-container {
           input {
@@ -112,18 +111,55 @@ section {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
+  .sp-content {
+    padding: 0 24px !important;
+  }
+
   h1 {
     font-size: 40px;
   }
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 29px !important;
+  }
+
+  .sp-content p:first-child {
+    font-size: 19px !important;
+  }
+
+  .sp-content p:last-child {
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .sp-content p {
+    text-align: center !important;
+  }
+
+  .sign-up-form {
+    flex-direction: column;
+    gap: 32px !important;
+  }
 
   .input-error-container {
-    width: calc(100% - 200px) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .input-container input {
+    box-sizing: border-box !important;
   }
 }
 
 @media (max-width: 400px) {
   .sp-content {
-    padding: 0 16px;
+    padding: 0 16px !important;
   }
 }
