@@ -27,12 +27,19 @@ export class CategoryComponent implements OnInit {
   constructor(private dataService: DataService, private videoPopupService: VideoPopupService) {}
 
   ngOnInit() {
+    this.subscribeVideoData();
+    this.subscribeVideoName();
+  }
+
+  subscribeVideoData() {
     this.dataService.videoData$.subscribe((videoData) => {
       if (videoData.length > 0) {
         this.updateCategories(videoData);
       }
     });
+  }
 
+  subscribeVideoName() {
     this.dataService.conversionCheck$.subscribe((videoName: string) => {
       if (videoName) {
         this.checkConvertionStatus(videoName);
@@ -61,39 +68,49 @@ export class CategoryComponent implements OnInit {
   }
 
   checkConvertionStatus(videoName: string) {
+    this.resetConvertionStatus;
+    const interval = setInterval(() => {
+      this.checkConvertionProgress(videoName, interval);
+    }, 500);
+  }
+
+  resetConvertionStatus() {
     this.convertionProgress = 0;
     this.convertionFinished = false;
-    const interval = setInterval(() => {
-      this.dataService.loadConvertionStatus(videoName).subscribe({
-        next: (response) => {
-          const convertedResponse = response as unknown as ConversionStatusResponse;
+  }
 
-          if (convertedResponse['360p_status'] === 'completed') {
-            this.convertionProgress = 33;
-          }
 
-          if (convertedResponse['720p_status'] === 'completed') {
-            this.convertionProgress = 67;
-          }
+  checkConvertionProgress(videoName: string, interval: NodeJS.Timeout) {
+    this.dataService.loadConvertionStatus(videoName).subscribe({
+      next: (response) => this.handleConvertionResponse(response, interval),
+      error: (error) => this.handleConvertionError(error, interval),
+    });
+  }
 
-          if (convertedResponse['1080p_status'] === 'completed') {
-            this.convertionProgress = 100;
-          }
+  handleConvertionResponse(response: any, interval: NodeJS.Timeout) {
+    const convertedResponse = response as unknown as ConversionStatusResponse;
+    this.updateConvertionProgress(convertedResponse);
 
-          if (
-            convertedResponse['360p_status'] === 'completed' &&
-            convertedResponse['720p_status'] === 'completed' &&
-            convertedResponse['1080p_status'] === 'completed'
-          ) {
-            this.convertionFinished = true;
-            clearInterval(interval);
-          }
-        },
-        error: (error) => {
-          console.error('Fehler beim Überprüfen des Convertion-Status:', error);
-          clearInterval(interval);
-        },
-      });
-    }, 500);
+    if (this.isConvertionComplete(convertedResponse)) {
+      this.convertionFinished = true;
+      clearInterval(interval);
+    }
+  }
+
+  updateConvertionProgress(response: ConversionStatusResponse) {
+    if (response['360p_status'] === 'completed') this.convertionProgress = 33;
+    if (response['720p_status'] === 'completed') this.convertionProgress = 67;
+    if (response['1080p_status'] === 'completed') this.convertionProgress = 100;
+  }
+
+  isConvertionComplete(response: ConversionStatusResponse): boolean {
+    return response['360p_status'] === 'completed' &&
+    response['720p_status'] === 'completed' &&
+    response['1080p_status'] === 'completed';
+  }
+
+  handleConvertionError(error: any, interval: NodeJS.Timeout) {
+    console.error('Fehler beim Überprüfen des Convertion-Status:', error);
+    clearInterval(interval);
   }
 }

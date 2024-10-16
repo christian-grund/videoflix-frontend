@@ -31,6 +31,10 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
   constructor(private dataService: DataService, private videoPopupService: VideoPopupService, private http: HttpClient) {}
 
   ngOnInit(): void {
+    this.subscribeVideoCounter();
+  }
+
+  subscribeVideoCounter() {
     this.subscriptions.add(
       this.videoPopupService.triggerCountVideos$.subscribe(() => {
         this.countUserUploadedVideos();
@@ -60,19 +64,13 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
   }
 
   async uploadVideo() {
-    if (this.selectedFile && this.selectedFile.size <= 52428800 && this.userVideoCounter <= 3) {
+    if (this.isUploadValid()) {
       this.isLoading = true;
-      this.videoName = this.selectedFile.name.replace('.mp4', '');
-
-      const uploadVideoData = new FormData();
-      uploadVideoData.append('name', this.videoName);
-      uploadVideoData.append('title', this.videoTitle);
-      uploadVideoData.append('description', this.videoDescription);
-      uploadVideoData.append('categories', 'My Videos');
-      uploadVideoData.append('video_file', this.selectedFile, this.selectedFile.name);
+      this.videoName = this.getVideoName();
+      const uploadVideoData = this.createUploadData();
 
       try {
-        await firstValueFrom(this.dataService.setVideosInBackend(uploadVideoData));
+        await firstValueFrom(this.dataService.setVideosInBackend(uploadVideoData!));
         this.checkThumbnailStatus();
       } catch (error) {
         console.error('Fehler beim Hochladen des Videos oder der Statusüberprüfung:', error);
@@ -85,27 +83,53 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
     }
   }
 
+  isUploadValid() {
+    return this.selectedFile && this.selectedFile.size <= 52428800 && this.userVideoCounter <= 3;
+  }
+
+  getVideoName() {
+    return (this.selectedFile?.name ?? '').replace('.mp4', '');
+  }
+
+  createUploadData() {
+    if (!this.selectedFile) {
+      return null; 
+    }
+    const uploadVideoData = new FormData();
+      uploadVideoData.append('name', this.videoName);
+      uploadVideoData.append('title', this.videoTitle);
+      uploadVideoData.append('description', this.videoDescription);
+      uploadVideoData.append('categories', 'My Videos');
+      uploadVideoData.append('video_file', this.selectedFile, this.selectedFile.name);
+      return uploadVideoData;
+  }
+
   checkThumbnailStatus() {
     const interval = setInterval(() => {
       this.dataService.loadThumbnailStatus(this.videoName).subscribe({
         next: (response) => {
           if (response.status === 'completed') {
-            console.log('Thumbnail wurde erfolgreich erstellt');
-            clearInterval(interval);
-            setTimeout(() => {
-              this.dataService.loadVideoData(this.dataService.getAuthHeaders());
-            }, 1000);
-            this.isLoading = false;
-            this.closeAddVideoPopup();
-            this.dataService.triggerConvertionCheck(this.videoName);
+            this.handleThumbnailResponse(interval)
           }
         },
         error: (error) => {
-          console.error('Fehler beim Überprüfen des Thumbnail-Status:', error);
-          clearInterval(interval);
+          this.handleThumbnailError(error, interval)
         },
       });
     }, 500);
+  }
+
+  handleThumbnailResponse(interval: any) {
+    clearInterval(interval);
+    setTimeout(() => {this.dataService.loadVideoData(this.dataService.getAuthHeaders())}, 1000);
+    this.isLoading = false;
+    this.closeAddVideoPopup();
+    this.dataService.triggerConvertionCheck(this.videoName);
+  }
+
+  handleThumbnailError(error: any, interval: any) {
+    console.error('Fehler beim Überprüfen des Thumbnail-Status:', error);
+    clearInterval(interval);
   }
 
   countUserUploadedVideos() {

@@ -39,6 +39,10 @@ export class EditvideopopupComponent implements OnInit {
   constructor(private videoPopupService: VideoPopupService, private dataService: DataService) {}
 
   ngOnInit() {
+    this.getVideoData();
+  }
+
+  getVideoData() {
     this.videoPopupService.editVideoName$.subscribe((videoName) => {
       this.editVideoName = videoName;
       if (this.editVideoName) {
@@ -57,23 +61,27 @@ export class EditvideopopupComponent implements OnInit {
   async saveEditedVideo() {
     if (this.videoData) {
       this.isLoading = true;
-      const formData = new FormData();
-      formData.append('title', this.videoTitle);
-      formData.append('description', this.videoDescription);
-      formData.append('has_sound', this.hasSound.toString());
-      if (this.selectedFile instanceof File) {
-        formData.append('video_file', this.selectedFile);
-        formData.append('name', this.selectedFile!.name.replace('.mp4', ''));
-      }
+      const formData = this.updateFormData();
       try {
         const response = await this.dataService.patchBackendVideo(this.videoData.id, formData);
-        console.log('Video erfolgreich im Backend aktualisiert:', response);
         this.checkUpdatedThumbnailStatus();
       } catch (error) {
         console.error('Fehler beim Aktualisieren der Kategorien:', error);
       }
     }
     this.dataService.loadVideoData(this.dataService.getAuthHeaders());
+  }
+
+  updateFormData() {
+    const formData = new FormData();
+    formData.append('title', this.videoTitle);
+    formData.append('description', this.videoDescription);
+    formData.append('has_sound', this.hasSound.toString());
+    if (this.selectedFile instanceof File) {
+      formData.append('video_file', this.selectedFile);
+      formData.append('name', this.selectedFile!.name.replace('.mp4', ''));
+    }
+    return formData;
   }
 
   checkUpdatedThumbnailStatus() {

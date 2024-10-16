@@ -38,7 +38,6 @@ export class VideoofferComponent implements OnInit {
   @ViewChild(EditvideopopupComponent) editVideoPopupComponent!: EditvideopopupComponent;
   selectedVideoName: string | null = null;
   editVideoName: string | null = null;
-
   previewVideo: any;
   canPlayVideo = false;
   isPlaying: boolean = false;
@@ -71,43 +70,66 @@ export class VideoofferComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  async ngOnInit() {
-    this.authService.checkAuthStatus();
 
+  async ngOnInit() {
+    this.checkAuthStatus();
+    this.setupAuthListener();
+    
+    if (isPlatformBrowser(this.platformId)) {
+      await this.loadVideoData();
+    }
+    
+    this.setupDataListeners();
+    this.setupPopupListeners();
+    this.closePopupIfOpen();
+  }
+
+  checkAuthStatus() {
+    this.authService.checkAuthStatus();
+  }
+  
+  setupAuthListener(): void {
     this.authService.isLoggedIn().subscribe((isLoggedIn) => {
       if (isLoggedIn !== null) {
         this.isLoading = false;
       }
     });
-
-    if (isPlatformBrowser(this.platformId)) {
-      const headers = new HttpHeaders().set('Authorization', `Token ${localStorage.getItem('token')}`);
-      await this.dataService.loadVideoData(headers);
-    }
-
+  }
+  
+  async loadVideoData(): Promise<void> {
+    const headers = new HttpHeaders().set('Authorization', `Token ${localStorage.getItem('token')}`);
+    await this.dataService.loadVideoData(headers);
+  }
+  
+  setupDataListeners(): void {
     this.dataService.videoData$.subscribe((data) => {
       if (data.length > 0) {
         this.previewVideo = this.dataService.getVideoByName('breakout');
       }
     });
-
+  }
+  
+  setupPopupListeners(): void {
     this.videoPopupService.videoName$.subscribe((videoName) => {
       this.selectedVideoName = videoName;
     });
-
+  
     this.videoPopupService.editVideoName$.subscribe((videoName) => {
       this.editVideoName = videoName;
     });
-
+  
     this.videoPopupService.addVideoPopupStatus$.subscribe((status) => {
       this.isAddVideoPopupVisible = status;
     });
-
+  }
+  
+  closePopupIfOpen(): void {
     this.previewVideo = this.dataService.getVideoByName('breakout');
     if (this.openVideoPopupComponent) {
       this.openVideoPopupComponent.closePopup();
     }
   }
+  
 
   ngAfterViewInit() {
     if (this.selectedVideoName && this.openVideoPopupComponent) {
