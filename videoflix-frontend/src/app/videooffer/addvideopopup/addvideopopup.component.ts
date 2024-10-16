@@ -34,6 +34,10 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
     this.subscribeVideoCounter();
   }
 
+  /**
+   * Subscribes to the video counter updates from the video popup service.
+   * When the triggerCountVideos event occurs, it calls the countUserUploadedVideos method.
+   */
   subscribeVideoCounter() {
     this.subscriptions.add(
       this.videoPopupService.triggerCountVideos$.subscribe(() => {
@@ -42,12 +46,21 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Cleans up subscriptions when the component is destroyed.
+   */
   ngOnDestroy(): void {
     if (this.subscriptions) {
       this.subscriptions.unsubscribe();
     }
   }
 
+  /**
+   * Handles the selection of a video file from the input element.
+   * Updates the selectedFile property and checks the file size.
+   *
+   * @param {Event} event - The change event from the file input.
+   */
   onFileSelected(event: Event) {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
@@ -63,6 +76,10 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Uploads the selected video to the backend.
+   * Validates the upload conditions and sends the video data.
+   */
   async uploadVideo() {
     if (this.isUploadValid()) {
       this.isLoading = true;
@@ -83,55 +100,91 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Checks if the upload conditions are valid.
+   *
+   * @returns {boolean} True if the selected file is valid and the user has not exceeded the upload limit, false otherwise.
+   */
   isUploadValid() {
     return this.selectedFile && this.selectedFile.size <= 52428800 && this.userVideoCounter <= 3;
   }
 
+  /**
+   * Retrieves the name of the selected video file without the file extension.
+   *
+   * @returns {string} The name of the video file.
+   */
   getVideoName() {
     return (this.selectedFile?.name ?? '').replace('.mp4', '');
   }
 
+  /**
+   * Creates a FormData object containing the video upload information.
+   *
+   * @returns {FormData | null} The FormData object if a file is selected; otherwise, null.
+   */
   createUploadData() {
     if (!this.selectedFile) {
-      return null; 
+      return null;
     }
     const uploadVideoData = new FormData();
-      uploadVideoData.append('name', this.videoName);
-      uploadVideoData.append('title', this.videoTitle);
-      uploadVideoData.append('description', this.videoDescription);
-      uploadVideoData.append('categories', 'My Videos');
-      uploadVideoData.append('video_file', this.selectedFile, this.selectedFile.name);
-      return uploadVideoData;
+    uploadVideoData.append('name', this.videoName);
+    uploadVideoData.append('title', this.videoTitle);
+    uploadVideoData.append('description', this.videoDescription);
+    uploadVideoData.append('categories', 'My Videos');
+    uploadVideoData.append('video_file', this.selectedFile, this.selectedFile.name);
+    return uploadVideoData;
   }
 
+  /**
+   * Checks the status of the video's thumbnail generation at regular intervals.
+   */
   checkThumbnailStatus() {
     const interval = setInterval(() => {
       this.dataService.loadThumbnailStatus(this.videoName).subscribe({
         next: (response) => {
           if (response.status === 'completed') {
-            this.handleThumbnailResponse(interval)
+            this.handleThumbnailResponse(interval);
           }
         },
         error: (error) => {
-          this.handleThumbnailError(error, interval)
+          this.handleThumbnailError(error, interval);
         },
       });
     }, 500);
   }
 
+  /**
+   * Handles the successful response of the thumbnail status check.
+   * Stops the interval, reloads video data, and triggers video conversion.
+   *
+   * @param {any} interval - The interval ID for clearing the interval.
+   */
   handleThumbnailResponse(interval: any) {
     clearInterval(interval);
-    setTimeout(() => {this.dataService.loadVideoData(this.dataService.getAuthHeaders())}, 1000);
+    setTimeout(() => {
+      this.dataService.loadVideoData(this.dataService.getAuthHeaders());
+    }, 1000);
     this.isLoading = false;
     this.closeAddVideoPopup();
     this.dataService.triggerConvertionCheck(this.videoName);
   }
 
+  /**
+   * Handles errors during the thumbnail status check.
+   *
+   * @param {any} error - The error object from the failed request.
+   * @param {any} interval - The interval ID for clearing the interval.
+   */
   handleThumbnailError(error: any, interval: any) {
     console.error('Fehler beim Überprüfen des Thumbnail-Status:', error);
     clearInterval(interval);
   }
 
+  /**
+   * Counts the number of videos uploaded by the user.
+   * Updates the userVideoCounter property based on the data retrieved from the data service.
+   */
   countUserUploadedVideos() {
     const data = this.dataService.getData();
     this.userVideoCounter = 0;
@@ -142,6 +195,9 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Closes the video upload popup and resets the user video counter.
+   */
   closeAddVideoPopup() {
     this.videoPopupService.closeAddVideoPopup();
     this.userVideoCounter = 0;

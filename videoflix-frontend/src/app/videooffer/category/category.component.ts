@@ -31,6 +31,9 @@ export class CategoryComponent implements OnInit {
     this.subscribeVideoName();
   }
 
+  /**
+   * Subscribes to the video data stream and updates categories when data is received.
+   */
   subscribeVideoData() {
     this.dataService.videoData$.subscribe((videoData) => {
       if (videoData.length > 0) {
@@ -39,6 +42,9 @@ export class CategoryComponent implements OnInit {
     });
   }
 
+  /**
+   * Subscribes to the conversion check stream to monitor the status of a specific video.
+   */
   subscribeVideoName() {
     this.dataService.conversionCheck$.subscribe((videoName: string) => {
       if (videoName) {
@@ -48,6 +54,10 @@ export class CategoryComponent implements OnInit {
     });
   }
 
+  /**
+   * Updates the categories based on the provided video data, organizing videos into their respective categories.
+   * @param {any[]} videoData - The array of video data to categorize.
+   */
   updateCategories(videoData: any[]): void {
     const categoryMap: { [key: string]: { title: string; videos: any[] } } = {};
 
@@ -63,10 +73,18 @@ export class CategoryComponent implements OnInit {
     this.categories = Object.values(categoryMap);
   }
 
+  /**
+   * Opens a video information popup for the specified video.
+   * @param {string} videoName - The name of the video to display information for.
+   */
   openVideoInfo(videoName: string) {
     this.videoPopupService.openVideoPopup(videoName);
   }
 
+  /**
+   * Initializes the conversion status reset and starts monitoring the conversion progress for a specific video.
+   * @param {string} videoName - The name of the video whose conversion status is being checked.
+   */
   checkConvertionStatus(videoName: string) {
     this.resetConvertionStatus;
     const interval = setInterval(() => {
@@ -74,12 +92,19 @@ export class CategoryComponent implements OnInit {
     }, 500);
   }
 
+  /**
+   * Resets the conversion progress and completion status to their initial values.
+   */
   resetConvertionStatus() {
     this.convertionProgress = 0;
     this.convertionFinished = false;
   }
 
-
+  /**
+   * Checks the conversion progress of a specific video and invokes the appropriate response handling.
+   * @param {string} videoName - The name of the video to check conversion progress for.
+   * @param {NodeJS.Timeout} interval - The interval ID for tracking the conversion status.
+   */
   checkConvertionProgress(videoName: string, interval: NodeJS.Timeout) {
     this.dataService.loadConvertionStatus(videoName).subscribe({
       next: (response) => this.handleConvertionResponse(response, interval),
@@ -87,6 +112,11 @@ export class CategoryComponent implements OnInit {
     });
   }
 
+  /**
+   * Handles the response from the conversion status check and updates the conversion progress.
+   * @param {any} response - The response containing the conversion status.
+   * @param {NodeJS.Timeout} interval - The interval ID for tracking the conversion status.
+   */
   handleConvertionResponse(response: any, interval: NodeJS.Timeout) {
     const convertedResponse = response as unknown as ConversionStatusResponse;
     this.updateConvertionProgress(convertedResponse);
@@ -96,19 +126,30 @@ export class CategoryComponent implements OnInit {
       clearInterval(interval);
     }
   }
-
+  /**
+   * Updates the conversion progress based on the conversion status response.
+   * @param {ConversionStatusResponse} response - The response containing conversion status information.
+   */
   updateConvertionProgress(response: ConversionStatusResponse) {
     if (response['360p_status'] === 'completed') this.convertionProgress = 33;
     if (response['720p_status'] === 'completed') this.convertionProgress = 67;
     if (response['1080p_status'] === 'completed') this.convertionProgress = 100;
   }
 
+  /**
+   * Checks if the conversion is complete for all specified resolutions.
+   * @param {ConversionStatusResponse} response - The response containing conversion status information.
+   * @returns {boolean} True if conversion is complete; otherwise, false.
+   */
   isConvertionComplete(response: ConversionStatusResponse): boolean {
-    return response['360p_status'] === 'completed' &&
-    response['720p_status'] === 'completed' &&
-    response['1080p_status'] === 'completed';
+    return response['360p_status'] === 'completed' && response['720p_status'] === 'completed' && response['1080p_status'] === 'completed';
   }
 
+  /**
+   * Handles any errors that occur during the conversion status check and clears the interval.
+   * @param {any} error - The error object containing error information.
+   * @param {NodeJS.Timeout} interval - The interval ID for tracking the conversion status.
+   */
   handleConvertionError(error: any, interval: NodeJS.Timeout) {
     console.error('Fehler beim Überprüfen des Convertion-Status:', error);
     clearInterval(interval);

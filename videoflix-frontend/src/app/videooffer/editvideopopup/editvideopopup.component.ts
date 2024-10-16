@@ -43,6 +43,10 @@ export class EditvideopopupComponent implements OnInit {
     this.getVideoData();
   }
 
+  /**
+   * Retrieves video data for editing based on the name from the videoPopupService.
+   * If the video data is found, it populates the relevant fields for editing.
+   */
   getVideoData() {
     this.videoPopupService.editVideoName$.subscribe((videoName) => {
       this.editVideoName = videoName;
@@ -59,6 +63,10 @@ export class EditvideopopupComponent implements OnInit {
     });
   }
 
+  /**
+   * Saves the edited video data to the backend if valid video data is available.
+   * It updates the video information and checks for the updated thumbnail status.
+   */
   async saveEditedVideo() {
     if (this.videoData) {
       this.isLoading = true;
@@ -73,6 +81,10 @@ export class EditvideopopupComponent implements OnInit {
     this.dataService.loadVideoData(this.dataService.getAuthHeaders());
   }
 
+  /**
+   * Updates the form data with the current video details for submission.
+   * @returns {FormData} The FormData object containing updated video details.
+   */
   updateFormData() {
     const formData = new FormData();
     formData.append('title', this.videoTitle);
@@ -85,10 +97,17 @@ export class EditvideopopupComponent implements OnInit {
     return formData;
   }
 
+  /**
+   * Initiates an interval to check the thumbnail status after updating the video.
+   */
   checkUpdatedThumbnailInterval() {
     const interval: NodeJS.Timeout = setInterval(() => this.checkUpdatedThumbnailStatus(interval), 500);
   }
 
+  /**
+   * Checks the thumbnail status for the currently edited video at regular intervals.
+   * @param {NodeJS.Timeout} interval - The interval ID for tracking the thumbnail status check.
+   */
   checkUpdatedThumbnailStatus(interval: NodeJS.Timeout) {
     this.dataService.loadThumbnailStatus(this.editVideoName as string).subscribe({
       next: (response) => this.handleThumbnailRespone(response, interval),
@@ -96,6 +115,11 @@ export class EditvideopopupComponent implements OnInit {
     });
   }
 
+  /**
+   * Handles the response from the thumbnail status check and performs actions based on its completion.
+   * @param {any} response - The response containing the thumbnail status.
+   * @param {NodeJS.Timeout} interval - The interval ID for tracking the thumbnail status check.
+   */
   handleThumbnailRespone(response: any, interval: NodeJS.Timeout) {
     if (response.status === 'completed') {
       clearInterval(interval);
@@ -108,11 +132,19 @@ export class EditvideopopupComponent implements OnInit {
     }
   }
 
+  /**
+   * Handles any errors that occur during the thumbnail status check and clears the interval.
+   * @param {any} error - The error object containing error information.
+   * @param {NodeJS.Timeout} interval - The interval ID for tracking the thumbnail status check.
+   */
   handleThumbnailError(error: any, interval: NodeJS.Timeout) {
     console.error('Fehler beim Überprüfen des Thumbnail-Status:', error);
     clearInterval(interval);
   }
 
+  /**
+   * Deletes the currently selected video from the backend and closes the edit video popup.
+   */
   async deleteVideo() {
     if (this.videoData) {
       try {
@@ -125,6 +157,10 @@ export class EditvideopopupComponent implements OnInit {
     this.dataService.loadVideoData(this.dataService.getAuthHeaders());
   }
 
+  /**
+   * Handles the file selection event and stores the selected file for further processing.
+   * @param {Event} event - The event object containing information about the file input.
+   */
   onFileSelected(event: Event) {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
@@ -132,6 +168,9 @@ export class EditvideopopupComponent implements OnInit {
     }
   }
 
+  /**
+   * Closes the edit video popup.
+   */
   closeEditVideoPopup() {
     this.videoPopupService.closeEditVideoPopup();
   }

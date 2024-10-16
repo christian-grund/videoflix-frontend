@@ -27,6 +27,10 @@ export class HeaderComponent implements OnInit {
     this.subscribeToRouteUrl();
   }
 
+  /**
+   * Subscribes to the route URL changes and updates the current URL property.
+   * Triggers change detection to ensure the view reflects the updated URL.
+   */
   subscribeToRouteUrl() {
     this.route.url.subscribe((segments) => {
       this.currentUrl = '/' + segments.map((segment) => segment.path).join('/');
@@ -34,12 +38,18 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  /**
+   * Logs out the current user by calling the logout service.
+   * Clears the stored token, navigates to the home page, and reloads the page.
+   */
   logout() {
     this.authService.logout().subscribe({
       next: () => {
         localStorage.removeItem('token');
         this.router.navigate(['/']);
-        setTimeout(() => {location.reload()}, 0);
+        setTimeout(() => {
+          location.reload();
+        }, 0);
       },
       error: (error) => {
         this.message = 'Logout failed: ' + (error.error ? error.error : 'Unknown error');
@@ -47,6 +57,9 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens a popup for adding a new video using the video popup service.
+   */
   openAddVideoPopup() {
     this.videoPopupService.openAddVideoPopup();
   }
