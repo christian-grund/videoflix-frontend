@@ -24,6 +24,10 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.subscribeToRouteUrl();
+  }
+
+  subscribeToRouteUrl() {
     this.route.url.subscribe((segments) => {
       this.currentUrl = '/' + segments.map((segment) => segment.path).join('/');
       this.changeDetectorRef.detectChanges();
@@ -32,14 +36,10 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authService.logout().subscribe({
-      next: (response) => {
+      next: () => {
         localStorage.removeItem('token');
-        localStorage.removeItem('introPlayed');
-        this.message = 'Logout successful!';
         this.router.navigate(['/']);
-        setTimeout(() => {
-          location.reload();
-        }, 0);
+        setTimeout(() => {location.reload()}, 0);
       },
       error: (error) => {
         this.message = 'Logout failed: ' + (error.error ? error.error : 'Unknown error');

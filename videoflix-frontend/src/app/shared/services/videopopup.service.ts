@@ -39,7 +39,6 @@ export class VideoPopupService {
 
   openEditVideoPopup(videoName: string) {
     this.editVideoNameSubject.next(videoName);
-    console.log('editVideoNameSubject:', this.editVideoNameSubject);
   }
 
   closeEditVideoPopup() {

@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { FormsModule, NgForm } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { DataService } from '../../shared/services/data.service';
 import { AuthService } from '../../shared/services/auth.service';
@@ -28,10 +28,17 @@ export class SignupComponent implements OnInit {
   formSubmitted: boolean = false;
   isUserAlreadyRegistered: boolean = false;
 
-  constructor(private dataService: DataService, private authService: AuthService, private router: Router) {}
+  constructor(private dataService: DataService, private authService: AuthService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
     this.subscribeCurrentEmail();
+    this.removeIntroPlayedCache();
+  }
+
+  removeIntroPlayedCache() {
+    if (isPlatformBrowser(this.platformId)) {
+    localStorage.removeItem('introPlayed');
+    }
   }
 
   subscribeCurrentEmail() {
