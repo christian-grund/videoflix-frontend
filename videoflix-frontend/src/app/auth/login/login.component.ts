@@ -27,10 +27,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.currentEmail.subscribe((email) => (this.email = email));
-
     this.checkSavedCredentials();
   }
 
+  /**
+   * Handles the login process by checking if the user is registered,
+   * authenticating the user, and managing the token and navigation upon success.
+   */
   async login() {
     await this.checkUserRegistered();
     if (this.isUserRegistered) {
@@ -39,7 +42,9 @@ export class LoginComponent implements OnInit {
           this.matchError = false;
           localStorage.setItem('token', response.token);
           this.authService.checkAuthStatus();
-          setTimeout(() => {this.router.navigate(['/videos'])}, 100);
+          setTimeout(() => {
+            this.router.navigate(['/videos']);
+          }, 100);
         },
         error: (error) => {
           this.message = 'Login failed: ' + (error.error.non_field_errors ? error.error.non_field_errors[0] : 'Unknown error');
@@ -50,6 +55,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Saves or deletes user credentials in local storage based on the 'Remember Me' checkbox status.
+   */
   checkRememberMe() {
     if (this.isRememberMeChecked) {
       this.saveCredentials();
@@ -58,6 +66,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Checks if the user is registered by verifying the email with the authentication service.
+   */
   async checkUserRegistered() {
     this.authService.checkUserExists(this.email).subscribe({
       next: (response) => {
@@ -72,6 +83,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * Saves the user's email and password to local storage for future use.
+   */
   saveCredentials() {
     let credentials = JSON.stringify({
       email: this.email,
@@ -80,10 +94,16 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('credentials', credentials);
   }
 
+  /**
+   * Deletes the saved user credentials from local storage.
+   */
   deleteCredentials() {
     localStorage.removeItem('credentials');
   }
 
+  /**
+   * Checks and populates the email and password fields with saved credentials from local storage.
+   */
   checkSavedCredentials() {
     if (typeof localStorage !== 'undefined') {
       const savedCredentials = localStorage.getItem('credentials');
@@ -97,6 +117,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Toggles the visibility of the password input field.
+   */
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }

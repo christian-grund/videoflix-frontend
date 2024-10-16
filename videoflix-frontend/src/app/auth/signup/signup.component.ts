@@ -28,28 +28,47 @@ export class SignupComponent implements OnInit {
   formSubmitted: boolean = false;
   isUserAlreadyRegistered: boolean = false;
 
-  constructor(private dataService: DataService, private authService: AuthService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    private dataService: DataService,
+    private authService: AuthService,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
     this.subscribeCurrentEmail();
     this.removeIntroPlayedCache();
   }
 
+  /**
+   * Removes the 'introPlayed' item from local storage if running in a browser environment.
+   */
   removeIntroPlayedCache() {
     if (isPlatformBrowser(this.platformId)) {
-    localStorage.removeItem('introPlayed');
+      localStorage.removeItem('introPlayed');
     }
   }
 
+  /**
+   * Subscribes to the current email from the data service and updates the component's email property.
+   */
   subscribeCurrentEmail() {
     this.dataService.currentEmail.subscribe((email) => (this.email = email));
   }
 
+  /**
+   * Updates the email property and checks if the email format is valid.
+   * @param {string} value - The email input value.
+   */
   onEmailChange(value: string) {
     this.email = value;
     this.emailValid = this.validateEmail(value);
   }
 
+  /**
+   * Validates the email and password fields on form submission.
+   * If both fields are valid, it changes the email and proceeds with registration.
+   */
   onSubmit() {
     this.onEmailChange(this.email);
     this.emailError = !this.emailValid;
@@ -61,6 +80,10 @@ export class SignupComponent implements OnInit {
     }
   }
 
+  /**
+   * Registers a new user with the provided email and password.
+   * Updates the component's state based on the registration result.
+   */
   register() {
     this.authService.register({ email: this.email, password: this.password }).subscribe({
       next: () => {
@@ -74,11 +97,19 @@ export class SignupComponent implements OnInit {
     });
   }
 
+  /**
+   * Validates the email format using a regular expression.
+   * @param {string} email - The email to validate.
+   * @returns {boolean} True if the email is valid, otherwise false.
+   */
   validateEmail(email: string): boolean {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
   }
 
+  /**
+   * Toggles the visibility of the password input field.
+   */
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }

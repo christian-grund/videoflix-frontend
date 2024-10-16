@@ -31,23 +31,38 @@ export class ResetpasswordComponent implements OnInit {
     this.checkQueryParams();
   }
 
+  /**
+   * Subscribes to query parameters to retrieve the password reset token and user ID.
+   * If both values are present, it attempts to confirm the password reset.
+   */
   checkQueryParams() {
     this.route.queryParams.subscribe((params) => {
       this.token = params['token'];
       this.uid = parseInt(params['uid'], 10);
       if (this.token && this.uid) {
         this.authService.passwordResetConfirm(this.token, this.uid, this.password).subscribe({
-          next: () => {this.formSubmitted = true},
-          error: () => {this.formSubmitted = false},
+          next: () => {
+            this.formSubmitted = true;
+          },
+          error: () => {
+            this.formSubmitted = false;
+          },
         });
       }
     });
   }
 
+  /**
+   * Checks if the password and confirm password fields match.
+   * @returns {boolean} True if the passwords match, otherwise false.
+   */
   passwordMatch(): boolean {
-    return this.password === this.confirmPassword; 
+    return this.password === this.confirmPassword;
   }
 
+  /**
+   * Toggles the visibility of the password input field.
+   */
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
