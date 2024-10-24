@@ -5,6 +5,7 @@ import { DataService } from '../shared/services/data.service';
 import { HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-videoplayer',
@@ -39,7 +40,8 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   timeOver: number = 3;
   isHeaderVisible = false;
   resolutions = [360, 720, 1080];
-  videoBasePath = 'http://localhost:8000/media/videos/';
+  // videoBasePath = 'http://localhost:8000/media/videos/';
+  videoBasePath = environment.apiUrl + 'media/videos/';
   iconBasePath = '../../assets/img/icons/videoplayer/';
 
   private animationFrameId: any;

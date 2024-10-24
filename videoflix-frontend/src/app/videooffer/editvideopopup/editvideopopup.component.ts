@@ -5,6 +5,7 @@ import { VideoPopupService } from '../../shared/services/videopopup.service';
 import { DataService } from '../../shared/services/data.service';
 import { HttpHeaders } from '@angular/common/http';
 import { response } from 'express';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-editvideopopup',
@@ -34,7 +35,8 @@ export class EditvideopopupComponent implements OnInit {
     video_file: File;
   } | null = null;
 
-  videoBasePath = 'http://localhost:8000/media/videos/';
+  // videoBasePath = 'http://localhost:8000/media/videos/';
+  videoBasePath = environment.apiUrl + 'media/videos/';
   iconBasePath = '../../assets/img/icons/';
 
   constructor(private videoPopupService: VideoPopupService, private dataService: DataService) {}

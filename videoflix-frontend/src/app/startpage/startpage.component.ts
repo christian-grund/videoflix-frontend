@@ -38,7 +38,7 @@ export class StartpageComponent implements OnInit {
         setTimeout(() => {
           this.isIntroPlaying = false;
           localStorage.setItem('introPlayed', 'true');
-        }, 4000);
+        }, 3000);
       } else {
         this.isIntroPlaying = false;
       }

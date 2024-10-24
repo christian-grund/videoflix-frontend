@@ -14,6 +14,7 @@ import { AddvideopopupComponent } from './addvideopopup/addvideopopup.component'
 import { EditvideopopupComponent } from './editvideopopup/editvideopopup.component';
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-videooffer',
@@ -58,7 +59,8 @@ export class VideoofferComponent implements OnInit {
     video_file: File;
   } | null = null;
 
-  videoBasePath = 'http://localhost:8000/media/videos/';
+  // videoBasePath = 'http://localhost:8000/media/videos/';
+  videoBasePath = environment.apiUrl + 'media/videos/';
   iconBasePath = '../../assets/img/icons/';
 
   constructor(

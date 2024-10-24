@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { DataService } from '../../shared/services/data.service';
 import { Router } from '@angular/router';
 import { VideoPopupService } from '../../shared/services/videopopup.service';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-openvideopopup',
@@ -23,7 +24,8 @@ export class OpenvideopopupComponent implements OnInit {
     id: number;
   } | null = null;
 
-  thumbBasePath = 'http://localhost:8000/media/thumbnails/';
+  // thumbBasePath = 'http://localhost:8000/media/thumbnails/';
+  thumbBasePath = environment.apiUrl + 'media/thumbnails/';
 
   constructor(private dataService: DataService, private router: Router, private videoPopupService: VideoPopupService) {}
 

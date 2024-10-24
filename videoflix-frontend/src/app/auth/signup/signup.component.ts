@@ -86,12 +86,16 @@ export class SignupComponent implements OnInit {
    */
   register() {
     this.authService.register({ email: this.email, password: this.password }).subscribe({
-      next: () => {
+      next: (response) => {
         this.isUserAlreadyRegistered = false;
         this.formSubmitted = true;
       },
       error: (error) => {
-        this.message = 'Registration failed: ' + (error.error.non_field_errors ? error.error.non_field_errors[0] : 'Unknown error');
+        console.error('Registration failed: Full error object:', error);
+        console.error('Registration failed: Error message:', error.message);
+        if (error.error) {
+          console.error('Registration failed: Error details:', error.error);
+        }
         this.isUserAlreadyRegistered = true;
       },
     });

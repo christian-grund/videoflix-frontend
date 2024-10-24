@@ -2,12 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000/';
+  // private apiUrl = 'http://localhost:8000/';
+  private apiUrl = environment.apiUrl;
   private isLoggedInSubject = new BehaviorSubject<boolean | null>(null);
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: object) {}
@@ -21,7 +23,11 @@ export class AuthService {
    * @returns {Observable<any>} An observable containing the server response.
    */
   register(user: { email: string; password: string }): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'signup/', user);
+    return this.http.post<any>(this.apiUrl + 'signup/', user, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 
   /**
@@ -112,6 +118,6 @@ export class AuthService {
    * @returns {Observable<any>} An observable containing the response indicating whether the user exists.
    */
   checkUserExists(email: string): Observable<any> {
-    return this.http.get(`http://localhost:8000/api/users/check-email/?email=${email}`);
+    return this.http.get(`${this.apiUrl}api/users/check-email/?email=${email}`);
   }
 }

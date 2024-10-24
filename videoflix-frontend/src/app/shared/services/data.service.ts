@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from './auth.service';
+import { environment } from '../../../environments/environment.prod';
 // import { isPlatformBrowser } from '@angular/common';
 // import { Inject, PLATFORM_ID } from '@angular/core';
 
@@ -19,8 +20,10 @@ export class DataService {
   private conversionCheckSubject = new BehaviorSubject<string>('');
   conversionCheck$ = this.conversionCheckSubject.asObservable();
 
-  private baseUrl = 'http://localhost:8000/';
-  private apiUrl = 'http://localhost:8000/api/videos/';
+  // private baseUrl = 'http://localhost:8000/';
+  private baseUrl = environment.apiUrl;
+  // private apiUrl = 'http://localhost:8000/api/videos/';
+  private apiUrl = this.baseUrl + 'api/videos/';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
