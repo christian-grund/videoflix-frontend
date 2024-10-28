@@ -43,18 +43,18 @@ export class HeaderComponent implements OnInit {
    * Clears the stored token, navigates to the home page, and reloads the page.
    */
   logout() {
-    this.authService.logout().subscribe({
-      next: () => {
+    this.authService
+      .logout()
+      .then(() => {
         localStorage.removeItem('token');
         this.router.navigate(['/']);
         setTimeout(() => {
           location.reload();
         }, 0);
-      },
-      error: (error) => {
+      })
+      .catch((error) => {
         this.message = 'Logout failed: ' + (error.error ? error.error : 'Unknown error');
-      },
-    });
+      });
   }
 
   /**

@@ -8,15 +8,15 @@ import { ResetpasswordComponent } from './auth/resetpassword/resetpassword.compo
 import { ForgotpasswordComponent } from './auth/forgotpassword/forgotpassword.component';
 import { VideoofferComponent } from './videooffer/videooffer.component';
 import { VideoplayerComponent } from './videoplayer/videoplayer.component';
-import { authGuard } from './shared/guards/auth.guard';
+import { AuthGuard } from './shared/guards/auth.guard';
 import { ActivateComponent } from './auth/activate/activate.component';
 // import { authResolver } from './shared/resolvers/auth.resolver';
 
 export const routes: Routes = [
   { path: '', component: StartpageComponent },
   { path: 'home', component: StartpageComponent },
-  { path: 'videos', component: VideoofferComponent, canActivate: [authGuard] },
-  { path: 'videos/watch/:videoname', component: VideoplayerComponent, canActivate: [authGuard] },
+  { path: 'videos', component: VideoofferComponent, canActivate: [AuthGuard.canActivate] },
+  { path: 'videos/watch/:videoname', component: VideoplayerComponent, canActivate: [AuthGuard.canActivate] },
   { path: 'signup', component: SignupComponent },
   { path: 'activate', component: ActivateComponent },
   { path: 'login', component: LoginComponent },

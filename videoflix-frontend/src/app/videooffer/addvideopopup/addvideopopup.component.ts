@@ -66,7 +66,7 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
     if (target.files && target.files.length > 0) {
       this.selectedFile = target.files[0];
       this.fileInserted = true;
-      if (this.selectedFile.size <= 52428800) {
+      if (this.selectedFile.size <= 26214400) {
         this.fileSizeError = false;
       } else {
         this.fileSizeError = true;
@@ -107,7 +107,7 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
    * @returns {boolean} True if the selected file is valid and the user has not exceeded the upload limit, false otherwise.
    */
   isUploadValid() {
-    return this.selectedFile && this.selectedFile.size <= 52428800 && this.userVideoCounter <= 3;
+    return this.selectedFile && this.selectedFile.size <= 26214400 && this.userVideoCounter <= 3;
   }
 
   /**

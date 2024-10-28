@@ -24,7 +24,6 @@ export class OpenvideopopupComponent implements OnInit {
     id: number;
   } | null = null;
 
-  // thumbBasePath = 'http://localhost:8000/media/thumbnails/';
   thumbBasePath = environment.apiUrl + 'media/thumbnails/';
 
   constructor(private dataService: DataService, private router: Router, private videoPopupService: VideoPopupService) {}
@@ -71,7 +70,7 @@ export class OpenvideopopupComponent implements OnInit {
    * Closes the popup, resets the selected video name and video data,
    * and emits a close event.
    */
-  closePopup() {
+  async closePopup() {
     this.selectedVideoName = null;
     this.videoData = null;
     this.closePopupEvent.emit();
@@ -81,9 +80,9 @@ export class OpenvideopopupComponent implements OnInit {
    * Navigates to the video watch page for the specified video name after closing the popup.
    * @param {string} videoName - The name of the video to watch.
    */
-  openVideo(videoName: string) {
+  async openVideo(videoName: string) {
     if (videoName) {
-      this.closePopup();
+      await this.closePopup();
       this.router.navigate([`/videos/watch/${videoName}`]);
     }
   }

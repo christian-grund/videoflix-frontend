@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.removeIntroPlayedCache();
-    this.dataService.currentEmail.subscribe((email) => (this.email = email));
+    this.subscribeCurrentEmail();
     this.checkSavedCredentials();
   }
 
@@ -46,10 +46,18 @@ export class LoginComponent implements OnInit {
   }
 
   /**
+   * Subscribes the current email address from Data Service.
+   */
+  subscribeCurrentEmail() {
+    this.dataService.currentEmail.subscribe((email) => (this.email = email));
+  }
+
+  /**
    * Handles the login process by checking if the user is registered,
    * authenticating the user, and managing the token and navigation upon success.
    */
   async login() {
+    this.authService.logout();
     await this.checkUserRegistered();
     if (this.isUserRegistered) {
       this.authService.login(this.email, this.password).subscribe({

@@ -1,4 +1,4 @@
-<section *ngIf="!isLoading">
+<section>
   <div class="videooffer-main">
     <app-header></app-header>
     <div class="videooffer-content" (click)="enableVideoPlay()">
@@ -45,9 +45,6 @@
   </div>
 
   <div class="popup" *ngIf="selectedVideoName">
-    <app-openvideopopup
-      [selectedVideoName]="selectedVideoName"
-      (closePopupEvent)="closePopup()"
-    ></app-openvideopopup>
+    <app-openvideopopup [selectedVideoName]="selectedVideoName" (closePopupEvent)="closePopup()"></app-openvideopopup>
   </div>
 </section>

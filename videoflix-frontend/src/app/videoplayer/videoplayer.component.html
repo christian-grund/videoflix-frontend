@@ -1,4 +1,9 @@
-<section>
+<ng-container *ngIf="loading">
+  <app-loading></app-loading>
+  <!-- Ladeanzeige anzeigen -->
+</ng-container>
+
+<section *ngIf="!loading">
   <div class="videoplayer-main">
     <div class="videoplayer-content">
       <div class="video-container" *ngIf="videoData">

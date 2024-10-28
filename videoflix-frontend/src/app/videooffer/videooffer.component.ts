@@ -59,7 +59,6 @@ export class VideoofferComponent implements OnInit {
     video_file: File;
   } | null = null;
 
-  // videoBasePath = 'http://localhost:8000/media/videos/';
   videoBasePath = environment.apiUrl + 'media/videos/';
   iconBasePath = '../../assets/img/icons/';
 
@@ -73,8 +72,8 @@ export class VideoofferComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    console.log('videoBasePath:', this.videoBasePath);
     this.checkAuthStatus();
-    this.setupAuthListener();
 
     if (isPlatformBrowser(this.platformId)) {
       await this.loadVideoData();
@@ -90,17 +89,6 @@ export class VideoofferComponent implements OnInit {
    */
   checkAuthStatus() {
     this.authService.checkAuthStatus();
-  }
-
-  /**
-   * Sets up a listener to monitor the authentication status and updates the loading state accordingly.
-   */
-  setupAuthListener(): void {
-    this.authService.isLoggedIn().subscribe((isLoggedIn) => {
-      if (isLoggedIn !== null) {
-        this.isLoading = false;
-      }
-    });
   }
 
   /**

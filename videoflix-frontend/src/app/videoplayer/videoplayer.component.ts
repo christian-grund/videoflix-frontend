@@ -6,11 +6,13 @@ import { HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { VideoPopupService } from '../shared/services/videopopup.service';
+import { LoadingComponent } from '../shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-videoplayer',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, LoadingComponent],
   templateUrl: './videoplayer.component.html',
   styleUrl: './videoplayer.component.scss',
 })
@@ -40,7 +42,7 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   timeOver: number = 3;
   isHeaderVisible = false;
   resolutions = [360, 720, 1080];
-  // videoBasePath = 'http://localhost:8000/media/videos/';
+  loading: boolean = false;
   videoBasePath = environment.apiUrl + 'media/videos/';
   iconBasePath = '../../assets/img/icons/videoplayer/';
 
@@ -49,7 +51,9 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     private dataService: DataService,
+
     private cdr: ChangeDetectorRef,
+    private videoPopupService: VideoPopupService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -57,6 +61,11 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
     await this.loadData();
     this.getVideoData();
     this.subscribeToRouteUrl();
+    this.closeOpenVideoPopup();
+  }
+
+  closeOpenVideoPopup() {
+    this.videoPopupService.closeVideoPopup();
   }
 
   /**

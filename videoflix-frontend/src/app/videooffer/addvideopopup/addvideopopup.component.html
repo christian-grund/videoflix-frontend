@@ -8,7 +8,7 @@
 <div class="popup-add-video-content">
   <form #myForm="ngForm" class="add-video-container" (ngSubmit)="uploadVideo()">
     <h2>Add your own video</h2>
-    <p>You can upload up to three videos, each with a maximum size of 50 megabytes. The file type must be "mp4".</p>
+    <p>You can upload up to three videos, each with a maximum size of 25 megabytes. The file type must be "mp4".</p>
     <div class="input-popup-container">
       <p class="title">Title:</p>
       <input class="input-default" type="text" name="videoTitle" [(ngModel)]="videoTitle" #videoNameInput="ngModel" placeholder=" " required />
@@ -77,7 +77,7 @@
       </div>
       <div class="file-size-error" *ngIf="fileInserted && fileSizeError">
         <img src="../../../assets/img/icons/warning.svg" alt="file-size-warning" />
-        <p>The size of your file is bigger than 50 megabytes.</p>
+        <p>The size of your file is bigger than 25 megabytes.</p>
       </div>
     </div>
 

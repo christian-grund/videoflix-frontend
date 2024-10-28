@@ -37,7 +37,7 @@ import { AuthService } from './shared/services/auth.service';
 export class AppComponent {
   title = 'videoflix';
 
-  constructor(private authService: AuthService) {
-    this.authService.checkAuthStatus();
-  }
+  // constructor(private authService: AuthService) {
+  //   this.authService.checkAuthStatus();
+  // }
 }

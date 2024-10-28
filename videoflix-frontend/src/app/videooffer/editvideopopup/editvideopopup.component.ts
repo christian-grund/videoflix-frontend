@@ -6,6 +6,7 @@ import { DataService } from '../../shared/services/data.service';
 import { HttpHeaders } from '@angular/common/http';
 import { response } from 'express';
 import { environment } from '../../../environments/environment';
+import axios, { AxiosError } from 'axios';
 
 @Component({
   selector: 'app-editvideopopup',
@@ -144,15 +145,36 @@ export class EditvideopopupComponent implements OnInit {
     clearInterval(interval);
   }
 
+  getAuthHeaders(): HttpHeaders {
+    const headers: HttpHeaders = new HttpHeaders({
+      Authorization: `Token ${localStorage.getItem('token')}`,
+    });
+    return headers;
+  }
+
   /**
    * Deletes the currently selected video from the backend and closes the edit video popup.
    */
   async deleteVideo() {
     if (this.videoData) {
       try {
-        const response = await this.dataService.deleteBackendVideo(this.videoData.id);
+        // Erstelle die Header als einfaches Objekt
+        const headers = {
+          Authorization: `Token ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json', // Füge dies hinzu, wenn benötigt
+        };
+
+        // Verwende axios für die DELETE-Anfrage
+        const response = await axios.delete(`http://localhost:8000/api/videos/${this.videoData.id}/`, { headers });
+        console.log('Antwort vom Server:', response);
       } catch (error) {
-        console.error('Fehler beim löschen des Videos:', error);
+        console.error('Fehler beim Löschen des Videos:', error);
+        if (error instanceof AxiosError) {
+          console.error('Serverantwort:', error.response?.data);
+          console.error('Status:', error.response?.status);
+        } else {
+          console.error('Ein unbekannter Fehler ist aufgetreten:', error);
+        }
       }
     }
     this.closeEditVideoPopup();

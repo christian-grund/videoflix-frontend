@@ -1,8 +1,6 @@
-import { CanActivateFn } from '@angular/router';
-import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
-import { map, take } from 'rxjs/operators';
+import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
 
 /**
  * Auth guard to protect routes by checking if the user is logged in.
@@ -10,18 +8,18 @@ import { map, take } from 'rxjs/operators';
  * If the user is logged in, it allows access to the route.
  * Otherwise, it redirects to the login page.
  */
-export const authGuard: CanActivateFn = () => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
+export class AuthGuard {
+  constructor(private authService: AuthService, private router: Router) {}
 
-  return authService.isLoggedIn().pipe(
-    take(1),
-    map((isLoggedIn) => {
-      if (isLoggedIn) {
-        return true;
-      } else {
-        return router.parseUrl('/login');
-      }
-    })
-  );
-};
+  static canActivate: CanActivateFn = (route, state) => {
+    const authService = inject(AuthService);
+    const router = inject(Router);
+
+    if (authService.isLoggedIn()) {
+      return true;
+    } else {
+      router.navigate(['/home']);
+      return false;
+    }
+  };
+}
