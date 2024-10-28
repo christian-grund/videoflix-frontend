@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from './auth.service';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 // import { isPlatformBrowser } from '@angular/common';
 // import { Inject, PLATFORM_ID } from '@angular/core';
 
@@ -69,6 +69,7 @@ export class DataService {
     this.getVideosFromBackend(headers).subscribe({
       next: (data) => {
         this.videoData = data;
+        console.log('videoData:', data);
         this.videoDataSubject.next(this.videoData);
       },
       error: (error) => {

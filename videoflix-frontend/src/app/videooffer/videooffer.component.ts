@@ -14,7 +14,7 @@ import { AddvideopopupComponent } from './addvideopopup/addvideopopup.component'
 import { EditvideopopupComponent } from './editvideopopup/editvideopopup.component';
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-videooffer',

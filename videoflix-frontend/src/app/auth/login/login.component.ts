@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { AuthService } from '../../shared/services/auth.service';
 import { DataService } from '../../shared/services/data.service';
 
@@ -23,11 +23,26 @@ export class LoginComponent implements OnInit {
   isRememberMeChecked: boolean = false;
   isUserRegistered: boolean = true;
 
-  constructor(private dataService: DataService, private authService: AuthService, private router: Router) {}
+  constructor(
+    private dataService: DataService,
+    private authService: AuthService,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
+    this.removeIntroPlayedCache();
     this.dataService.currentEmail.subscribe((email) => (this.email = email));
     this.checkSavedCredentials();
+  }
+
+  /**
+   * Removes the 'introPlayed' item from local storage if running in a browser environment.
+   */
+  removeIntroPlayedCache() {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('introPlayed');
+    }
   }
 
   /**

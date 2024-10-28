@@ -8,6 +8,27 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
+        },
+        "architect": {
+          "build": {
+            "configurations": {
+              "production": {
+                "fileReplacements": [
+                  {
+                    "replace": "src/environments/environment.ts",
+                    "with": "src/environments/environment.prod.ts"
+                  }
+                ]
+              }
+            }
+          },
+          "serve": {
+            "configurations": {
+              "production": {
+                "browserTarget": "your-app-name:build:production"
+              }
+            }
+          }
         }
       },
       "root": "",

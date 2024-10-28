@@ -85,6 +85,7 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
       this.isLoading = true;
       this.videoName = this.getVideoName();
       const uploadVideoData = this.createUploadData();
+      console.log('uploadVideoData:', uploadVideoData);
 
       try {
         await firstValueFrom(this.dataService.setVideosInBackend(uploadVideoData!));

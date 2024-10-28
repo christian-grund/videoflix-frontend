@@ -5,7 +5,7 @@ import { VideoPopupService } from '../../shared/services/videopopup.service';
 import { DataService } from '../../shared/services/data.service';
 import { HttpHeaders } from '@angular/common/http';
 import { response } from 'express';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-editvideopopup',

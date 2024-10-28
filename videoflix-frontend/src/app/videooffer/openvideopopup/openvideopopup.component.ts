@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { DataService } from '../../shared/services/data.service';
 import { Router } from '@angular/router';
 import { VideoPopupService } from '../../shared/services/videopopup.service';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-openvideopopup',
