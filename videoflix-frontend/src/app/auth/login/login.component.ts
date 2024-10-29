@@ -95,7 +95,6 @@ export class LoginComponent implements OnInit {
   async checkUserRegistered() {
     this.authService.checkUserExists(this.email).subscribe({
       next: (response) => {
-        console.log('checkUserRegistered', response);
         if (response.exists) {
           this.isUserRegistered = true;
         }

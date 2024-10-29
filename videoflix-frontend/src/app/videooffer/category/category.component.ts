@@ -28,9 +28,9 @@ export class CategoryComponent implements OnInit {
   constructor(private dataService: DataService, private videoPopupService: VideoPopupService) {}
 
   ngOnInit() {
-    this.subscribeVideoData();
     this.subscribeVideoName();
     this.loadConversionStatusFromStorage();
+    this.subscribeVideoData();
   }
 
   /**
@@ -50,31 +50,49 @@ export class CategoryComponent implements OnInit {
   subscribeVideoName() {
     this.dataService.conversionCheck$.subscribe((videoName: string) => {
       if (videoName) {
-        this.checkConvertionStatus(videoName);
         this.videoName = videoName;
+        localStorage.setItem('currentVideoName', this.videoName);
+
+        this.loadConversionStatusFromStorage();
+        this.checkConvertionStatus(videoName);
+      } else {
+        this.loadVideoNameFromStorage();
       }
     });
   }
 
-  loadConversionStatusFromStorage() {
-    const storedStatus = localStorage.getItem(`conversionStatus_${this.videoName}`);
-    if (storedStatus) {
-      this.handleConvertionResponse(JSON.parse(storedStatus), null); // Hier null für das Interval, da wir nicht neu starten
+  /**
+   * Loads the current video name from local storage and assigns it to the videoName property.
+   */
+  loadVideoNameFromStorage() {
+    const storedVideoName = localStorage.getItem('currentVideoName');
+    if (storedVideoName) {
+      this.videoName = storedVideoName;
     }
   }
 
-  // loadConversionStatusFromStorage() {
-  //   const storedStatus = localStorage.getItem('conversionProgress');
-  //   if (storedStatus) {
-  //     const { progress, finished } = JSON.parse(storedStatus);
-  //     this.convertionProgress = progress;
-  //     this.convertionFinished = finished;
+  /**
+   * Loads the conversion status for the current video from local storage.
+   * If the videoName is available, it retrieves the corresponding conversion status
+   * and updates the conversionProgress and convertionFinished properties.
+   * If the videoName is not available, it retries after 100 milliseconds.
+   */
+  loadConversionStatusFromStorage() {
+    if (this.videoName) {
+      const storedStatus = localStorage.getItem(`conversionStatus_${this.videoName}`);
+      if (storedStatus) {
+        const parsedStatus = JSON.parse(storedStatus);
+        this.convertionProgress = parsedStatus.progress || 0;
+        this.convertionFinished = parsedStatus.finished || false;
 
-  //     if (!this.convertionFinished) {
-  //       this.checkConvertionStatus(this.videoName);
-  //     }
-  //   }
-  // }
+        if (!this.convertionFinished) {
+          this.checkConvertionStatus(this.videoName);
+        }
+      }
+    } else {
+      setTimeout(() => this.loadConversionStatusFromStorage(), 100);
+    }
+  }
 
   /**
    * Updates the categories based on the provided video data, organizing videos into their respective categories.
@@ -108,7 +126,8 @@ export class CategoryComponent implements OnInit {
    * @param {string} videoName - The name of the video whose conversion status is being checked.
    */
   checkConvertionStatus(videoName: string) {
-    this.resetConvertionStatus;
+    this.resetConvertionStatus();
+
     const interval = setInterval(() => {
       this.checkConvertionProgress(videoName, interval);
     }, 500);
@@ -145,20 +164,21 @@ export class CategoryComponent implements OnInit {
    * @param {NodeJS.Timeout} interval - The interval ID for tracking the conversion status.
    */
   handleConvertionResponse(response: any, interval: NodeJS.Timeout | null) {
-    const convertedResponse = response as unknown as ConversionStatusResponse;
+    const convertedResponse = response as ConversionStatusResponse;
     this.updateConvertionProgress(convertedResponse);
-
-    localStorage.setItem(`conversionStatus_${response.videoName}`, JSON.stringify(convertedResponse));
 
     if (this.isConvertionComplete(convertedResponse)) {
       this.convertionFinished = true;
+
       if (interval) {
         clearInterval(interval);
       }
-    }
 
-    localStorage.removeItem(`conversionStatus_${response.videoName}`);
+      localStorage.removeItem(`conversionStatus_${this.videoName}`);
+      localStorage.removeItem('currentVideoName');
+    }
   }
+
   /**
    * Updates the conversion progress based on the conversion status response.
    * @param {ConversionStatusResponse} response - The response containing conversion status information.
@@ -168,13 +188,14 @@ export class CategoryComponent implements OnInit {
     if (response['720p_status'] === 'completed') this.convertionProgress = 67;
     if (response['1080p_status'] === 'completed') this.convertionProgress = 100;
 
-    // localStorage.setItem(
-    //   'conversionProgress',
-    //   JSON.stringify({
-    //     progress: this.convertionProgress,
-    //     finished: this.convertionFinished,
-    //   })
-    // );
+    localStorage.setItem(
+      `conversionStatus_${this.videoName}`,
+      JSON.stringify({
+        videoName: this.videoName,
+        progress: this.convertionProgress,
+        finished: this.convertionFinished,
+      })
+    );
   }
 
   /**
@@ -183,7 +204,10 @@ export class CategoryComponent implements OnInit {
    * @returns {boolean} True if conversion is complete; otherwise, false.
    */
   isConvertionComplete(response: ConversionStatusResponse): boolean {
-    return response['360p_status'] === 'completed' && response['720p_status'] === 'completed' && response['1080p_status'] === 'completed';
+    const isComplete = response['360p_status'] === 'completed' && response['720p_status'] === 'completed' && response['1080p_status'] === 'completed';
+
+    console.log('Checking if conversion is complete:', isComplete);
+    return isComplete;
   }
 
   /**
@@ -191,8 +215,16 @@ export class CategoryComponent implements OnInit {
    * @param {any} error - The error object containing error information.
    * @param {NodeJS.Timeout} interval - The interval ID for tracking the conversion status.
    */
-  handleConvertionError(error: any, interval: NodeJS.Timeout) {
-    console.error('Fehler beim Überprüfen des Convertion-Status:', error);
-    clearInterval(interval);
+  handleConvertionError(response: any, interval: NodeJS.Timeout | null) {
+    this.updateConvertionProgress(response);
+
+    if (this.isConvertionComplete(response)) {
+      this.convertionFinished = true;
+      localStorage.removeItem(`conversionStatus_${this.videoName}`);
+      localStorage.removeItem('currentVideoName');
+      if (interval) {
+        clearInterval(interval);
+      }
+    }
   }
 }

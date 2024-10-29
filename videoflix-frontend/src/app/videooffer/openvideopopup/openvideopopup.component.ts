@@ -129,7 +129,6 @@ export class OpenvideopopupComponent implements OnInit {
   patchBackendVideoCategories() {
     if (this.videoData) {
       this.dataService.patchBackendVideoCategories(this.videoData.id, this.videoData.categories).subscribe({
-        next: () => console.log('Kategorien erfolgreich im Backend aktualisiert.'),
         error: (error) => console.error('Fehler beim Aktualisieren der Kategorien:', error),
       });
     }

@@ -58,10 +58,9 @@ export class AuthService {
   isLoggedIn(): boolean {
     let tokenExists: boolean = false;
     if (isPlatformBrowser(this.platformId)) {
-      console.log('!!localStorage.getItem("token"):', !!localStorage.getItem('token'));
       tokenExists = !!localStorage.getItem('token');
     }
-    return tokenExists; // Ersetze dies durch deine Logik
+    return tokenExists;
   }
 
   // /**

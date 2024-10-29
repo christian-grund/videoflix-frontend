@@ -72,7 +72,6 @@ export class VideoofferComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    console.log('videoBasePath:', this.videoBasePath);
     this.checkAuthStatus();
 
     if (isPlatformBrowser(this.platformId)) {

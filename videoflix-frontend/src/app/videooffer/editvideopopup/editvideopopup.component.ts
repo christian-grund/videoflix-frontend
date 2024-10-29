@@ -130,8 +130,6 @@ export class EditvideopopupComponent implements OnInit {
       this.dataService.triggerConvertionCheck(this.videoName);
       this.isLoading = false;
       this.closeEditVideoPopup();
-    } else {
-      console.log('Creating Thumbnail...');
     }
   }
 
@@ -158,15 +156,11 @@ export class EditvideopopupComponent implements OnInit {
   async deleteVideo() {
     if (this.videoData) {
       try {
-        // Erstelle die Header als einfaches Objekt
         const headers = {
           Authorization: `Token ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json', // Füge dies hinzu, wenn benötigt
+          'Content-Type': 'application/json',
         };
-
-        // Verwende axios für die DELETE-Anfrage
         const response = await axios.delete(`http://localhost:8000/api/videos/${this.videoData.id}/`, { headers });
-        console.log('Antwort vom Server:', response);
       } catch (error) {
         console.error('Fehler beim Löschen des Videos:', error);
         if (error instanceof AxiosError) {
