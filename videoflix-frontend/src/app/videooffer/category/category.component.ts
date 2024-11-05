@@ -205,8 +205,6 @@ export class CategoryComponent implements OnInit {
    */
   isConvertionComplete(response: ConversionStatusResponse): boolean {
     const isComplete = response['360p_status'] === 'completed' && response['720p_status'] === 'completed' && response['1080p_status'] === 'completed';
-
-    console.log('Checking if conversion is complete:', isComplete);
     return isComplete;
   }
 

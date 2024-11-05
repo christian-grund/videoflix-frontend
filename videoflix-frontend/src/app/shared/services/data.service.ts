@@ -69,7 +69,6 @@ export class DataService {
     this.getVideosFromBackend(headers).subscribe({
       next: (data) => {
         this.videoData = data;
-        console.log('videoData:', data);
         this.videoDataSubject.next(this.videoData);
       },
       error: (error) => {

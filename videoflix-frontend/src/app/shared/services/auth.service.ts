@@ -76,34 +76,6 @@ export class AuthService {
     }
   }
 
-  // /**
-  //  * Returns an observable that emits the logged-in status of the user.
-  //  *
-  //  * @returns {Observable<boolean | null>} An observable emitting the user's login status.
-  //  */
-  // isLoggedIn(): Observable<boolean | null> {
-  //   return this.isLoggedInSubject.asObservable();
-  // }
-
-  // checkLoginStatus(): Observable<void> {
-  //   if (this.loggedIn$.value !== null) {
-  //     return of();
-  //   }
-
-  //   // Hier wird der aktuelle Login-Status vom Server geholt und gecached
-  //   return this.http.get<{ isLoggedIn: boolean }>('/api/check-auth-status').pipe(
-  //     tap((response) => this.loggedIn$.next(response.isLoggedIn)),
-  //     mapTo(void 0)
-  //   );
-  // }
-
-  // isLoggedIn(): Observable<boolean> {
-  //   return this.loggedIn$.pipe(
-  //     filter((status) => status !== null),
-  //     take(1)
-  //   ) as Observable<boolean>;
-  // }
-
   /**
    * Activates a user account using the provided token.
    *

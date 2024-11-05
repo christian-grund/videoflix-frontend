@@ -57,7 +57,9 @@ export class LoginComponent implements OnInit {
    * authenticating the user, and managing the token and navigation upon success.
    */
   async login() {
-    this.authService.logout();
+    if (this.authService.isLoggedIn()) {
+      this.authService.logout();
+    }
     await this.checkUserRegistered();
     if (this.isUserRegistered) {
       this.authService.login(this.email, this.password).subscribe({
