@@ -58,14 +58,43 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   async ngOnInit() {
+    this.dataService.videoData$.subscribe(
+      (videoData) => {
+        if (videoData && videoData.length > 0) {
+          console.log('videoData:', videoData);
+        } else {
+          console.log('Keine Videodaten gefunden!');
+        }
+      },
+      (error) => {
+        console.error('Fehler beim Abrufen der Videodaten:', error);
+      }
+    );
+    await this.subscribeToRouteUrl();
     await this.loadData();
     this.getVideoData();
-    this.subscribeToRouteUrl();
+
     this.closeOpenVideoPopup();
   }
 
+  /**
+   * Closes video popup
+   */
   closeOpenVideoPopup() {
     this.videoPopupService.closeVideoPopup();
+  }
+
+  /**
+   * Subscribes to the route parameters and retrieves the video name from the URL.
+   */
+  async subscribeToRouteUrl() {
+    return new Promise<void>((resolve) => {
+      this.route.paramMap.subscribe((params) => {
+        this.videoName = params.get('videoname')!;
+        console.log('videoName:', this.videoName);
+        resolve(); // Sobald der videoName extrahiert ist, wird das Promise aufgelöst
+      });
+    });
   }
 
   /**
@@ -87,16 +116,8 @@ export class VideoplayerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataService.videoData$.subscribe((videoData) => {
       if (videoData && videoData.length > 0) {
         this.videoData = this.dataService.getVideoByName(this.videoName);
+        console.log('getVideoData:', this.videoData);
       }
-    });
-  }
-
-  /**
-   * Subscribes to the route parameters and retrieves the video name from the URL.
-   */
-  subscribeToRouteUrl() {
-    this.route.paramMap.subscribe((params) => {
-      this.videoName = params.get('videoname')!;
     });
   }
 

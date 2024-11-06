@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { DataService } from '../shared/services/data.service';
 import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-startpage',
@@ -20,10 +21,16 @@ export class StartpageComponent implements OnInit {
   emailError: boolean = false;
   isIntroPlaying: boolean = false;
 
-  constructor(private router: Router, private dataService: DataService, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    private router: Router,
+    private dataService: DataService,
+    private authService: AuthService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
     this.checkIntroPlayed();
+    this.checkUserIsLoggedIn();
   }
 
   /**
@@ -42,6 +49,15 @@ export class StartpageComponent implements OnInit {
       } else {
         this.isIntroPlaying = false;
       }
+    }
+  }
+
+  /**
+   * Checks if a user is already logged in.
+   */
+  checkUserIsLoggedIn() {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/videos']);
     }
   }
 

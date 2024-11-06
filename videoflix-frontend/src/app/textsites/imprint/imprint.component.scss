@@ -4,13 +4,13 @@ section {
   position: relative;
   width: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: center;
   box-sizing: border-box;
+  background: $color-black;
 
   .imprint-main {
     width: 100%;
     max-width: 1440px !important;
-    // min-height: 100vh;
     display: flex;
     justify-content: start;
     align-items: start;

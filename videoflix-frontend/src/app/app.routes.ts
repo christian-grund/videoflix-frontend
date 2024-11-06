@@ -10,7 +10,6 @@ import { VideoofferComponent } from './videooffer/videooffer.component';
 import { VideoplayerComponent } from './videoplayer/videoplayer.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { ActivateComponent } from './auth/activate/activate.component';
-// import { authResolver } from './shared/resolvers/auth.resolver';
 
 export const routes: Routes = [
   { path: '', component: StartpageComponent },
