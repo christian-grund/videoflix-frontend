@@ -1,27 +1,57 @@
-# Videoflix
+# Videoflix Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.6.
+This is the frontend for the Videoflix project, a video streaming platform. The application is built with **Angular** and provides the user interface for the backend powered by Django.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- User registration and login
+- Video catalog with search and filtering options
+- Video player for content playback
+- Favorite management
+- Admin dashboard for managing video content
 
-## Code scaffolding
+## Technology Stack
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Frontend:** Angular 17+
+- **Backend:** Django 5.1.1 (Videoflix Backend)
+- **Database:** PostgreSQL
+- **Auth:** Tokenauthentication for authentication
+- **Webserver:** Nginx for serving the application
 
-## Build
+## Installation
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 1. Clone the repository
 
-## Running unit tests
+First, clone the repository to your local machine:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+git clone https://github.com/christian-grund/videoflix-frontend.git
+cd videoflix-frontend
 
-## Running end-to-end tests
+### 2. Install Node.js and Angular CLI
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Ensure that you have Node.js and Angular CLI installed on your system:
 
-## Further help
+Download Node.js
+Install Angular CLI:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+npm install -g @angular/cli
+
+### 3. Install dependencies
+
+Install all the required dependencies with npm:
+
+npm install
+
+### 4. Start development server
+
+To start the application in development mode:
+
+ng serve
+
+### 5. Build for production
+
+To build the application for production, run the following command:
+
+ng build --prod
+```
