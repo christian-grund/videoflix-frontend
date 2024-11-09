@@ -9,8 +9,8 @@
           [class.disabled]="videoName === video.name && !convertionFinished"
           (click)="videoName === video.name && !convertionFinished ? $event.stopPropagation() : openVideoInfo(video.name)"
         />
-        <p class="text" *ngIf="videoName === video.name">Converting video:</p>
-        <p class="progress" *ngIf="videoName === video.name">{{ convertionProgress }} %</p>
+        <p class="text" *ngIf="videoName === video.name && !convertionFinished">Converting video:</p>
+        <p class="progress" *ngIf="videoName === video.name && !convertionFinished">{{ convertionProgress }} %</p>
       </div>
     </div>
   </div>

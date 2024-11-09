@@ -36,7 +36,6 @@ export class EditvideopopupComponent implements OnInit {
     video_file: File;
   } | null = null;
 
-  // videoBasePath = 'http://localhost:8000/media/videos/';
   videoBasePath = environment.apiUrl + 'media/videos/';
   iconBasePath = '../../assets/img/icons/';
 
@@ -160,7 +159,7 @@ export class EditvideopopupComponent implements OnInit {
           Authorization: `Token ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json',
         };
-        const response = await axios.delete(`http://localhost:8000/api/videos/${this.videoData.id}/`, { headers });
+        const response = await axios.delete(`https://videoflix-backend.christian-grund.dev/api/videos/${this.videoData.id}/`, { headers });
       } catch (error) {
         console.error('Fehler beim Löschen des Videos:', error);
         if (error instanceof AxiosError) {

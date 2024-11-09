@@ -83,7 +83,7 @@ export class CategoryComponent implements OnInit {
       if (storedStatus) {
         const parsedStatus = JSON.parse(storedStatus);
         this.convertionProgress = parsedStatus.progress || 0;
-        this.convertionFinished = parsedStatus.finished || false;
+        this.convertionFinished = this.convertionProgress === 100;
 
         if (!this.convertionFinished) {
           this.checkConvertionStatus(this.videoName);
