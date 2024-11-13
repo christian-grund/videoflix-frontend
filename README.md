@@ -12,7 +12,7 @@ This is the frontend for the Videoflix project, a video streaming platform. The 
 
 ## Technology Stack
 
--   **Frontend:** Angular 17+
+-   **Frontend:** Angular CLI 17.0.6
 -   **Backend:** Django 5.1.1 (Videoflix Backend)
 -   **Database:** PostgreSQL
 -   **Auth:** Tokenauthentication for authentication
