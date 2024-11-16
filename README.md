@@ -63,3 +63,9 @@ To build the application for production, run the following command:
 ```bash
 ng build --prod
 ```
+
+## Contact
+
+For inquiries or feedback, reach out to me at mail@christian-grund.dev or create an issue in the repository.
+
+---

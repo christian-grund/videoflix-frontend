@@ -84,6 +84,7 @@ export class AddvideopopupComponent implements OnInit, OnDestroy {
     if (this.isUploadValid()) {
       this.isLoading = true;
       this.videoName = this.getVideoName();
+      // this.videoName = this.videoTitle.toLowerCase().replace(/ /g, '_');
       const uploadVideoData = this.createUploadData();
 
       try {
