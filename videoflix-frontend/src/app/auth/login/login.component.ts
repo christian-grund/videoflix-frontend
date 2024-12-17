@@ -57,9 +57,7 @@ export class LoginComponent implements OnInit {
    * authenticating the user, and managing the token and navigation upon success.
    */
   async login() {
-    if (this.authService.isLoggedIn()) {
-      this.authService.logout();
-    }
+    await this.checkLoggedInUser();
     await this.checkUserRegistered();
     if (this.isUserRegistered) {
       this.authService.login(this.email, this.password).subscribe({
@@ -77,6 +75,34 @@ export class LoginComponent implements OnInit {
         },
       });
       this.checkRememberMe();
+    }
+  }
+
+  async guestLogin() {
+    await this.checkLoggedInUser();
+    this.authService.login('guest@web.de', 'Admin123').subscribe({
+      next: (response) => {
+        this.matchError = false;
+        localStorage.setItem('token', response.token);
+        this.authService.checkAuthStatus();
+        setTimeout(() => {
+          this.router.navigate(['/videos']);
+        }, 100);
+      },
+      error: (error) => {
+        this.message = 'Login failed: ' + (error.error.non_field_errors ? error.error.non_field_errors[0] : 'Unknown error');
+        this.matchError = true;
+      },
+    });
+    this.checkRememberMe();
+  }
+
+  /**
+   * Checks if a user is already logged in and if true, the user is logged out.
+   */
+  async checkLoggedInUser() {
+    if (this.authService.isLoggedIn()) {
+      await this.authService.logout();
     }
   }
 

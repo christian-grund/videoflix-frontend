@@ -41,7 +41,10 @@
           <input type="checkbox" id="rememberMe" name="remember-me" [(ngModel)]="isRememberMeChecked" />
           <label for="rememberMe">Remember me</label>
         </div>
-        <button class="btn-default" [disabled]="!email || !password">Log in</button>
+        <div class="login-btns">
+          <button class="btn-default" [disabled]="!email || !password">Log in</button>
+          <button type="button" class="btn-default" (click)="guestLogin()">Guest Login</button>
+        </div>
       </form>
       <a [routerLink]="['/forgot-password']" class="forgot-pw">Forgot password?</a>
       <div class="sign-up-link">
